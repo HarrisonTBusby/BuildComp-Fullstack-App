@@ -1,3 +1,7 @@
+*, ::before, ::after {
+    box-sizing: border-box;
+}
+
 body{
     background-image: url('../../Assets/backgroundFulllstack.png');
     background-repeat: no-repeat;
@@ -13,8 +17,8 @@ body{
 }
 
 .logo {
-    width: 60px;
-    height: auto;
+    width: auto;
+    height: 60px;
 }
 
 .login-container {
@@ -35,6 +39,13 @@ body{
     border-radius: 15px;
 }
 
+.left-login-top {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+}
+
 .right-login {
     position: absolute;
     right: 0;
@@ -43,4 +54,57 @@ body{
     height: 80%;
     background: #ffffff;
     border-radius: 15px;
+    padding: 6rem;
 }
+
+input {
+    appearance: none;
+    border: 1.5px solid #a3a3a3;
+    outline: none;
+    border-radius: 5px;
+    padding: .5rem;
+    width: 100%;
+    margin-top: .5rem;
+}
+
+.login-btn {
+    appearance: none;
+    background: #4463D5;
+    color: white;
+    border: none;
+    width: 100%;
+    padding: .5rem 0;
+    border-radius: 8px;
+    margin-top: 1rem;
+}
+
+.divider {
+    margin: 2rem 0;
+    position: relative;
+    width: 100%;
+}
+
+.or {
+    position: absolute;
+    width: fit-content;
+    background: white;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -55%);
+    margin: 0;
+    padding: 1rem;
+}
+
+.create-account {
+    text-align: center;
+}
+
+.create-account span{
+    color: #4463D5;
+    cursor: pointer;
+}
+
+.create-account span:hover{
+    text-decoration: underline;
+}
+
