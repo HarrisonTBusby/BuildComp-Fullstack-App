@@ -1,0 +1,40 @@
+.login-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background-image: linear-gradient(to top right, hsl(198, 100%, 71%), hsla(228, 56%, 24%, 0.568), hsl(257, 78%, 86%));
+}
+
+.logo {
+    width: 60px;
+    height: auto;
+}
+
+.login-container {
+    position: relative;
+    width: 675px;
+    height: 800px;
+    /* margin: 0 auto; */
+    
+}   
+
+.left-login {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 70%;
+    height: 80%;
+    background: #4463D5;
+    border-radius: 15px;
+}
+
+.right-login {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 70%;
+    height: 80%;
+    background: #ffffff;
+    border-radius: 15px;
+}
