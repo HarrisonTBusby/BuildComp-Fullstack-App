@@ -3,6 +3,9 @@ import './Homepage.css';
 
 export default function Homepage() {
   return (
-    <div>Homepage</div>
+   <body>
+
+    <h1>Homepage</h1>
+   </body>
   )
 }
