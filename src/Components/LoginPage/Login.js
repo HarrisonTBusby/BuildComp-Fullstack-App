@@ -1,4 +1,4 @@
-import BuildCompLogo from '../../Assets/BuildCompLogo.png'
+import BuildCompLogo from '../../Assets/Logo.png'
 import './Login.css';
 import { Link } from 'react-router-dom';
 
@@ -7,13 +7,33 @@ const Login = () => {
         <div className='login-wrapper'>
             <div className="login-container">
                 <div className="left-login">
-                    <div>
+                    <div className='left-login-top'>
                         <img className="logo" src={BuildCompLogo}></img>
-                        <h1>Build Comp</h1>
+                        <h1>BuildComp</h1>
                     </div>
                 </div>
                 <div className="right-login">
-                    Words
+                    <h1>Welcome back</h1>
+                    <p>Please login to your account.</p>
+                    <label style={{display: 'block'}}>
+                        Username
+                        <div>
+                            <input type="text" name="username"></input>
+                        </div>
+                    </label>
+                    <label style={{display: 'block'}}>
+                        Password
+                        <div>
+                            <input type="password" name="password"></input>
+                        </div>
+                    </label>
+                    <button className='login-btn'>Login</button>
+                    <div className='divider'>
+                        <hr ></hr>
+                        <p className='or'>or</p>
+                    </div>
+                    <button className='login-btn'>Continue as guest</button>
+                    <p className='create-account'>Don't have an account <span>Sign up</span></p>
                 </div>
             </div>
         </div>
