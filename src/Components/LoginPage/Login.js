@@ -1,4 +1,4 @@
-import BuildCompLogo from '../../Assets/BuildComp Logo.png'
+import BuildCompLogo from '../../Assets/BuildCompLogo.png'
 import './Login.css';
 import { Link } from 'react-router-dom';
 
