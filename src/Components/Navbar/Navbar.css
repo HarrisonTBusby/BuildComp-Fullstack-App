@@ -1,0 +1,18 @@
+@font-face {
+    font-family: Poppins;
+    src: url('../../Assets/Fonts/Poppins-Regular.ttf');
+}
+
+.NavBackground{
+    background-color: #4463D5;
+    font-family: Poppins;
+}
+
+.fontColor{
+    color: white !important;
+}
+
+.logoSize{
+    width: auto;
+    height: 50px;
+}

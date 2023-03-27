@@ -1,4 +1,4 @@
-import Logo from './Assets/BuildComp Logo.png'
+import Logo from './Assets/BuildCompLogo.png'
 import BestBuilds from './Components/BestBuildsPage/BestBuilds.js';
 import Homepage from './Components/HomePage/Homepage';
 import Login from './Components/LoginPage/Login';
@@ -6,12 +6,12 @@ import PreviousSelections from './Components/PreviousSelectionsPage/PreviousSele
 import SignUp from './Components/SignUpPage/SignUp';
 import Wishlist from './Components/WishlistPage/Wishlist';
 import { BrowserRouter,Routes,Route } from 'react-router-dom';
+
 import './App.css';
 import './Components/LoginPage/Login.css'
 
 function App() {
   return (
-
     <BrowserRouter>
     <Routes>
       <Route path='/' element={<Homepage/>}/>
@@ -22,6 +22,7 @@ function App() {
       <Route path='/Wishlist' element={<Wishlist/>}/>
   </Routes>
     </BrowserRouter>
+
   );
 }
 

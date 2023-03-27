@@ -2,4 +2,18 @@ body{
     background-image: url('../../Assets/backgroundFulllstack.png');
     background-repeat: no-repeat;
     background-size: cover;
+    height: 1820px;
+}
+
+@font-face {
+    font-family: PoppinsBold;
+    src: url('../../Assets/Fonts/;
+}
+
+.BannerImg{
+   width: 100vw !important;
+   height: 700px !important;
+   background-image: url('../../Assets/GamingImage.jpg');
+   background-repeat: no-repeat;
+   background-size: cover;
 }
