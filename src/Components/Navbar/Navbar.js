@@ -2,7 +2,7 @@ import React from 'react'
 import './Navbar.css';
 import {Container, Navbar, Nav} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
-import Logo from '../../Assets/BuildCompLogo.png';
+import Logo from '../../Assets/BuildComp_Logo.png';
 export default function NavbarComponent() {
   return (
     <Navbar expand="lg" className='NavBackground'>
