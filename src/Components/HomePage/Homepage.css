@@ -7,7 +7,31 @@ body{
 
 @font-face {
     font-family: PoppinsBold;
-    src: url('../../Assets/Fonts/;
+    src: url('../../Assets/Fonts/Poppins-Bold.ttf');
+}
+
+.bannerFont{
+    color: white !important;
+    font-family: PoppinsBold;
+    text-align: left;
+    width: 500px;
+    position: relative;
+    top: 250px;
+    left: 250px;
+}
+
+.bannerFont2{
+    background-color: #4463D5;
+    color: white !important;
+    font-family: PoppinsBold;
+    width: 400px;
+    border-radius: 5px;
+    padding: 20px;
+    text-align: center;
+    position: relative;
+    top: 400px;
+    right: 190px;
+    
 }
 
 .BannerImg{
@@ -16,4 +40,16 @@ body{
    background-image: url('../../Assets/GamingImage.jpg');
    background-repeat: no-repeat;
    background-size: cover;
+}
+
+.quizBg{
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 20px;
+    height: 600px;
+    margin-top: 100px;
+}
+
+.quizFont1{
+    color: black !important;
+    text-align: center;
 }
