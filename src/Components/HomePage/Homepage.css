@@ -3,3 +3,7 @@ body{
     background-repeat: no-repeat;
     background-size: cover;
 }
+
+.BannerImg{
+    background-image: url('../../Assets/GamingImage.jpg');
+}
