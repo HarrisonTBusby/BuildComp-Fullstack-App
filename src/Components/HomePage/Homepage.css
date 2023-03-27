@@ -6,7 +6,7 @@ body{
 }
 
 @font-face {
-    font-family: PoppinsBold;
+    font-family: PoppinsBold, sans-serif;
     src: url('../../Assets/Fonts/');
 }
 
@@ -16,4 +16,16 @@ body{
    background-image: url('../../Assets/GamingImage.jpg');
    background-repeat: no-repeat;
    background-size: cover;
+}
+
+.quizBg{
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 20px;
+    height: 600px;
+    margin-top: 100px;
+}
+
+.quizFont1{
+    color: black !important;
+    text-align: center;
 }
