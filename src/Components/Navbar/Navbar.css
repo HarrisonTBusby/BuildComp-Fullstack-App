@@ -8,3 +8,8 @@
     color: white !important;
     font-family: Poppins;
 }
+
+.logoSize{
+    width: auto;
+    height: 50px;
+}
