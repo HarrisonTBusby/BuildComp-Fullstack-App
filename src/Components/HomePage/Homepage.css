@@ -6,7 +6,7 @@ body{
 }
 
 @font-face {
-    font-family: PoppinsBold;
+    font-family: PoppinsBold, sans-serif;
     src: url('../../Assets/Fonts/Poppins-Bold.ttf');
 }
 

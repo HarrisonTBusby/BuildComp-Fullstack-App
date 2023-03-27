@@ -44,6 +44,7 @@ body{
     justify-content: center;
     align-items: center;
     color: white;
+    margin-top: 2rem;
 }
 
 .right-login {
