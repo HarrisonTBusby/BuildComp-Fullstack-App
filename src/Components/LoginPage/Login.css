@@ -1,15 +1,15 @@
-/* body{
+body{
     background-image: url('../../Assets/backgroundFulllstack.png');
     background-repeat: no-repeat;
     background-size: cover;
-} */
+}
 
 .login-wrapper {
     display: flex;
     align-items: center;
     justify-content: center;
     min-height: 100vh;
-    background-image: linear-gradient(to top right, hsl(198, 100%, 71%), hsla(228, 56%, 24%, 0.568), hsl(257, 78%, 86%));
+    /* background-image: linear-gradient(to top right, hsl(198, 100%, 71%), hsla(228, 56%, 24%, 0.568), hsl(257, 78%, 86%)); */
 }
 
 .logo {

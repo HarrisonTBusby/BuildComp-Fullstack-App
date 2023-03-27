@@ -8,7 +8,6 @@ import Wishlist from './Components/WishlistPage/Wishlist';
 import { BrowserRouter,Routes,Route } from 'react-router-dom';
 import './App.css';
 import './Components/LoginPage/Login.css'
-import Login from './Components/LoginPage/Login';
 
 function App() {
   return (
