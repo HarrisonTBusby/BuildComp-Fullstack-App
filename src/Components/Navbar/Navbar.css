@@ -1,4 +1,10 @@
+@font-face {
+    font-family: Poppins;
+    src: url('../../Assets/Fonts/Poppins-Regular.ttf');
+}
+
 .NavBackground{
     background-color: #4463D5;
-    color: white;
+    color: white !important;
+    font-family: Poppins;
 }

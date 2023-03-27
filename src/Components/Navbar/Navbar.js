@@ -2,10 +2,10 @@ import React from 'react'
 import './Navbar.css';
 import {Container, Navbar, Nav} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
-
+import Logo from '../../Assets/BuildCompLogo.png';
 export default function NavbarComponent() {
   return (
-    <Navbar bg="light" expand="lg">
+    <Navbar expand="lg" className='NavBackground'>
     <Container>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
@@ -16,7 +16,7 @@ export default function NavbarComponent() {
                 <Nav.Link as={Link} to='/PreviousSelections'>Previous Selections</Nav.Link>
             </Nav>
         </Navbar.Collapse>
-        <Navbar.Brand as={Link} to='/'>BuildComp</Navbar.Brand>
+        <Navbar.Brand as={Link} to='/'><img className='' src={Logo}/>BuildComp</Navbar.Brand>
     </Container>
 </Navbar>
   )
