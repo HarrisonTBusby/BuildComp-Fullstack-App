@@ -5,8 +5,11 @@
 
 .NavBackground{
     background-color: #4463D5;
-    color: white !important;
     font-family: Poppins;
+}
+
+.fontColor{
+    color: white !important;
 }
 
 .logoSize{
