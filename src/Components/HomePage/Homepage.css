@@ -7,7 +7,7 @@ body{
 
 @font-face {
     font-family: PoppinsBold, sans-serif;
-    src: url('../../Assets/Fonts/');
+    src: url('../../Assets/Fonts/Poppins-Bold.ttf');
 }
 
 .BannerImg{
