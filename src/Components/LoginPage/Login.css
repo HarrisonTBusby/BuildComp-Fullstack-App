@@ -3,3 +3,15 @@ body{
     background-repeat: no-repeat;
     background-size: cover;
 }
+
+.cardBodyMain{
+    background-color: #4463D5;
+}
+
+.cardBodyLogin{
+    background-color: #F4F4F4;
+}
+
+.logoBC{
+    background-image: url('../../Assets/BuildCompLogo.png') ;
+}
