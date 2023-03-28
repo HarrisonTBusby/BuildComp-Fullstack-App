@@ -13,7 +13,7 @@ export default function BestBuilds() {
         </Tooltip>
     );
     return (
-        <body>
+        <>
             <NavbarComponent />
 
             <Row>
@@ -93,6 +93,6 @@ export default function BestBuilds() {
 
 
             <Footer />
-        </body>
+            </>
     )
 }
