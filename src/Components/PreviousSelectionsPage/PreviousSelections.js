@@ -1,31 +1,39 @@
 import React from 'react'
 import './PreviousSelections.css';
-import '../Navbar/Navbar.js';
+import NavbarComponent from '../Navbar/Navbar.js';
+
 import { Link } from 'react-router-dom';
 import {Container, Row, Col,} from 'react-bootstrap'
+import SelectionsRow from './previousRows'
+import Footer from '../Footer/Footer.js'
 export default function PreviousSelections() {
   return (
-    <div>PreviousSelections
 
 
-<Row className='rowBack'>
-Hee
+    <div className=''>
+<NavbarComponent/>
 
-</Row>
+
+<SelectionsRow/>
+
+
+
+
+
+
 
 
 <br></br>
-<Row className='rowBack'>
-Hee
+<br></br>
+
+<br></br>
+<br></br>
+
+<br></br>
+
+<Row className='footerr'>
+<Footer/>
 </Row>
-
-
-
-
-
-
-
-
     </div>
 
 
