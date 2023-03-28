@@ -33,3 +33,15 @@ body{
     width: 500px;
     height: auto;
 }
+
+.clearFiltersBtn{
+    background-color: #ffffff;
+    padding: 7px;
+    border-radius: 15px !important;
+    border: none;
+}
+
+.clearFiltersBtn:hover{
+    background-color: aliceblue;
+    box-shadow: 2px 2px 2px grey;
+}

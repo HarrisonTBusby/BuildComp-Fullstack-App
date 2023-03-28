@@ -20,6 +20,7 @@ export default function BestBuilds() {
                 <Col className='filterBackground mt-5'>
                     <div className='marginLeft2 filterBoxColor'>
                         <p className='mt-4'>Filter</p>
+                        <button className='clearFiltersBtn'>Clear Filters</button>
                         <hr />
                         {/* Budget */}
                         {/* ====================================================================== */}
