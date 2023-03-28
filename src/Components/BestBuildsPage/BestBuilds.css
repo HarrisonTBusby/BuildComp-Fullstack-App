@@ -6,9 +6,43 @@ body{
 
 .filterBackground{
     background-color: #E2E2E2;
-    height: 100vh;
+    height: 150vh;
+    border-radius: 5px;
 }
 
 .marginLeft{
     margin-left: 500px !important;
+}
+
+.marginLeft2{
+    margin-left: 20px;
+}
+
+.filterBoxColor{
+    font-family: PoppinsBold;
+    font-size: 30px;
+    color: rgb(0, 0, 0) !important;
+}
+
+@font-face {
+    font-family: PoppinsBold;
+    src: url('../../Assets/Fonts/Poppins-Bold.ttf');
+}
+
+.searchWidth{
+    width: 500px;
+    height: auto;
+    font-family: PoppinsBold;
+}
+
+.clearFiltersBtn{
+    background-color: #ffffff;
+    padding: 7px;
+    border-radius: 15px !important;
+    border: none;
+}
+
+.clearFiltersBtn:hover{
+    background-color: aliceblue;
+    box-shadow: 2px 2px 2px grey;
 }
