@@ -16,7 +16,7 @@ export default function Footer() {
                 </Col>
             </Row>
             <Col>
-            <Nav className='marginLeft font4'>
+            <Nav className='marginLeftFooter font4'>
                 <Row>
                 <Nav.Link as={Link} to='/Login'>Login</Nav.Link>
                 <Nav.Link as={Link} to='/'>Home</Nav.Link>

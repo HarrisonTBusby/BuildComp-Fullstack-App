@@ -1,8 +1,8 @@
 import React from 'react'
 import './BestBuilds.css'
-import NavbarComponent from '../Navbar/Navbar';
+import NavbarComponent from '../Navbar/Navbar.js';
 import { Container, Row, Col, Dropdown, Form, InputGroup, OverlayTrigger, Tooltip } from 'react-bootstrap';
-import Footer from '../Footer/Footer';
+import Footer from '../Footer/Footer.js';
 import { Link } from 'react-router-dom';
 
 export default function BestBuilds() {
@@ -17,9 +17,9 @@ export default function BestBuilds() {
             <NavbarComponent />
 
             <Row>
-                <Col className='filterBackground'>
-                    <div className='marginLeft2 filterBoxColor '>
-                        <p className='mt-5'>Filter</p>
+                <Col className='filterBackground mt-5'>
+                    <div className='marginLeft2 filterBoxColor'>
+                        <p className='mt-4'>Filter</p>
                         <hr />
                         {/* Budget */}
                         {/* ====================================================================== */}
@@ -78,7 +78,9 @@ export default function BestBuilds() {
                             
                     </div>
                 </Col>
-                <Col className='marginLeft'></Col>
+                <Col className='marginLeft mt-5 mb-5'>
+                    <input type={'search'} placeholder='Search' className='searchWidth'></input>
+                </Col>
             </Row>
 
 
