@@ -9,24 +9,16 @@ body{
 }
 
 .login-wrapper {
-    display: flex;
-    align-items: center;
-    justify-content: center;
     min-height: 100vh;
-    /* background-image: linear-gradient(to top right, hsl(198, 100%, 71%), hsla(228, 56%, 24%, 0.568), hsl(257, 78%, 86%)); */
 }
 
-.logo {
+.login-logo {
     width: auto;
     height: 60px;
 }
 
 .login-container {
-    position: relative;
-    width: 675px;
     height: 800px;
-    /* margin: 0 auto; */
-    
 }   
 
 .left-login {
@@ -40,11 +32,7 @@ body{
 }
 
 .left-login-top {
-    display: flex;
-    justify-content: center;
-    align-items: center;
     color: white;
-    margin-top: 2rem;
 }
 
 .right-login {
