@@ -1,4 +1,3 @@
-import Logo from './Assets/BuildCompLogo.png'
 import BestBuilds from './Components/BestBuildsPage/BestBuilds.js';
 import Homepage from './Components/HomePage/Homepage';
 import Login from './Components/LoginPage/Login';

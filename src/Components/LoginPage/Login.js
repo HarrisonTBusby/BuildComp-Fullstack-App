@@ -32,8 +32,8 @@ const Login = () => {
                         <hr ></hr>
                         <p className='or'>or</p>
                     </div>
-                    <button className='login-btn'>Continue as guest</button>
-                    <p className='create-account'>Don't have an account <span>Sign up</span></p>
+                    <Link to='/'><button className='login-btn'>Continue as guest</button></Link>
+                    <p className='create-account'>Don't have an account <Link to='/SignUp'>Sign up</Link></p>
                 </div>
             </div>
         </div>

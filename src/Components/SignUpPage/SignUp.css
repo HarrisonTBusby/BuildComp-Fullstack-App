@@ -3,3 +3,71 @@ body{
     background-repeat: no-repeat;
     background-size: cover;
 }
+
+.signup-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+.logo {
+    width: auto;
+    height: 60px;
+}
+
+.signup-container {
+    position: relative;
+    width: 675px;
+    height: 800px;
+}   
+
+.left-signup {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 70%;
+    height: 80%;
+    background: #4463D5;
+    border-radius: 15px;
+}
+
+.left-signup-top {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    margin-top: 2rem;
+}
+
+.right-signup {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 70%;
+    height: 80%;
+    background: #ffffff;
+    border-radius: 15px;
+    padding: 6rem;
+}
+
+input {
+    appearance: none;
+    border: 1.5px solid #a3a3a3;
+    outline: none;
+    border-radius: 5px;
+    padding: .5rem;
+    width: 100%;
+    margin-top: .5rem;
+}
+
+.signup-btn {
+    appearance: none;
+    background: #4463D5;
+    color: white;
+    border: none;
+    width: 100%;
+    padding: .5rem 0;
+    border-radius: 8px;
+    margin-top: 1rem;
+}
