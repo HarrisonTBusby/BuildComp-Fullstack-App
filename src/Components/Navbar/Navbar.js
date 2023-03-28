@@ -18,6 +18,7 @@ export default function NavbarComponent() {
             </Nav>
         </Navbar.Collapse>
         <Navbar.Brand as={Link} to='/' className='fontColor'><img className='logoSize' src={Logo}/>BuildComp</Navbar.Brand>
+        <Nav.Link as={Link} to='/Login' className='fontColor mx-3'>Login</Nav.Link>
     </Container>
 </Navbar>
   )

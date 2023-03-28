@@ -18,12 +18,10 @@ export default function Footer() {
             <Col>
             <Nav className='marginLeft font4'>
                 <Row>
+                <Nav.Link as={Link} to='/Login'>Login</Nav.Link>
                 <Nav.Link as={Link} to='/'>Home</Nav.Link>
-                
                 <Nav.Link as={Link} to='/BestBuilds'>Best Builds</Nav.Link>
-                
                 <Nav.Link as={Link} to='/Wishlist'>Wishlist</Nav.Link>
-                
                 <Nav.Link as={Link} to='/PreviousSelections'>Previous Selections</Nav.Link>
                 </Row>
             </Nav>
