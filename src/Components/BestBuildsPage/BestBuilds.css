@@ -6,7 +6,7 @@ body{
 
 .filterBackground{
     background-color: #E2E2E2;
-    height: 100vh;
+    height: 150vh;
     border-radius: 5px;
 }
 
@@ -32,6 +32,7 @@ body{
 .searchWidth{
     width: 500px;
     height: auto;
+    font-family: PoppinsBold;
 }
 
 .clearFiltersBtn{

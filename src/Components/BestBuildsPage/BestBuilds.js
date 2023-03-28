@@ -75,8 +75,15 @@ export default function BestBuilds() {
                             <InputGroup className="mb-3">
                             <InputGroup.Checkbox />Better performance
                             </InputGroup>
-                        {/*  */}
-                            
+                        {/*Rgb or No Rgb  */}
+                        {/* ========================================================== */}
+                        <p className='mt-5'>RGB</p>
+                        <InputGroup className="mb-3">
+                            <InputGroup.Checkbox />RGB
+                            </InputGroup>
+                            <InputGroup className="mb-3">
+                            <InputGroup.Checkbox />No RGB
+                            </InputGroup>
                     </div>
                 </Col>
                 <Col className='marginLeft mt-5 mb-5'>
