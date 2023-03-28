@@ -12,3 +12,18 @@ body{
 .marginLeft{
     margin-left: 500px !important;
 }
+
+.marginLeft2{
+    margin-left: 20px;
+}
+
+.filterBoxColor{
+    font-family: PoppinsBold;
+    font-size: 30px;
+    color: rgb(0, 0, 0) !important;
+}
+
+@font-face {
+    font-family: PoppinsBold;
+    src: url('../../Assets/Fonts/Poppins-Bold.ttf');
+}
