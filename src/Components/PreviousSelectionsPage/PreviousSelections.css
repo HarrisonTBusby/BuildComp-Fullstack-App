@@ -3,3 +3,8 @@ body{
     background-repeat: no-repeat;
     background-size: cover;
 }
+
+.rowBack {
+    background-color: white;
+    height: 6rem;
+}

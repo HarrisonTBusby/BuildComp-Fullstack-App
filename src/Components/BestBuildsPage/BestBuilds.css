@@ -3,3 +3,12 @@ body{
     background-repeat: no-repeat;
     background-size: cover;
 }
+
+.filterBackground{
+    background-color: #E2E2E2;
+    height: 100vh;
+}
+
+.marginLeft{
+    margin-left: 500px !important;
+}
