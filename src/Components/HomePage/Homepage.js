@@ -15,7 +15,7 @@ export default function Homepage() {
     );
 
     return (
-        <body>
+        <>
             <NavbarComponent />
             <Row className='BannerImg'>
                 <Col>
@@ -79,6 +79,6 @@ export default function Homepage() {
                 </Row>
             </Container>
             <Footer/>
-        </body>
+        </>
     )
 }
