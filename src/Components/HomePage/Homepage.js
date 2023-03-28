@@ -1,6 +1,7 @@
 import React from 'react';
 import { Container, Row, Col, Dropdown, Button, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import NavbarComponent from '../Navbar/Navbar.js';
+import Footer from '../Footer/Footer.js';
 import Banner from '../../Assets/GamingImage.jpg';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Homepage.css';
@@ -77,7 +78,7 @@ export default function Homepage() {
                     <Button className='submitBtn'>Submit</Button>
                 </Row>
             </Container>
-
+            <Footer/>
         </body>
     )
 }

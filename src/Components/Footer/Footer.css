@@ -1,0 +1,51 @@
+@font-face {
+    font-family: PoppinsBold;
+    src: url('../../Assets/Fonts/Poppins-Bold.ttf');
+}
+
+
+
+footer{
+    background-color: #E2E2E2;
+    height: 385px;
+    margin-top: 100px;
+    font-family: PoppinsBold;
+}
+
+.supportFont{
+    font-size: 24px;
+    text-align: left;
+    margin-left: 50px;
+    width: 500px;
+}
+
+.questionFont{
+    font-size: 30px;
+    text-align: right;
+    margin-right: 50px;
+}
+
+.emailFont{
+    font-size: 20px;
+    text-align: right;
+    margin-right: 50px;
+}
+
+.font4{
+    font-size: 15px;
+    color: black !important;
+}
+
+.center{
+    display: flex;
+    justify-content: center;
+}
+
+.marginTop{
+    margin-top: 100px;
+}
+
+.marginLeft{
+    margin-left: 50px;
+}
+
