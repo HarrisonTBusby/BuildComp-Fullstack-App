@@ -45,10 +45,10 @@ export default function Homepage() {
 
                         <Dropdown.Menu className='ddButton'>
                             <OverlayTrigger placement="right" overlay={renderTooltip('Provides the instructions and processing power the computer needs to do its work. The more powerful and updated your processor, the faster your computer can complete its tasks.')}>
-                                <Dropdown.Item value='Gpu'>CPU</Dropdown.Item>
+                                <Dropdown.Item value='Cpu'>CPU</Dropdown.Item>
                             </OverlayTrigger>
                             <OverlayTrigger placement="right" overlay={renderTooltip('Helps handle graphics-related work like graphics, effects, and videos')}>
-                                <Dropdown.Item value='Cpu'>GPU</Dropdown.Item>
+                                <Dropdown.Item value='Gpu'>GPU</Dropdown.Item>
                             </OverlayTrigger>
                             <OverlayTrigger placement="right" overlay={renderTooltip('The circuit board that connects all of your hardware to your processor, distributes electricity from your power supply, and defines the types of storage devices, memory modules, and graphics cards (among other expansion cards) that can connect to your PC.')}>
                                 <Dropdown.Item value='Motherboard'>Motherboard</Dropdown.Item>
