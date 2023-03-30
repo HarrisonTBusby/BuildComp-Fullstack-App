@@ -1,4 +1,5 @@
-import BestBuilds from './Components/BestBuildsPage/BestBuilds.js';
+import React from 'react';
+import BestBuilds from './Components/BestBuildsPage/BestBuilds';
 import Homepage from './Components/HomePage/Homepage';
 import Login from './Components/LoginPage/Login';
 import PreviousSelections from './Components/PreviousSelectionsPage/PreviousSelections';
@@ -12,16 +13,15 @@ import './Components/LoginPage/Login.css'
 function App() {
   return (
     <BrowserRouter>
-    <Routes>
-      <Route path='/' element={<Homepage/>}/>
-      <Route path='/Login' element={<Login/>}/>
-      <Route path='/SignUp' element={<SignUp/>}/>
-      <Route path='/BestBuilds' element={<BestBuilds/>}/>
-      <Route path='/PreviousSelections' element={<PreviousSelections/>}/>
-      <Route path='/Wishlist' element={<Wishlist/>}/>
-  </Routes>
+      <Routes>
+        <Route path='/' element={<Homepage/>}/>
+        <Route path='/Login' element={<Login/>}/>
+        <Route path='/SignUp' element={<SignUp/>}/>
+        <Route path='/BestBuilds' element={<BestBuilds/>}/>
+        <Route path='/PreviousSelections' element={<PreviousSelections/>}/>
+        <Route path='/Wishlist' element={<Wishlist/>}/>
+      </Routes>
     </BrowserRouter>
-
   );
 }
 

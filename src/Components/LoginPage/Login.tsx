@@ -1,4 +1,5 @@
-import BuildCompLogo from '../../Assets/Logo.png'
+import React from 'react';
+// import Logo from '../../Assets/Images/Logo.png'
 import './Login.css';
 import { Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -11,7 +12,7 @@ const Login = () => {
                 <Container className="left-login">
                     <Row className='left-login-top mt-4'>
                         <Col className='d-flex justify-content-center align-items-center'>
-                            <img className="login-logo" src={BuildCompLogo} alt='BuildComp logo'></img>
+                            <img className="login-logo" alt='BuildComp logo'></img>
                             <h1>BuildComp</h1>
                         </Col>
                     </Row>

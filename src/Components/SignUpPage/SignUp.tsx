@@ -1,7 +1,7 @@
 import React from 'react'
 import './SignUp.css';
 import { Link } from 'react-router-dom';
-import BuildCompLogo from '../../Assets/Logo.png'
+//import BuildCompLogo from '../../Assets/Logo.png'
 
 export default function SignUp() {
   return (
@@ -9,7 +9,7 @@ export default function SignUp() {
             <div className="signup-container">
                 <div className="left-signup">
                     <div className='left-signup-top'>
-                        <img className="logo" src={BuildCompLogo}></img>
+                        <img className="logo" /*src={BuildCompLogo}*/></img>
                         <h1>BuildComp</h1>
                     </div>
                 </div>

@@ -1,13 +1,13 @@
 import React from 'react'
 import './BestBuilds.css'
-import NavbarComponent from '../Navbar/Navbar.js';
+import NavbarComponent from '../Navbar/Navbar';
 import { Container, Row, Col, Dropdown, Form, InputGroup, OverlayTrigger, Tooltip } from 'react-bootstrap';
-import Footer from '../Footer/Footer.js';
+import Footer from '../Footer/Footer';
 import { Link } from 'react-router-dom';
 
 export default function BestBuilds() {
 
-    const renderTooltip = (text) => (
+    const renderTooltip = (text: string) => (
         <Tooltip id={`tooltip-${text}`}>
             {text}
         </Tooltip>

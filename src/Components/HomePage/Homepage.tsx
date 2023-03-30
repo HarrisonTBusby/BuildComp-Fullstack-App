@@ -1,14 +1,14 @@
 import React from 'react';
 import { Container, Row, Col, Dropdown, Button, OverlayTrigger, Tooltip } from 'react-bootstrap';
-import NavbarComponent from '../Navbar/Navbar.js';
-import Footer from '../Footer/Footer.js';
-import Banner from '../../Assets/GamingImage.jpg';
+import NavbarComponent from '../Navbar/Navbar';
+import Footer from '../Footer/Footer';
+// import Banner from '../../Assets/GamingImage.jpg';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Homepage.css';
 import { Link } from 'react-router-dom';
 
 export default function Homepage() {
-    const renderTooltip = (text) => (
+    const renderTooltip = (text: string) => (
         <Tooltip id={`tooltip-${text}`}>
             {text}
         </Tooltip>
