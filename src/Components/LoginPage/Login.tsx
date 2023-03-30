@@ -1,5 +1,4 @@
 import React from 'react';
-// import Logo from '../../Assets/Images/Logo.png'
 import './Login.css';
 import { Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
