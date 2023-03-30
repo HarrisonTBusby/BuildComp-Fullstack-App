@@ -1,15 +1,17 @@
-import React from 'react'
+import React, { FC } from 'react'
 import './SignUp.css';
 import { Link } from 'react-router-dom';
-import BuildCompLogo from '../../Assets/Logo.png'
 
-export default function SignUp() {
+interface Props {}
+
+
+export const SignUp: FC<Props> = () => {
   return (
     <div className='signup-wrapper'>
             <div className="signup-container">
                 <div className="left-signup">
                     <div className='left-signup-top'>
-                        <img className="logo" src={BuildCompLogo}></img>
+                        <img className="logo" src='../../Assets/Logo.png'></img>
                         <h1>BuildComp</h1>
                     </div>
                 </div>

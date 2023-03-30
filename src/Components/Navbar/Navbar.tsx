@@ -1,10 +1,12 @@
-import React from 'react'
+import React, { FC } from 'react'
 import './Navbar.css';
 import {Container, Navbar, Nav} from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Link} from 'react-router-dom';
-import Logo from '../../Assets/BGLogoRB.png';
-export default function NavbarComponent() {
+
+interface Props {}
+
+export const NavbarComponent: FC<Props> = () => {
   return (
     <Navbar expand="lg" className='NavBackground'>
     <Container>
@@ -17,7 +19,7 @@ export default function NavbarComponent() {
                 <Nav.Link as={Link} to='/PreviousSelections' className='fontColor mx-5'>Previous Selections</Nav.Link>
             </Nav>
         </Navbar.Collapse>
-        <Navbar.Brand as={Link} to='/' className='fontColor'><img className='logoSize' src={Logo}/>BuildComp</Navbar.Brand>
+        <Navbar.Brand as={Link} to='/' className='fontColor'><img className='logoSize' src='../../Assets/BGLogoRB.png'/>BuildComp</Navbar.Brand>
         <Nav.Link as={Link} to='/Login' className='fontColor mx-3'>Login</Nav.Link>
     </Container>
 </Navbar>

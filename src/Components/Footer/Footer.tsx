@@ -1,9 +1,11 @@
-import React from 'react'
+import React, {FC} from 'react'
 import './Footer.css';
 import { Row, Col, Nav } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
-export default function Footer() {
+interface Props {}
+
+export const Footer: FC<Props> = () => {
     return (
         <footer>
             <Row>

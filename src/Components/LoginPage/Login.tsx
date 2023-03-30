@@ -1,18 +1,19 @@
-import React from 'react';
-import BuildCompLogo from '../../Assets/Logo.png'
+import React, {FC} from 'react';
 import './Login.css';
 import { Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Container, Row, Col } from 'react-bootstrap';
 
-const Login = () => {
+interface Props {}
+
+export const Login: FC<Props> = () => {
     return (
         <Container className='login-wrapper d-flex justify-content-center align-items-center'>
             <Container className="login-container position-relative">
                 <Container className="left-login">
                     <Row className='left-login-top mt-4'>
                         <Col className='d-flex justify-content-center align-items-center'>
-                            <img className="login-logo" src={BuildCompLogo} alt='BuildComp logo'></img>
+                            <img className="login-logo" src='../../Assets/Logo.png' alt='BuildComp logo'></img>
                             <h1>BuildComp</h1>
                         </Col>
                     </Row>

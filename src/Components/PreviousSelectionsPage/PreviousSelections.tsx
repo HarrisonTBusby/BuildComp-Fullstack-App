@@ -1,12 +1,16 @@
-import React from 'react'
+import React, { FC } from 'react'
 import './PreviousSelections.css';
-import NavbarComponent from '../Navbar/Navbar.js';
+import {NavbarComponent} from '../Navbar/Navbar';
 
 import { Link } from 'react-router-dom';
 import {Container, Row, Col,} from 'react-bootstrap'
 import SelectionsRow from './previousRows'
-import Footer from '../Footer/Footer.js'
-export default function PreviousSelections() {
+import {Footer} from '../Footer/Footer'
+
+interface Props {}
+
+
+export const PreviousSelections : FC<Props> = () => {
   return (
 
 
