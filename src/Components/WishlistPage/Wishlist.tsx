@@ -10,7 +10,7 @@ export default function Wishlist() {
     <div> 
       <NavbarComponent/>
 
-<wishlistRow/>
+
 
 
 
