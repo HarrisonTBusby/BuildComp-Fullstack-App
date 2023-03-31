@@ -2,10 +2,11 @@
     box-sizing: border-box;
 }
 
-body{
+body {
     background-image: url('../../Assets/Images/backgroundFulllstack.png'); 
     background-repeat: no-repeat;
     background-size: cover;
+    font-family: 'Poppins', sans-serif;
 }
 
 .login-wrapper {
@@ -36,6 +37,11 @@ body{
     color: white;
 }
 
+.left-login-top img{
+    height: 80px;
+    width: auto;
+}
+
 .right-login {
     position: absolute;
     right: 0;
@@ -47,11 +53,11 @@ body{
     padding: 6rem;
 }
 
-input {
+.right-login input {
     appearance: none;
-    border: 1.5px solid #a3a3a3;
+    border: 1.5px solid rgba(199, 199, 199, 0.5);
+    border-radius: 8px;
     outline: none;
-    border-radius: 5px;
     padding: .5rem;
     width: 100%;
     margin-top: .5rem;
@@ -80,23 +86,30 @@ input {
     background: white;
     left: 50%;
     top: 50%;
-    transform: translate(-50%, -55%);
+    transform: translate(-50%, -70%);
     margin: 0;
     padding: 1rem;
 }
 
 .create-account {
     text-align: center;
+    font-size: 12px;
+    text-decoration: none;
 }
 
-.create-account span{
-    color: #4463D5;
-    cursor: pointer;
+a {
+    text-decoration: none;
 }
 
 .create-account span:hover{
     text-decoration: underline;
 }
+
+.right-login p {
+    color: #a7a7a7;
+    margin-top: .75rem;
+}
+
 
 
 
