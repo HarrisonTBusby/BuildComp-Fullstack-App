@@ -1,7 +1,7 @@
 import React from 'react'
 import './SignUp.css';
 import { Link } from 'react-router-dom';
-//import BuildCompLogo from '../../Assets/Logo.png'
+const logo = require('../../Assets/Images/BlackLogo.png');
 
 export default function SignUp() {
   return (
@@ -9,20 +9,20 @@ export default function SignUp() {
             <div className="signup-container">
                 <div className="left-signup">
                     <div className='left-signup-top'>
-                        <img className="logo" /*src={BuildCompLogo}*/></img>
+                        <img className="logo" src={logo}></img>
                         <h1>BuildComp</h1>
                     </div>
                 </div>
                 <div className="right-signup">
                     <h2>Create an account</h2>
                     <p>Please enter your details to get started.</p>
-                    <label style={{display: 'block'}}>
+                    <label className='w-100 mb-4'>
                         Username
                         <div>
                             <input type="text" name="username"></input>
                         </div>
                     </label>
-                    <label style={{display: 'block'}}>
+                    <label className='w-100'>
                         Password
                         <div>
                             <input type="password" name="password"></input>
