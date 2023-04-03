@@ -48,17 +48,21 @@ body{
     height: 80%;
     background: #ffffff;
     border-radius: 15px;
-    padding: 6rem;
+    padding: 6rem 4rem;
 }
 
-input {
+.right-signup input {
     appearance: none;
-    border: 1.5px solid #a3a3a3;
+    border: 1.5px solid #c7c7c780;
+    border-radius: 8px;
     outline: none;
-    border-radius: 5px;
     padding: .5rem;
     width: 100%;
     margin-top: .5rem;
+}
+
+.right-signup p {
+    color: #949494;
 }
 
 .signup-btn {

@@ -1,11 +1,13 @@
 import React from 'react';
 import './Login.css';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Container, Row, Col } from 'react-bootstrap';
 const logo = require('../../Assets/Images/BlackLogo.png');
 
 const Login = () => {
+    const navigate = useNavigate();
+
     return (
         <Container className='login-wrapper d-flex justify-content-center align-items-center'>
             <Container className="login-container position-relative">
@@ -48,8 +50,8 @@ const Login = () => {
                                 <hr ></hr>
                                 <p className='or'>or</p>
                             </div>
-                            <Link to='/'><button className='login-btn'>Continue as guest</button></Link>
-                            <p className='create-account'>Don't have an account <Link to='/SignUp'><span>Sign up</span></Link></p>
+                            <button className='login-btn' onClick={() => navigate('/')}>Continue as guest</button>
+                            <p className='create-account'>Don't have an account? <span onClick={() => navigate('/SignUp')}>Sign up</span></p>
                         </Col>
                     </Row>
                 </Container>

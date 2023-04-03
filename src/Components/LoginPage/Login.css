@@ -101,6 +101,11 @@ a {
     text-decoration: none;
 }
 
+.create-account span {
+    color: #4463D5;
+    cursor: pointer;
+}
+
 .create-account span:hover{
     text-decoration: underline;
 }

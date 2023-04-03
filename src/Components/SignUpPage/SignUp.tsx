@@ -16,13 +16,13 @@ export default function SignUp() {
                 <div className="right-signup">
                     <h2>Create an account</h2>
                     <p>Please enter your details to get started.</p>
-                    <label style={{display: 'block'}}>
+                    <label className='w-100 mb-4'>
                         Username
                         <div>
                             <input type="text" name="username"></input>
                         </div>
                     </label>
-                    <label style={{display: 'block'}}>
+                    <label className='w-100'>
                         Password
                         <div>
                             <input type="password" name="password"></input>
