@@ -75,3 +75,8 @@ body{
     border-radius: 8px;
     margin-top: 1rem;
 }
+
+.active {
+    /* background-color: #596FBE; */
+    border: 2px solid white;
+}
