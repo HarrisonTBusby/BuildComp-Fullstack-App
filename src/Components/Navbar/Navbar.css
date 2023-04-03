@@ -16,3 +16,8 @@
     width: auto;
     height: 50px;
 }
+
+.active{
+    background-color: #596fbe;
+    box-shadow: 2px 2px 2px grey;
+}

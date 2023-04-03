@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, MouseEvent} from 'react';
 import { Container, Row, Col, Dropdown, Button, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import NavbarComponent from '../Navbar/Navbar';
 import Footer from '../Footer/Footer';
@@ -12,6 +12,11 @@ export default function Homepage() {
             {text}
         </Tooltip>
     );
+
+    const [cpuValue, setCpuValue] = useState<string>('');
+
+    // const handleCpu = (e: MouseEvent<HTMLLIElement>) => setCpuValue(e.currentTarget.value);
+
 
     return (
         <>
@@ -44,7 +49,7 @@ export default function Homepage() {
 
                         <Dropdown.Menu className='ddButton'>
                             <OverlayTrigger placement="right" overlay={renderTooltip('Provides the instructions and processing power the computer needs to do its work. The more powerful and updated your processor, the faster your computer can complete its tasks.')}>
-                                <Dropdown.Item value='Cpu'>CPU</Dropdown.Item>
+                                <Dropdown.Item value='Cpu' defaultValue={cpuValue}>CPU</Dropdown.Item>
                             </OverlayTrigger>
                             <OverlayTrigger placement="right" overlay={renderTooltip('Helps handle graphics-related work like graphics, effects, and videos')}>
                                 <Dropdown.Item value='Gpu'>GPU</Dropdown.Item>
