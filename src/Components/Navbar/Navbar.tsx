@@ -3,7 +3,7 @@ import './Navbar.css';
 import { Container, Navbar, Nav } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Link } from 'react-router-dom';
-const logo = require('../../Assets/Images/Logo.png');
+const logo = require('../../Assets/Images/BlackLogo.png');
 
 export default function NavbarComponent() {
   return (

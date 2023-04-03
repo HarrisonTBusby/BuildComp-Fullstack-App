@@ -3,7 +3,7 @@ import './Login.css';
 import { Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Container, Row, Col } from 'react-bootstrap';
-const logo = require('../../Assets/Images/Logo.png');
+const logo = require('../../Assets/Images/BlackLogo.png');
 
 const Login = () => {
     return (
