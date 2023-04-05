@@ -1,9 +1,8 @@
-import React, {useState, ChangeEvent, KeyboardEvent} from 'react'
-import './BestBuilds.css'
+import React, {useState} from 'react';
+import './BestBuilds.css';
 import NavbarComponent from '../Navbar/Navbar';
-import { Container, Row, Col, Dropdown, Form, InputGroup, OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { Container, Row, Col, Dropdown, InputGroup, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import Footer from '../Footer/Footer';
-import { Link } from 'react-router-dom';
 
 export default function BestBuilds() {
 
@@ -27,7 +26,7 @@ export default function BestBuilds() {
 
 
 
-    
+
     // For Budget values
     const handleMinBudget = (event: React.KeyboardEvent<HTMLInputElement>) => {
         if(event.key == 'Enter'){
@@ -75,7 +74,7 @@ export default function BestBuilds() {
                         <p>Budget</p>
                         <input type='number' placeholder='Min' value={minBudget} onKeyDown={handleMinBudget} onChange={(event) => setMinBudget(event.currentTarget.value)}></input>
                         <input type='number' placeholder='Max' value={maxBudget} onKeyDown={handleMaxBudget} onChange={(event) => setMaxBudget(event.currentTarget.value)}></input>
-                        {/* Components */}
+                        {/* PC Components */}
                         {/* ====================================================================== */}
                         <p className='mt-5'>Components</p>
                         <Dropdown>
