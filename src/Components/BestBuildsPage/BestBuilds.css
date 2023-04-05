@@ -46,3 +46,7 @@ body{
     background-color: aliceblue;
     box-shadow: 2px 2px 2px grey;
 }
+
+.bb-dropdown button{
+    width: 100%;
+}

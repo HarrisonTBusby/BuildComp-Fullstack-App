@@ -16,20 +16,27 @@ footer {
     font-size: 1.5rem;
 }
 
-.head-one {
+/* .head-one {
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
-}
+} */
 
-@media screen and (max-width: 900px){
+@media screen and (max-width: 991px){
     .footer-content {
         flex-direction: column;
     }
 
     footer {
         padding: 2rem;
+    }
+
+    .head-one {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
     }
 }
 

@@ -1,27 +1,27 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import './BestBuilds.css';
 import NavbarComponent from '../Navbar/Navbar';
-import { Container, Row, Col, Dropdown, InputGroup, OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { Container, Row, Col, Dropdown, InputGroup, OverlayTrigger, Tooltip, Card, Button } from 'react-bootstrap';
 import Footer from '../Footer/Footer';
 
 export default function BestBuilds() {
 
     type Component = 'Cpu' | 'Gpu' | 'Motherboard' | 'Case' | 'Fan' | 'RAM' | 'Power Supply' | 'Heat Sink' | 'Hard Drives';
-      const [selectedComponent, setSelectedComponent] = useState<Component>('Cpu');
-      const [minBudget, setMinBudget] = useState<string>('');
-      const [maxBudget, setMaxBudget] = useState<string>('');
+    const [selectedComponent, setSelectedComponent] = useState<Component>('Cpu');
+    const [minBudget, setMinBudget] = useState<string>('');
+    const [maxBudget, setMaxBudget] = useState<string>('');
 
 
 
     // For Dropdown values
-      const handleComponentSelection = (component: Component) => {
+    const handleComponentSelection = (component: Component) => {
         setSelectedComponent(component);
         console.log(selectedComponent);
-      };
+    };
 
     // For ToolTip on Dropdown
     const renderTooltip = (content: string) => {
-      return <Tooltip id='button-tooltip'>{content}</Tooltip>;
+        return <Tooltip id='button-tooltip'>{content}</Tooltip>;
     };
 
 
@@ -29,14 +29,14 @@ export default function BestBuilds() {
 
     // For Budget values
     const handleMinBudget = (event: React.KeyboardEvent<HTMLInputElement>) => {
-        if(event.key == 'Enter'){
-        setMinBudget(event.currentTarget.value);
-        console.log(minBudget)
+        if (event.key == 'Enter') {
+            setMinBudget(event.currentTarget.value);
+            console.log(minBudget)
         }
     }
 
     const handleMaxBudget = (event: React.KeyboardEvent<HTMLInputElement>) => {
-        if(event.key == 'Enter') {
+        if (event.key == 'Enter') {
 
             setMaxBudget(event.currentTarget.value);
             console.log(maxBudget)
@@ -52,19 +52,19 @@ export default function BestBuilds() {
 
 
 
-   
-
-    
 
 
 
+
+
+    const items: number = 12;
 
     return (
         <body>
             <NavbarComponent />
 
             <Row>
-                <Col className='filterBackground mt-5'>
+                <Col className='filterBackground mt-5' md={5}>
                     <div className='marginLeft2 filterBoxColor'>
                         <p className='mt-4'>Filter</p>
                         <button className='clearFiltersBtn'>Clear Filters</button>
@@ -72,12 +72,12 @@ export default function BestBuilds() {
                         {/* Budget */}
                         {/* ====================================================================== */}
                         <p>Budget</p>
-                        <input type='number' placeholder='Min' value={minBudget} onKeyDown={handleMinBudget} onChange={(event) => setMinBudget(event.currentTarget.value)}></input>
-                        <input type='number' placeholder='Max' value={maxBudget} onKeyDown={handleMaxBudget} onChange={(event) => setMaxBudget(event.currentTarget.value)}></input>
+                        <input className='w-100' type='number' placeholder='Min' value={minBudget} onKeyDown={handleMinBudget} onChange={(event) => setMinBudget(event.currentTarget.value)}></input>
+                        <input className='w-100' type='number' placeholder='Max' value={maxBudget} onKeyDown={handleMaxBudget} onChange={(event) => setMaxBudget(event.currentTarget.value)}></input>
                         {/* PC Components */}
                         {/* ====================================================================== */}
                         <p className='mt-5'>Components</p>
-                        <Dropdown>
+                        <Dropdown className='bb-dropdown'>
                             <Dropdown.Toggle className='dropdownSize'>
                                 PC Components
                             </Dropdown.Toggle>
@@ -118,26 +118,117 @@ export default function BestBuilds() {
                         <p className='mt-5'>Better Price or Better Performance</p>
                         <InputGroup className="mb-3">
                             <InputGroup.Checkbox />Better price
-                            </InputGroup>
-                            <InputGroup className="mb-3">
+                        </InputGroup>
+                        <InputGroup className="mb-3">
                             <InputGroup.Checkbox />Better performance
-                            </InputGroup>
+                        </InputGroup>
                         {/*Rgb or No Rgb  */}
                         {/* ========================================================== */}
                         <p className='mt-5'>RGB</p>
                         <InputGroup className="mb-3">
                             <InputGroup.Checkbox />RGB
-                            </InputGroup>
-                            <InputGroup className="mb-3">
+                        </InputGroup>
+                        <InputGroup className="mb-3">
                             <InputGroup.Checkbox />No RGB
-                            </InputGroup>
+                        </InputGroup>
                     </div>
+                </Col>
+                <Col md={7} className='p-5'>
+                    <Row className='gap-3'>
+                    <Card style={{ width: '18rem' }}>
+                        <Card.Img variant="top" src="https://m.media-amazon.com/images/W/IMAGERENDERING_521856-T2/images/I/51c1zFDNVmL._AC_SX679_.jpg" />
+                        <Card.Body>
+                            <Card.Title>Card Title</Card.Title>
+                            <Card.Text>
+                                Some quick example text to build on the card title and make up the
+                                bulk of the card's content.
+                            </Card.Text>
+                            <Button variant="primary">Go somewhere</Button>
+                        </Card.Body>
+                    </Card>
+                    <Card style={{ width: '18rem' }}>
+                        <Card.Img variant="top" src="https://m.media-amazon.com/images/W/IMAGERENDERING_521856-T2/images/I/51c1zFDNVmL._AC_SX679_.jpg" />
+                        <Card.Body>
+                            <Card.Title>Card Title</Card.Title>
+                            <Card.Text>
+                                Some quick example text to build on the card title and make up the
+                                bulk of the card's content.
+                            </Card.Text>
+                            <Button variant="primary">Go somewhere</Button>
+                        </Card.Body>
+                    </Card>
+                    <Card style={{ width: '18rem' }}>
+                        <Card.Img variant="top" src="https://m.media-amazon.com/images/W/IMAGERENDERING_521856-T2/images/I/51c1zFDNVmL._AC_SX679_.jpg" />
+                        <Card.Body>
+                            <Card.Title>Card Title</Card.Title>
+                            <Card.Text>
+                                Some quick example text to build on the card title and make up the
+                                bulk of the card's content.
+                            </Card.Text>
+                            <Button variant="primary">Go somewhere</Button>
+                        </Card.Body>
+                    </Card>
+                    <Card style={{ width: '18rem' }}>
+                        <Card.Img variant="top" src="https://m.media-amazon.com/images/W/IMAGERENDERING_521856-T2/images/I/51c1zFDNVmL._AC_SX679_.jpg" />
+                        <Card.Body>
+                            <Card.Title>Card Title</Card.Title>
+                            <Card.Text>
+                                Some quick example text to build on the card title and make up the
+                                bulk of the card's content.
+                            </Card.Text>
+                            <Button variant="primary">Go somewhere</Button>
+                        </Card.Body>
+                    </Card>
+                    <Card style={{ width: '18rem' }}>
+                        <Card.Img variant="top" src="https://m.media-amazon.com/images/W/IMAGERENDERING_521856-T2/images/I/51c1zFDNVmL._AC_SX679_.jpg" />
+                        <Card.Body>
+                            <Card.Title>Card Title</Card.Title>
+                            <Card.Text>
+                                Some quick example text to build on the card title and make up the
+                                bulk of the card's content.
+                            </Card.Text>
+                            <Button variant="primary">Go somewhere</Button>
+                        </Card.Body>
+                    </Card>
+                    <Card style={{ width: '18rem' }}>
+                        <Card.Img variant="top" src="https://m.media-amazon.com/images/W/IMAGERENDERING_521856-T2/images/I/51c1zFDNVmL._AC_SX679_.jpg" />
+                        <Card.Body>
+                            <Card.Title>Card Title</Card.Title>
+                            <Card.Text>
+                                Some quick example text to build on the card title and make up the
+                                bulk of the card's content.
+                            </Card.Text>
+                            <Button variant="primary">Go somewhere</Button>
+                        </Card.Body>
+                    </Card>
+                    <Card style={{ width: '18rem' }}>
+                        <Card.Img variant="top" src="https://m.media-amazon.com/images/W/IMAGERENDERING_521856-T2/images/I/51c1zFDNVmL._AC_SX679_.jpg" />
+                        <Card.Body>
+                            <Card.Title>Card Title</Card.Title>
+                            <Card.Text>
+                                Some quick example text to build on the card title and make up the
+                                bulk of the card's content.
+                            </Card.Text>
+                            <Button variant="primary">Go somewhere</Button>
+                        </Card.Body>
+                    </Card>
+                    <Card style={{ width: '18rem' }}>
+                        <Card.Img variant="top" src="https://m.media-amazon.com/images/W/IMAGERENDERING_521856-T2/images/I/51c1zFDNVmL._AC_SX679_.jpg" />
+                        <Card.Body>
+                            <Card.Title>Card Title</Card.Title>
+                            <Card.Text>
+                                Some quick example text to build on the card title and make up the
+                                bulk of the card's content.
+                            </Card.Text>
+                            <Button variant="primary">Go somewhere</Button>
+                        </Card.Body>
+                    </Card>
+                    </Row>
                 </Col>
                 <Col className='marginLeft mt-5 mb-5'>
                     <input type={'search'} placeholder='Search' className='searchWidth'></input>
                 </Col>
             </Row>
-
 
             <Footer />
         </body>
