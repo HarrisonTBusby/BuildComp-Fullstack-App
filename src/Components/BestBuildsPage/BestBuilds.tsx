@@ -1,17 +1,64 @@
-import React from 'react'
-import './BestBuilds.css'
+import React, {useState} from 'react';
+import './BestBuilds.css';
 import NavbarComponent from '../Navbar/Navbar';
-import { Container, Row, Col, Dropdown, Form, InputGroup, OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { Container, Row, Col, Dropdown, InputGroup, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import Footer from '../Footer/Footer';
-import { Link } from 'react-router-dom';
 
 export default function BestBuilds() {
 
-    const renderTooltip = (text: string) => (
-        <Tooltip id={`tooltip-${text}`}>
-            {text}
-        </Tooltip>
-    );
+    type Component = 'Cpu' | 'Gpu' | 'Motherboard' | 'Case' | 'Fan' | 'RAM' | 'Power Supply' | 'Heat Sink' | 'Hard Drives';
+      const [selectedComponent, setSelectedComponent] = useState<Component>('Cpu');
+      const [minBudget, setMinBudget] = useState<string>('');
+      const [maxBudget, setMaxBudget] = useState<string>('');
+
+
+
+    // For Dropdown values
+      const handleComponentSelection = (component: Component) => {
+        setSelectedComponent(component);
+        console.log(selectedComponent);
+      };
+
+    // For ToolTip on Dropdown
+    const renderTooltip = (content: string) => {
+      return <Tooltip id='button-tooltip'>{content}</Tooltip>;
+    };
+
+
+
+
+    // For Budget values
+    const handleMinBudget = (event: React.KeyboardEvent<HTMLInputElement>) => {
+        if(event.key == 'Enter'){
+        setMinBudget(event.currentTarget.value);
+        console.log(minBudget)
+        }
+    }
+
+    const handleMaxBudget = (event: React.KeyboardEvent<HTMLInputElement>) => {
+        if(event.key == 'Enter') {
+
+            setMaxBudget(event.currentTarget.value);
+            console.log(maxBudget)
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+   
+
+    
+
+
+
+
     return (
         <body>
             <NavbarComponent />
@@ -25,9 +72,9 @@ export default function BestBuilds() {
                         {/* Budget */}
                         {/* ====================================================================== */}
                         <p>Budget</p>
-                        <input type='number' placeholder='Min'></input>
-                        <input type='number' placeholder='Max'></input>
-                        {/* Components */}
+                        <input type='number' placeholder='Min' value={minBudget} onKeyDown={handleMinBudget} onChange={(event) => setMinBudget(event.currentTarget.value)}></input>
+                        <input type='number' placeholder='Max' value={maxBudget} onKeyDown={handleMaxBudget} onChange={(event) => setMaxBudget(event.currentTarget.value)}></input>
+                        {/* PC Components */}
                         {/* ====================================================================== */}
                         <p className='mt-5'>Components</p>
                         <Dropdown>
@@ -37,31 +84,31 @@ export default function BestBuilds() {
 
                             <Dropdown.Menu className='ddButton'>
                                 <OverlayTrigger placement="right" overlay={renderTooltip('Provides the instructions and processing power the computer needs to do its work. The more powerful and updated your processor, the faster your computer can complete its tasks.')}>
-                                    <Dropdown.Item value='Cpu'>CPU</Dropdown.Item>
+                                    <Dropdown.Item onClick={() => handleComponentSelection('Cpu')}>CPU</Dropdown.Item>
                                 </OverlayTrigger>
                                 <OverlayTrigger placement="right" overlay={renderTooltip('Helps handle graphics-related work like graphics, effects, and videos')}>
-                                    <Dropdown.Item value='Gpu'>GPU</Dropdown.Item>
+                                    <Dropdown.Item onClick={() => handleComponentSelection('Gpu')}>GPU</Dropdown.Item>
                                 </OverlayTrigger>
                                 <OverlayTrigger placement="right" overlay={renderTooltip('The circuit board that connects all of your hardware to your processor, distributes electricity from your power supply, and defines the types of storage devices, memory modules, and graphics cards (among other expansion cards) that can connect to your PC.')}>
-                                    <Dropdown.Item value='Motherboard'>Motherboard</Dropdown.Item>
+                                    <Dropdown.Item onClick={() => handleComponentSelection('Motherboard')}>Motherboard</Dropdown.Item>
                                 </OverlayTrigger>
                                 <OverlayTrigger placement="right" overlay={renderTooltip('Container for all PC Components')}>
-                                    <Dropdown.Item value='Case'>Case</Dropdown.Item>
+                                    <Dropdown.Item onClick={() => handleComponentSelection('Case')}>Case</Dropdown.Item>
                                 </OverlayTrigger>
                                 <OverlayTrigger placement="right" overlay={renderTooltip('Used to draw cooler air into the case from the outside, expel warm air from inside and move air across a heat sink to cool a particular component.')}>
-                                    <Dropdown.Item value='Fan'>Fans</Dropdown.Item>
+                                    <Dropdown.Item onClick={() => handleComponentSelection('Fan')}>Fans</Dropdown.Item>
                                 </OverlayTrigger>
                                 <OverlayTrigger placement="right" overlay={renderTooltip('RAMs purpose is to store the short term data that a PC requires to properly operate.')}>
-                                    <Dropdown.Item value='Ram'>RAM</Dropdown.Item>
+                                    <Dropdown.Item onClick={() => handleComponentSelection('RAM')}>RAM</Dropdown.Item>
                                 </OverlayTrigger>
                                 <OverlayTrigger placement="right" overlay={renderTooltip('Pulls power from your wall outlet and distribute it throughout your PC.')}>
-                                    <Dropdown.Item value='Power Supply'>Power Supply</Dropdown.Item>
+                                    <Dropdown.Item onClick={() => handleComponentSelection('Power Supply')}>Power Supply</Dropdown.Item>
                                 </OverlayTrigger>
                                 <OverlayTrigger placement="right" overlay={renderTooltip('Properly removes heat from device components to improve device performance and extend its life. And usually, a heat sink incorporates a fan or other mechanism to reduce the temperature of a hardware component, such as a processor.')}>
-                                    <Dropdown.Item value='Heat Sink'>Heat Sink</Dropdown.Item>
+                                    <Dropdown.Item onClick={() => handleComponentSelection('Heat Sink')}>Heat Sink</Dropdown.Item>
                                 </OverlayTrigger>
                                 <OverlayTrigger placement="right" overlay={renderTooltip('A hard drive is the hardware component that stores all of your digital content. Your documents, pictures, music, videos, programs, application preferences, and operating system represent digital content stored on a hard drive.')}>
-                                    <Dropdown.Item value='Hard Drives'>Hard Drives</Dropdown.Item>
+                                    <Dropdown.Item onClick={() => handleComponentSelection('Hard Drives')}>Hard Drives</Dropdown.Item>
                                 </OverlayTrigger>
                             </Dropdown.Menu>
                         </Dropdown>
