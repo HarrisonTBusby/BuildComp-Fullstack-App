@@ -14,7 +14,7 @@ export default function SignUp() {
                     </div>
                 </div>
                 <div className="right-signup">
-                    <h2>Create an account</h2>
+                    <h3>Create an account</h3>
                     <p>Please enter your details to get started.</p>
                     <label className='w-100 mb-4'>
                         Username

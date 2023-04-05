@@ -17,4 +17,21 @@
     height: 50px;
 }
 
+.nav-links {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+}
+
+@media screen and (max-width: 991px){
+    .nav-links {
+        margin-top: 1rem;
+    }
+
+    .nav-links a {
+        width: fit-content;
+        padding: .25rem 1rem;
+    }
+}
+
 

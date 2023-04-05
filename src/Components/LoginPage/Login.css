@@ -1,7 +1,4 @@
-*, ::before, ::after {
-    box-sizing: border-box;
-}
-
+ 
 body {
     background-image: url('../../Assets/Images/backgroundFulllstack.png'); 
     background-repeat: no-repeat;
@@ -20,7 +17,8 @@ body {
 }
 
 .login-container {
-    height: 800px;
+    height: 600px;
+    width: 600px;
 }   
 
 .left-login {
@@ -50,7 +48,7 @@ body {
     height: 80%;
     background: #ffffff;
     border-radius: 15px;
-    padding: 6rem;
+    padding: 2.5rem 4rem;
 }
 
 .right-login input {
@@ -75,7 +73,7 @@ body {
 }
 
 .divider {
-    margin: 2rem 0;
+    margin-top: 1.5rem;
     position: relative;
     width: 100%;
 }
@@ -86,15 +84,17 @@ body {
     background: white;
     left: 50%;
     top: 50%;
-    transform: translate(-50%, -70%);
+    transform: translate(-50%, -55%);
     margin: 0;
-    padding: 1rem;
+    padding: 0rem 1rem;
 }
 
 .create-account {
     text-align: center;
     font-size: 12px;
     text-decoration: none;
+    margin-bottom: 0;
+    margin-top: .5rem;
 }
 
 a {
@@ -112,7 +112,33 @@ a {
 
 .right-login p {
     color: #a7a7a7;
-    margin-top: .75rem;
+}
+
+@media screen and (max-width: 991px){
+
+    .login-container {
+        display: flex;
+        align-items: center;
+    }
+
+    .left-login {
+        display: none;
+    }
+
+    .right-login {
+        position: relative;
+        width: 80%;
+    }
+}
+
+@media screen and (max-width: 500px){
+    .right-login {
+        padding: 2.75rem 1.25rem;
+    }
+
+    .right-login {
+        width: 90%;
+    }
 }
 
 

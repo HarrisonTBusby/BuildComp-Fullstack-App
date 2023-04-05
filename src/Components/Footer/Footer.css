@@ -1,46 +1,35 @@
-@font-face {
-    font-family: PoppinsBold;
-    src: url('../../Assets/Fonts/Poppins-Bold.ttf');
+
+footer {
+    background: #fff;
+    /* height: 385px; */
+    margin-top: 4rem;
+    /* font-family: PoppinsBold; */
+    padding: 2rem 0rem 2rem 4rem;
+    border-radius: 0;
 }
 
-
-
-footer{
-    background-color: #E2E2E2;
-    height: 385px;
-    margin-top: 100px;
-    font-family: PoppinsBold;
+.gutterless {
+    --bs-gutter-x: 0;
 }
 
-.supportFont{
-    font-size: 24px;
-    text-align: left;
-    margin-left: 50px;
-    width: 500px;
+.footer-heading {
+    font-size: 1.5rem;
 }
 
-.questionFont{
-    font-size: 30px;
-    text-align: right;
-    margin-right: 50px;
-}
-
-.emailFont{
-    font-size: 20px;
-    text-align: right;
-    margin-right: 50px;
-}
-
-.font4{
-    font-size: 15px;
-    color: black !important;
-}
-
-.center{
+.head-one {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
 }
-.marginLeftFooter{
-    margin-left: 50px;
+
+@media screen and (max-width: 900px){
+    .footer-content {
+        flex-direction: column;
+    }
+
+    footer {
+        padding: 2rem;
+    }
 }
 

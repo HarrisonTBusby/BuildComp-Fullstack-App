@@ -1,8 +1,3 @@
-body{
-    /* background-image: url('../../Assets/backgroundFulllstack.png'); */
-    background-repeat: no-repeat;
-    background-size: cover;
-}
 
 .signup-wrapper {
     display: flex;
@@ -18,8 +13,8 @@ body{
 
 .signup-container {
     position: relative;
-    width: 675px;
-    height: 800px;
+    width: 600px;
+    height: 600px;
 }   
 
 .left-signup {
@@ -48,7 +43,7 @@ body{
     height: 80%;
     background: #ffffff;
     border-radius: 15px;
-    padding: 6rem 4rem;
+    padding: 4rem 4rem;
 }
 
 .right-signup input {
@@ -77,6 +72,29 @@ body{
 }
 
 .active {
-    /* background-color: #596FBE; */
     border: 2px solid white;
+}
+
+@media screen and (max-width: 991px){
+    .left-signup {
+        display: none
+    }
+
+    .signup-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .right-signup {
+        width: 80%;
+        position: relative;
+    }
+}
+
+@media screen and (max-width: 500px){
+    .right-signup {
+        width: 90%;
+        padding: 4rem 1.5rem;
+    }
 }

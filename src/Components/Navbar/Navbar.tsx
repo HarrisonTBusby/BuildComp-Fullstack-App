@@ -18,11 +18,11 @@ export default function NavbarComponent() {
       <Container>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="mr-5">
-            <Nav.Link as={Link} to='/' className={`fontColor mx-5 ${location.pathname === '/' ? 'active' : ''}`}>Home</Nav.Link>
-            <Nav.Link as={Link} to='/BestBuilds' className={`fontColor mx-5 ${location.pathname === '/BestBuilds' ? 'active' : ''}`}>Best Builds</Nav.Link>
-            <Nav.Link as={Link} to='/Wishlist' className={`fontColor mx-5 ${location.pathname === '/Wishlist' ? 'active' : ''}`}>Wishlist</Nav.Link>
-            <Nav.Link as={Link} to='/PreviousSelections' className={`fontColor mx-5 ${location.pathname === '/PreviousSelections' ? 'active' : ''}`}>Previous Selections</Nav.Link>
+          <Nav className="nav-links">
+            <Nav.Link as={Link} to='/' className={`fontColor  ${location.pathname === '/' ? 'active' : ''}`}>Home</Nav.Link>
+            <Nav.Link as={Link} to='/BestBuilds' className={`fontColor  ${location.pathname === '/BestBuilds' ? 'active' : ''}`}>Best Builds</Nav.Link>
+            <Nav.Link as={Link} to='/Wishlist' className={`fontColor  ${location.pathname === '/Wishlist' ? 'active' : ''}`}>Wishlist</Nav.Link>
+            <Nav.Link as={Link} to='/PreviousSelections' className={`fontColor  ${location.pathname === '/PreviousSelections' ? 'active' : ''}`}>Previous Selections</Nav.Link>
           </Nav>
         </Navbar.Collapse>
         <Navbar.Brand as={Link} to="/" className="fontColor">

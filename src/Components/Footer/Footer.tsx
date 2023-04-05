@@ -6,35 +6,25 @@ import { Link } from 'react-router-dom';
 export default function Footer() {
     return (
         <footer>
-            <Row>
-                <Col className='mt-3'>
-                    <p className='supportFont'>Finding better PC parts for you!</p>
+            <Row className='gutterless gap-5 footer-content'>
+                <Col className='head-one'>
+                    <p className='footer-heading'>Finding better PC parts for you!</p>
+                    <Nav>
+                        <Row>
+                            <Nav.Link as={Link} to='/Login'>Login</Nav.Link>
+                            <Nav.Link as={Link} to='/'>Home</Nav.Link>
+                            <Nav.Link as={Link} to='/BestBuilds'>Best Builds</Nav.Link>
+                            <Nav.Link as={Link} to='/Wishlist'>Wishlist</Nav.Link>
+                            <Nav.Link as={Link} to='/PreviousSelections'>Previous Selections</Nav.Link>
+                        </Row>
+                    </Nav>
                 </Col>
-                <Col className='mt-3'>
-                    <p className='questionFont'>Support or Questions</p>
-                    <p className='emailFont'>harrisontbusby@gmail.com</p>
+                <Col className='text-center'>
+                    <p className='footer-heading'>Support or Questions</p>
+                    <p>harrisontbusby@gmail.com</p>
                 </Col>
             </Row>
-            <Col>
-            <Nav className='marginLeftFooter font4'>
-                <Row>
-                <Nav.Link as={Link} to='/Login'>Login</Nav.Link>
-                <Nav.Link as={Link} to='/'>Home</Nav.Link>
-                <Nav.Link as={Link} to='/BestBuilds'>Best Builds</Nav.Link>
-                <Nav.Link as={Link} to='/Wishlist'>Wishlist</Nav.Link>
-                <Nav.Link as={Link} to='/PreviousSelections'>Previous Selections</Nav.Link>
-                </Row>
-            </Nav>
-            </Col>
-
-            <Col></Col>
-            <Row>
-
-            </Row>
-
-            <Row className='center'>
-                <p className='center mt-4 font4'>Created by Harrison Busby, Carlos Felipe, and Reed Goodwin</p>
-            </Row>
+            <p className='mt-4 text-center'>Created by Harrison Busby, Carlos Felipe, and Reed Goodwin</p>
         </footer>
     )
 }
