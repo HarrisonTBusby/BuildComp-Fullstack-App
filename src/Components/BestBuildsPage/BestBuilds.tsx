@@ -3,6 +3,7 @@ import './BestBuilds.css';
 import NavbarComponent from '../Navbar/Navbar';
 import { Container, Row, Col, Dropdown, InputGroup, OverlayTrigger, Tooltip, Card, Button } from 'react-bootstrap';
 import Footer from '../Footer/Footer';
+import {saveToLocalStorageByName} from '../../Services/LocalStorage';
 
 export default function BestBuilds() {
 
