@@ -1,8 +1,3 @@
-body{
-    /* background-image: url('../../Assets/backgroundFulllstack.png'); */
-    background-repeat: no-repeat;
-    background-size: cover;
-}
 
 .filterBackground{
     background-color: #E2E2E2;
@@ -10,31 +5,6 @@ body{
     padding: 1rem;
     border-radius: 5px;
 }
-/* 
-.marginLeft{
-    margin-left: 500px !important;
-}
-
-.marginLeft2{
-    margin-left: 20px;
-} */
-/* 
-.filterBoxColor{
-    font-family: PoppinsBold;
-    font-size: 30px;
-    color: rgb(0, 0, 0) !important;
-} */
-
-/* @font-face {
-    font-family: PoppinsBold;
-    src: url('../../Assets/Fonts/Poppins-Bold.ttf');
-} */
-
-/* .searchWidth{
-    width: 500px;
-    height: auto;
-    font-family: PoppinsBold;
-} */
 
 .clearFiltersBtn{
     margin: 0 auto;
@@ -50,12 +20,12 @@ body{
 }
 
 .bb-dropdown button{
-    width: 80%;
+    width: fit-content;
     padding: .5rem;
 }
 
 .cards {
-    padding: 0 2rem;
+    padding: 0rem;
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
@@ -64,10 +34,17 @@ body{
 
 .bb-content {
     padding-left: .5rem;
+    max-width: 1200px;
+    justify-content: center;
+    margin: 0 auto;
 }
 
 @media screen and (max-width: 767px){
     .large-filter {
         display: none;
+    }
+
+    .bb-content {
+        flex-direction: column;
     }
 }

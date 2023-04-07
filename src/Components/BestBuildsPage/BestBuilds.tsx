@@ -5,7 +5,7 @@ import { Container, Row, Col, Dropdown, InputGroup, OverlayTrigger, Tooltip, Car
 import Footer from '../Footer/Footer';
 import { PaginationExample } from '../Pagination';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {saveToLocalStorageByName} from '../../Services/LocalStorage';
+import { saveToLocalStorageByName } from '../../Services/LocalStorage';
 
 export default function BestBuilds() {
 
@@ -76,26 +76,10 @@ export default function BestBuilds() {
 
     const size = useWindowSize();
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     return (
         <body>
             <NavbarComponent />
-            <Row className='gutterless mt-5 bb-content'>
+            <div className='d-flex gutterless mt-5 bb-content'>
                 {size < 768 ? (
                     <Dropdown className='my-4 mx-5'>
                         <Dropdown.Toggle >
@@ -104,6 +88,9 @@ export default function BestBuilds() {
                         <Dropdown.Menu>
                             <Col className='filterBackground p-3' md={3}>
                                 <div className='marginLeft2 filterBoxColor'>
+                                <Col className='marginLeft mt-5 mb-5'>
+                            <input type={'search'} placeholder='Search' className='w-100 searchWidth'></input>
+                        </Col>
                                     <p className='mt-4'>Filter</p>
                                     <button className='clearFiltersBtn'>Clear Filters</button>
                                     <hr />
@@ -173,14 +160,17 @@ export default function BestBuilds() {
                             </Col>
                             <Button>Apply filters</Button>
                         </Dropdown.Menu>
-                        
+
                     </Dropdown>
-                    
+
                 ) : (
                     ''
                 )}
                 <Col className='filterBackground large-filter p-3' md={3}>
                     <div className='marginLeft2 filterBoxColor'>
+                        <Col className='marginLeft mt-5 mb-5'>
+                            <input type={'search'} placeholder='Search' className='w-100 searchWidth'></input>
+                        </Col>
                         <p className='mt-4'>Filter</p>
                         <button className='clearFiltersBtn'>Clear Filters</button>
                         <hr />
@@ -249,81 +239,10 @@ export default function BestBuilds() {
                     </div>
                 </Col>
                 <Col md={9} className='cards px-2'>
-
-                    <Card style={{ width: '16rem' }}>
-                        <Card.Img variant="top" src="https://m.media-amazon.com/images/W/IMAGERENDERING_521856-T2/images/I/51c1zFDNVmL._AC_SX679_.jpg" />
-                        <Card.Body>
-                            <Card.Title>Card Title</Card.Title>
-                            <Card.Text>
-                                Some quick example text to build on the card title and make up the
-                                bulk of the card's content.
-                            </Card.Text>
-                            <Button variant="primary">Go somewhere</Button>
-                        </Card.Body>
-                    </Card>
-                    <Card style={{ width: '16rem' }}>
-                        <Card.Img variant="top" src="https://m.media-amazon.com/images/W/IMAGERENDERING_521856-T2/images/I/51c1zFDNVmL._AC_SX679_.jpg" />
-                        <Card.Body>
-                            <Card.Title>Card Title</Card.Title>
-                            <Card.Text>
-                                Some quick example text to build on the card title and make up the
-                                bulk of the card's content.
-                            </Card.Text>
-                            <Button variant="primary">Go somewhere</Button>
-                        </Card.Body>
-                    </Card>
-                    <Card style={{ width: '16rem' }}>
-                        <Card.Img variant="top" src="https://m.media-amazon.com/images/W/IMAGERENDERING_521856-T2/images/I/51c1zFDNVmL._AC_SX679_.jpg" />
-                        <Card.Body>
-                            <Card.Title>Card Title</Card.Title>
-                            <Card.Text>
-                                Some quick example text to build on the card title and make up the
-                                bulk of the card's content.
-                            </Card.Text>
-                            <Button variant="primary">Go somewhere</Button>
-                        </Card.Body>
-                    </Card>
-                    <Card style={{ width: '16rem' }}>
-                        <Card.Img variant="top" src="https://m.media-amazon.com/images/W/IMAGERENDERING_521856-T2/images/I/51c1zFDNVmL._AC_SX679_.jpg" />
-                        <Card.Body>
-                            <Card.Title>Card Title</Card.Title>
-                            <Card.Text>
-                                Some quick example text to build on the card title and make up the
-                                bulk of the card's content.
-                            </Card.Text>
-                            <Button variant="primary">Go somewhere</Button>
-                        </Card.Body>
-                    </Card>
-                    <Card style={{ width: '16rem' }}>
-                        <Card.Img variant="top" src="https://m.media-amazon.com/images/W/IMAGERENDERING_521856-T2/images/I/51c1zFDNVmL._AC_SX679_.jpg" />
-                        <Card.Body>
-                            <Card.Title>Card Title</Card.Title>
-                            <Card.Text>
-                                Some quick example text to build on the card title and make up the
-                                bulk of the card's content.
-                            </Card.Text>
-                            <Button variant="primary">Go somewhere</Button>
-                        </Card.Body>
-                    </Card>
-                    <Card style={{ width: '16rem' }}>
-                        <Card.Img variant="top" src="https://m.media-amazon.com/images/W/IMAGERENDERING_521856-T2/images/I/51c1zFDNVmL._AC_SX679_.jpg" />
-                        <Card.Body>
-                            <Card.Title>Card Title</Card.Title>
-                            <Card.Text>
-                                Some quick example text to build on the card title and make up the
-                                bulk of the card's content.
-                            </Card.Text>
-                            <Button variant="primary">Go somewhere</Button>
-                        </Card.Body>
-                    </Card>
-
+                    <PaginationExample />
                 </Col>
-                <PaginationExample />
-                {/* <Col className='marginLeft mt-5 mb-5'>
-                    <input type={'search'} placeholder='Search' className='searchWidth'></input>
-                </Col> */}
-            </Row>
 
+            </div>
             <Footer />
         </body>
     )

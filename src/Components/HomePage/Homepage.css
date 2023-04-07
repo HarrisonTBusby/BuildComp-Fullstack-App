@@ -21,7 +21,7 @@ body {
 }
 
 .BannerImg {
-   height: calc(100vh - 76px);
+   height: 70vh;
    background-image: url('../../Assets/Images/GamingImage.jpg'); 
    background-size: cover;
    justify-content: flex-end;

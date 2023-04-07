@@ -1,46 +1,18 @@
 import React from 'react'
 import './PreviousSelections.css';
 import NavbarComponent from '../Navbar/Navbar';
-
-import { Link } from 'react-router-dom';
-import {Container, Row, Col,} from 'react-bootstrap'
-import SelectionsRow from './previousRows'
 import Footer from '../Footer/Footer'
+import { PaginationExample } from '../Pagination';
+
 export default function PreviousSelections() {
+  
   return (
-
-
-    <div className=''>
-<NavbarComponent/>
-
-
-<SelectionsRow/>
-
-
-
-
-
-
-
-
-<br></br>
-<br></br>
-
-<br></br>
-<br></br>
-
-<br></br>
-
-<Row className='footerr'>
-<Footer/>
-</Row>
-    </div>
-
-
-
-
-
-
-
-  )
+    <>
+      <NavbarComponent />
+      <div className='mt-4'>
+        <PaginationExample />
+      </div>
+      <Footer />
+    </>
+  );
 }
