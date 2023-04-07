@@ -1,5 +1,11 @@
-body{
-    /* background-image: url('../../Assets/backgroundFulllstack.png'); */
+/* body{
+    background-image: url('../../Assets/backgroundFulllstack.png');
     background-repeat: no-repeat;
     background-size: cover;
+} */
+
+.wishlist-content {
+    width: fit-content;
+    display: flex;
+    flex-direction: column;
 }
