@@ -5,6 +5,7 @@ import { Container, Row, Col, Dropdown, InputGroup, OverlayTrigger, Tooltip, Car
 import Footer from '../Footer/Footer';
 import { PaginationExample } from '../Pagination';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import {saveToLocalStorageByName} from '../../Services/LocalStorage';
 
 export default function BestBuilds() {
 
