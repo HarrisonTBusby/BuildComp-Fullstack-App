@@ -236,6 +236,7 @@ export default function BestBuilds() {
                         <InputGroup className="mb-3">
                             <InputGroup.Checkbox />No RGB
                         </InputGroup>
+                        <Button>Apply filters</Button>
                     </div>
                 </Col>
                 <Col md={9} className='cards px-2'>

@@ -7,26 +7,3 @@
     margin: 2rem;
 }
 
-.pagination * {
-    color: white;
-}
-
-.pagination li {
-    padding: .75rem 1.25rem;
-}
-
-.pagination .previous a {
-    color: rgb(117, 154, 255);
-}
-
-.pagination .active-page {
-    background: rgb(78, 80, 216);
-}
-
-.pagination .next a {
-    color: rgb(117, 154, 255);
-}
-
-.pagination .disabled a {
-    color: rgb(190, 190, 190);
-}

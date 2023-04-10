@@ -11,3 +11,28 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 } */
+
+.pagination * {
+  color: white;
+  font-size: 1.25rem;
+}
+
+.pagination a {
+  padding: .4rem 1rem;
+}
+
+.pagination .previous a {
+  color: rgb(117, 154, 255);
+}
+
+.pagination .active-page a {
+  background: rgb(24, 72, 160);
+}
+
+.pagination .next a {
+  color: rgb(117, 154, 255);
+}
+
+.pagination .disabled a {
+  color: rgb(190, 190, 190);
+}
