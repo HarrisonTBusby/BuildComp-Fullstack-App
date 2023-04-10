@@ -1,9 +1,26 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './SignUp.css';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { createAccount, login } from '../../Services/DataService';
 const logo = require('../../Assets/Images/BlackLogo.png');
 
 export default function SignUp() {
+    const navigate = useNavigate();
+
+    const [Username, setUsername] = useState(null);
+    const [Password, setPassword] = useState(null);
+
+    const handleSubmit = () => {
+        let userData = {
+            Id: 0,
+            Username,
+            Password
+        }
+        console.log(userData);
+        createAccount(userData);
+        navigate('/Login');
+    }
+
   return (
     <div className='signup-wrapper'>
             <div className="signup-container">
@@ -19,16 +36,24 @@ export default function SignUp() {
                     <label className='w-100 mb-4'>
                         Username
                         <div>
-                            <input type="text" name="username"></input>
+                            <input 
+                                type="text" 
+                                name="username"
+                                onChange={({target: {value}}: any) => setUsername(value)}
+                            />
                         </div>
                     </label>
                     <label className='w-100'>
                         Password
                         <div>
-                            <input type="password" name="password"></input>
+                            <input 
+                                type="password" 
+                                name="password"
+                                onChange={({target: {value}}: any) => setPassword(value)}
+                            />
                         </div>
                     </label>
-                    <Link to='/login'><button className='signup-btn'>Sign Up</button></Link>
+                    <button className='signup-btn' onClick={handleSubmit}>Sign Up</button>
                 </div>
             </div>
         </div>

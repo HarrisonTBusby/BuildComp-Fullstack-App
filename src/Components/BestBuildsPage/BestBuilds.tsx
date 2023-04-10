@@ -77,7 +77,7 @@ export default function BestBuilds() {
     const size = useWindowSize();
 
     return (
-        <body>
+        <div>
             <NavbarComponent />
             <div className='d-flex gutterless mt-5 bb-content'>
                 {size < 768 ? (
@@ -244,6 +244,6 @@ export default function BestBuilds() {
 
             </div>
             <Footer />
-        </body>
+        </div>
     )
 }

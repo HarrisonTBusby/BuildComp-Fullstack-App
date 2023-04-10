@@ -1,13 +1,41 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './Login.css';
 import { Link, useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Container, Row, Col } from 'react-bootstrap';
+import { GetLoggedInUserData, createAccount, login } from '../../Services/DataService';
+import { GetRandomUserData } from '../../Services/DataService';
 const logo = require('../../Assets/Images/BlackLogo.png');
 
 
 const Login = () => {
     const navigate = useNavigate();
+
+    const [username, setUsername] = useState(null);
+    const [password, setPassword] = useState(null);
+
+    const handleSubmit = async () => {
+        
+        let userData = {
+            username,
+            password
+        }
+        console.log(userData);
+        let token = await login(userData);
+        if(token.token != null){
+            localStorage.setItem('Token', token.token);
+            // await GetLoggedInUserData(username);
+            navigate('/');
+        }
+        
+    }
+
+    const getUserData = async () => {
+        let data = await GetRandomUserData();
+        console.log(data);
+    }
+
+    // getUserData();
 
     return (
         <div className='login-wrapper d-flex justify-content-center align-items-center'>
@@ -28,16 +56,24 @@ const Login = () => {
                             <label className='w-100'>
                                 Username
                                 <div>
-                                    <input type="text" name="username"></input>
+                                    <input 
+                                        type="text" 
+                                        name="username"
+                                        onChange={({target: {value}}: any) => setUsername(value)}
+                                    />
                                 </div>
                             </label>
                             <label className='w-100'>
                                 Password
                                 <div>
-                                    <input type="password" name="password"></input>
+                                    <input 
+                                        type="password" 
+                                        name="password"
+                                        onChange={({target: {value}}: any) => setPassword(value)}
+                                    />
                                 </div>
                             </label>
-                            <button className='login-btn'>Login</button>
+                            <button className='login-btn' onClick={handleSubmit}>Login</button>
                             <div className='divider'>
                                 <hr ></hr>
                                 <p className='or'>or</p>

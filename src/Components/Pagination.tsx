@@ -1,12 +1,20 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Card } from "react-bootstrap";
 import Paginate from "react-paginate";
+import { GetRandomUserData } from "../Services/DataService";
 
 
 
 const PaginationExample = () => {
+  const [data, setData] = useState({});
+
+
   const ITEMS_PER_PAGE = 6;
-  const TOTAL_ITEMS = 24;
+  
+  let size = Object.keys(data).length;
+  const TOTAL_ITEMS = size;
+  
+  // console.log(size);
 
   const items = Array.from(Array(TOTAL_ITEMS).keys()).map(
     (index) => `Item ${index + 1}`
@@ -46,6 +54,19 @@ const PaginationExample = () => {
       </div>
     );
   };
+
+  
+
+  const getData = async () => {
+    let data = await GetRandomUserData();
+    setData(data.results);
+    console.log(data.results);
+  }
+
+  useEffect(() => {
+    getData();
+  }, [])
+
 
   return (
     <div className="">

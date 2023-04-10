@@ -6,6 +6,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './Homepage.css';
 import { Link } from 'react-router-dom';
 
+
 export default function Homepage() {
     const renderTooltip = (text: string) => (
         <Tooltip id={`tooltip-${text}`}>
@@ -17,6 +18,9 @@ export default function Homepage() {
 
     // const handleCpu = (e: MouseEvent<HTMLLIElement>) => setCpuValue(e.currentTarget.value);
 
+    
+
+   
 
     return (
         <>
