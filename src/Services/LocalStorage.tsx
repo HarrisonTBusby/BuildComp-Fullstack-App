@@ -20,6 +20,6 @@ function removeFromLocalStorage(name :any){
     localStorage.setItem('Favorites', JSON.stringify(favorites));
 }
 
-export {getLocalStorage, saveToLocalStorageByName, removeFromLocalStorage}
+export { getLocalStorage, saveToLocalStorageByName, removeFromLocalStorage }
 
 

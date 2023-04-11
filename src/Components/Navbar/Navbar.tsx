@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import './Navbar.css';
 import { Container, Navbar, Nav } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Link, useLocation } from 'react-router-dom';

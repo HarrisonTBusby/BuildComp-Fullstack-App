@@ -1,0 +1,479 @@
+/* BEST BUILDS */
+.filterBackground {
+    background-color: #E2E2E2;
+    height: fit-content;
+    padding: 1rem;
+    border-radius: 5px;
+}
+
+.clearFiltersBtn {
+    margin: 0 auto;
+    background-color: #ffffff;
+    padding: 7px;
+    border-radius: 15px !important;
+    border: none;
+}
+
+.clearFiltersBtn:hover {
+    background-color: aliceblue;
+    box-shadow: 2px 2px 2px grey;
+}
+
+.bb-dropdown button {
+    width: fit-content;
+    padding: .5rem;
+}
+
+.cards {
+    padding: 0rem;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.bb-content {
+    padding-left: .5rem;
+    max-width: 1200px;
+    justify-content: center;
+    margin: 0 auto;
+}
+
+@media screen and (max-width: 767px) {
+    .large-filter {
+        display: none;
+    }
+
+    .bb-content {
+        flex-direction: column;
+    }
+}
+
+/* FOOTER */
+footer {
+    background: #fff;
+    margin-top: 4rem;
+    padding: 2rem 0rem 2rem 4rem;
+    border-radius: 0;
+}
+
+.gutterless {
+    --bs-gutter-x: 0;
+}
+
+.footer-heading {
+    font-size: 1.5rem;
+}
+
+@media screen and (max-width: 991px) {
+    .footer-content {
+        flex-direction: column;
+    }
+
+    footer {
+        padding: 2rem;
+    }
+
+    .head-one {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+}
+
+/* HOME PAGE */
+body {
+    background-image: url('./Assets/Images/backgroundFulllstack.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    font-family: 'Poppins', sans-serif;
+}
+
+.bannerFont {
+    color: white;
+    font-weight: 700;
+}
+
+.bannerFont2 {
+    background-color: #4463D5;
+    color: white;
+    margin: 1rem auto;
+    width: fit-content;
+    border-radius: 5px;
+    padding: .5rem 1rem;
+    float: right;
+    padding: 2rem;
+}
+
+.BannerImg {
+    height: 70vh;
+    background-image: url('./Assets/Images/GamingImage.jpg');
+    background-size: cover;
+    justify-content: flex-end;
+    align-items: center;
+    width: 100%;
+    --bs-gutter-x: 0rem;
+}
+
+.home-body {
+    background: rgba(36, 36, 36, 0.336);
+    border-radius: .5rem;
+    margin-top: 3rem;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+}
+
+.home-body h3 {
+    background: white;
+    width: fit-content;
+    padding: .5rem .75rem;
+    margin: 0 auto;
+    border-radius: 5px;
+}
+
+.home-body h3:nth-child(1) {
+    background: #4463D5;
+    color: #fff;
+}
+
+.home-body h3:nth-child(2) {
+    font-size: 1rem;
+}
+
+.dropdownSize {
+    background-color: white !important;
+    color: black !important;
+    padding: 30px;
+    width: 400px;
+    height: auto;
+    border-radius: 5px !important;
+}
+
+.home-dropdown button {
+    margin: 0;
+    background: #fff;
+    color: black;
+}
+
+@media screen and (max-width: 572px) {
+    .home-body {
+        border-radius: 0;
+    }
+}
+
+@media screen and (max-width: 991px) {
+    .hero-padding {
+        width: 45%;
+    }
+
+    .BannerImg {
+        height: 50vh;
+    }
+}
+
+/* LOGIN */
+.login-wrapper {
+    min-height: 100vh;
+}
+
+.login-logo {
+    width: auto;
+    height: 3.5rem; 
+}
+
+.login-container {
+    height: 600px;
+    width: 600px;
+}
+
+.left-login {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 70%;
+    height: 80%;
+    background: #4463D5;
+    border-radius: 15px;
+}
+
+.left-login-top {
+    color: white;
+}
+
+.right-login {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 70%;
+    height: 80%;
+    background: #ffffff;
+    border-radius: 15px;
+    padding: 2.5rem 4rem;
+}
+
+.right-login input {
+    appearance: none;
+    border: 1.5px solid rgba(199, 199, 199, 0.5);
+    border-radius: 8px;
+    outline: none;
+    padding: .5rem;
+    width: 100%;
+    margin-top: .5rem;
+}
+
+.login-btn {
+    appearance: none;
+    background: #4463D5;
+    color: white;
+    border: none;
+    width: 100%;
+    padding: .5rem 0;
+    border-radius: 8px;
+    margin-top: 1rem;
+}
+
+.divider {
+    margin-top: 1.5rem;
+    position: relative;
+    width: 100%;
+}
+
+.or {
+    position: absolute;
+    width: fit-content;
+    background: white;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -55%);
+    margin: 0;
+    padding: 0rem 1rem;
+}
+
+.create-account {
+    text-align: center;
+    font-size: 12px;
+    text-decoration: none;
+    margin-bottom: 0;
+    margin-top: .5rem;
+}
+
+a {
+    text-decoration: none;
+}
+
+.create-account span {
+    color: #4463D5;
+    cursor: pointer;
+}
+
+.create-account span:hover {
+    text-decoration: underline;
+}
+
+.right-login p {
+    color: #a7a7a7;
+}
+
+@media screen and (max-width: 991px) {
+
+    .login-container {
+        display: flex;
+        align-items: center;
+    }
+
+    .left-login {
+        display: none;
+    }
+
+    .right-login {
+        position: relative;
+        width: 80%;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .right-login {
+        padding: 2.75rem 1.25rem;
+    }
+
+    .right-login {
+        width: 90%;
+    }
+}
+
+/* NAVBAR */
+.NavBackground {
+    background-color: #4463D5;
+}
+
+.fontColor {
+    color: white !important;
+}
+
+.logoSize {
+    width: auto;
+    height: 50px;
+}
+
+.nav-links {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+}
+
+@media screen and (max-width: 991px) {
+    .nav-links {
+        margin-top: 1rem;
+    }
+
+    .nav-links a {
+        width: fit-content;
+        padding: .25rem 1rem;
+    }
+}
+
+/* PREVIOUS SELECTIONS */
+.rowBack {
+    background-color: white;
+    height: 6rem;
+}
+
+/* SIGN UP */
+.signup-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+.logo {
+    width: auto;
+    height: 60px;
+}
+
+.signup-container {
+    position: relative;
+    width: 600px;
+    height: 600px;
+}
+
+.left-signup {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 70%;
+    height: 80%;
+    background: #4463D5;
+    border-radius: 15px;
+}
+
+.left-signup-top {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    margin-top: 2rem;
+}
+
+.right-signup {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 70%;
+    height: 80%;
+    background: #ffffff;
+    border-radius: 15px;
+    padding: 4rem 4rem;
+}
+
+.right-signup input {
+    appearance: none;
+    border: 1.5px solid #c7c7c780;
+    border-radius: 8px;
+    outline: none;
+    padding: .5rem;
+    width: 100%;
+    margin-top: .5rem;
+}
+
+.right-signup p {
+    color: #949494;
+}
+
+.signup-btn {
+    appearance: none;
+    background: #4463D5;
+    color: white;
+    border: none;
+    width: 100%;
+    padding: .5rem 0;
+    border-radius: 8px;
+    margin-top: 1rem;
+}
+
+.active {
+    border: 2px solid white;
+}
+
+@media screen and (max-width: 991px) {
+    .left-signup {
+        display: none
+    }
+
+    .signup-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .right-signup {
+        width: 80%;
+        position: relative;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .right-signup {
+        width: 90%;
+        padding: 4rem 1.5rem;
+    }
+}
+
+/* WISHLIST */
+.wishlist-content {
+    width: fit-content;
+    display: flex;
+    align-items: center;
+    max-width: 1100px;
+    margin: 2rem;
+}
+
+/* PAGINATION */
+.pagination * {
+    color: white;
+    font-size: 1.25rem;
+}
+
+.pagination a {
+    padding: .4rem 1rem;
+}
+
+.pagination .previous a {
+    color: rgb(117, 154, 255);
+}
+
+.pagination .active-page a {
+    background: rgb(24, 72, 160);
+}
+
+.pagination .next a {
+    color: rgb(117, 154, 255);
+}
+
+.pagination .disabled a {
+    color: rgb(190, 190, 190);
+}

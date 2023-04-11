@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import './BestBuilds.css';
+import React, { useState } from 'react';
 import NavbarComponent from '../Navbar/Navbar';
-import { Container, Row, Col, Dropdown, InputGroup, OverlayTrigger, Tooltip, Card, Button } from 'react-bootstrap';
+import { Col, Dropdown, InputGroup, OverlayTrigger, Tooltip, Button } from 'react-bootstrap';
 import Footer from '../Footer/Footer';
-import { PaginationExample } from '../Pagination';
+import { PaginationExample } from '../Pagination/Pagination';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { saveToLocalStorageByName } from '../../Services/LocalStorage';
+import { useWindowSize } from '../../HelperFunctions';
 
 export default function BestBuilds() {
 
@@ -13,13 +13,12 @@ export default function BestBuilds() {
     const [selectedComponent, setSelectedComponent] = useState<Component>('Cpu');
     const [minBudget, setMinBudget] = useState<string>('');
     const [maxBudget, setMaxBudget] = useState<string>('');
-
-
-
+    const size = useWindowSize();
+    
     // For Dropdown values
     const handleComponentSelection = (component: Component) => {
         setSelectedComponent(component);
-        console.log(selectedComponent);
+        //console.log(selectedComponent);
     };
 
     // For ToolTip on Dropdown
@@ -27,54 +26,21 @@ export default function BestBuilds() {
         return <Tooltip id='button-tooltip'>{content}</Tooltip>;
     };
 
-
-
-
     // For Budget values
     const handleMinBudget = (event: React.KeyboardEvent<HTMLInputElement>) => {
         if (event.key == 'Enter') {
             setMinBudget(event.currentTarget.value);
-            console.log(minBudget)
+            //console.log(minBudget)
         }
-    }
+    };
 
     const handleMaxBudget = (event: React.KeyboardEvent<HTMLInputElement>) => {
         if (event.key == 'Enter') {
 
             setMaxBudget(event.currentTarget.value);
-            console.log(maxBudget)
+            //console.log(maxBudget)
         }
-    }
-
-    const items = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
-
-    function useWindowSize() {
-        // Initialize state with undefined width/height so server and client renders match
-        // Learn more here: https://joshwcomeau.com/react/the-perils-of-rehydration/
-        const [windowSize, setWindowSize] = useState({
-            width: 500,
-            height: 500,
-        });
-        useEffect(() => {
-            // Handler to call on window resize
-            function handleResize() {
-                // Set window width/height to state
-                setWindowSize({
-                    width: window.innerWidth,
-                    height: window.innerHeight,
-                });
-            }
-            // Add event listener
-            window.addEventListener("resize", handleResize);
-            // Call handler right away so state gets updated with initial window size
-            handleResize();
-            // Remove event listener on cleanup
-            return () => window.removeEventListener("resize", handleResize);
-        }, []); // Empty array ensures that effect is only run on mount
-        return windowSize.width;
-    }
-
-    const size = useWindowSize();
+    };
 
     return (
         <div>
@@ -160,7 +126,6 @@ export default function BestBuilds() {
                             </Col>
                             <Button>Apply filters</Button>
                         </Dropdown.Menu>
-
                     </Dropdown>
 
                 ) : (
@@ -242,9 +207,8 @@ export default function BestBuilds() {
                 <Col md={9} className='cards px-2'>
                     <PaginationExample />
                 </Col>
-
             </div>
             <Footer />
         </div>
     )
-}
+};

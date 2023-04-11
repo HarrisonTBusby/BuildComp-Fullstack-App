@@ -1,5 +1,4 @@
 import React from 'react'
-import './Footer.css';
 import { Row, Col, Nav } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 

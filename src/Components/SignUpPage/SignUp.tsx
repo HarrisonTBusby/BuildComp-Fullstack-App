@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
-import './SignUp.css';
 import { Link, useNavigate } from 'react-router-dom';
-import { createAccount, login } from '../../Services/DataService';
+import { createAccount } from '../../Services/DataService';
 const logo = require('../../Assets/Images/BlackLogo.png');
 
 export default function SignUp() {

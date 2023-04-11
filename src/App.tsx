@@ -6,9 +6,8 @@ import PreviousSelections from './Components/PreviousSelectionsPage/PreviousSele
 import SignUp from './Components/SignUpPage/SignUp';
 import Wishlist from './Components/WishlistPage/Wishlist';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-
 import './App.css';
-import './Components/LoginPage/Login.css'
+// import './Components/LoginPage/Login.css'
 
 function App() {
   return (

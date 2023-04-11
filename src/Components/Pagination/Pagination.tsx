@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Button, Card } from "react-bootstrap";
 import Paginate from "react-paginate";
-import { GetRandomUserData } from "../Services/DataService";
-
-
+import { GetRandomUserData } from "../../Services/DataService";
 
 const PaginationExample = () => {
   const [data, setData] = useState([]);

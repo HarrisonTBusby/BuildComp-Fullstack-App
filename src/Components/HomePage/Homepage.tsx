@@ -3,9 +3,7 @@ import { Container, Row, Col, Dropdown, Button, OverlayTrigger, Tooltip } from '
 import NavbarComponent from '../Navbar/Navbar';
 import Footer from '../Footer/Footer';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './Homepage.css';
 import { Link } from 'react-router-dom';
-
 
 export default function Homepage() {
     const renderTooltip = (text: string) => (
@@ -15,12 +13,6 @@ export default function Homepage() {
     );
 
     const [cpuValue, setCpuValue] = useState<string>('');
-
-    // const handleCpu = (e: MouseEvent<HTMLLIElement>) => setCpuValue(e.currentTarget.value);
-
-    
-
-   
 
     return (
         <>
@@ -74,4 +66,4 @@ export default function Homepage() {
             <Footer />
         </>
     )
-}
+};
