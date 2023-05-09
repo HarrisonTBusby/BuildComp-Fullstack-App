@@ -49,7 +49,7 @@ const PaginationExample = () => {
 
   const getData = async () => {
     let data = await GetRandomUserData();
-    setData(data.results);
+    setData(data);
     // console.log(data.results)
   }
 

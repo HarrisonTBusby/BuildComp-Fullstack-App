@@ -9,7 +9,7 @@ import { useWindowSize } from '../../HelperFunctions';
 
 export default function BestBuilds() {
 
-    type Component = 'Cpu' | 'Gpu' | 'Motherboard' | 'Case' | 'Fan' | 'RAM' | 'Power Supply' | 'Heat Sink' | 'Hard Drives';
+    type Component = 'Cpu' | 'Gpu' | 'Motherboard' | 'Case' | 'RAM' | 'Power Supply' | 'Heat Sink' | 'Hard Drives';
     const [selectedComponent, setSelectedComponent] = useState<Component>('Cpu');
     const [minBudget, setMinBudget] = useState<string>('');
     const [maxBudget, setMaxBudget] = useState<string>('');
@@ -55,19 +55,7 @@ export default function BestBuilds() {
                             <Col className='filterBackground p-3' md={3}>
                                 <div className='marginLeft2 filterBoxColor'>
                                 <Col className='marginLeft mt-5 mb-5'>
-                            <input type={'search'} placeholder='Search' className='w-100 searchWidth'></input>
-                        </Col>
-                                    <p className='mt-4'>Filter</p>
-                                    <button className='clearFiltersBtn'>Clear Filters</button>
-                                    <hr />
-                                    {/* Budget */}
-                                    {/* ====================================================================== */}
-                                    <p>Budget</p>
-                                    <input className='w-75' type='number' placeholder='Min' value={minBudget} onKeyDown={handleMinBudget} onChange={(event) => setMinBudget(event.currentTarget.value)}></input>
-                                    <input className='w-75' type='number' placeholder='Max' value={maxBudget} onKeyDown={handleMaxBudget} onChange={(event) => setMaxBudget(event.currentTarget.value)}></input>
-                                    {/* PC Components */}
-                                    {/* ====================================================================== */}
-                                    <p className='mt-5'>Components</p>
+                                    <p>Component</p>
                                     <Dropdown className='bb-dropdown'>
                                         <Dropdown.Toggle className='dropdownSize'>
                                             PC Components
@@ -86,9 +74,6 @@ export default function BestBuilds() {
                                             <OverlayTrigger placement="right" overlay={renderTooltip('Container for all PC Components')}>
                                                 <Dropdown.Item onClick={() => handleComponentSelection('Case')}>Case</Dropdown.Item>
                                             </OverlayTrigger>
-                                            <OverlayTrigger placement="right" overlay={renderTooltip('Used to draw cooler air into the case from the outside, expel warm air from inside and move air across a heat sink to cool a particular component.')}>
-                                                <Dropdown.Item onClick={() => handleComponentSelection('Fan')}>Fans</Dropdown.Item>
-                                            </OverlayTrigger>
                                             <OverlayTrigger placement="right" overlay={renderTooltip('RAMs purpose is to store the short term data that a PC requires to properly operate.')}>
                                                 <Dropdown.Item onClick={() => handleComponentSelection('RAM')}>RAM</Dropdown.Item>
                                             </OverlayTrigger>
@@ -103,6 +88,18 @@ export default function BestBuilds() {
                                             </OverlayTrigger>
                                         </Dropdown.Menu>
                                     </Dropdown>
+                        </Col>
+                                    <p className='mt-4'>Filter</p>
+                                    <button className='clearFiltersBtn'>Clear Filters</button>
+                                    <hr />
+                                    {/* Budget */}
+                                    {/* ====================================================================== */}
+                                    <p>Budget</p>
+                                    <input className='w-75' type='number' placeholder='Min' value={minBudget} onKeyDown={handleMinBudget} onChange={(event) => setMinBudget(event.currentTarget.value)}></input>
+                                    <input className='w-75' type='number' placeholder='Max' value={maxBudget} onKeyDown={handleMaxBudget} onChange={(event) => setMaxBudget(event.currentTarget.value)}></input>
+                                    {/* PC Components */}
+                                    {/* ====================================================================== */}
+                                    <p className='mt-5'>Components</p>
 
                                     {/* Better Price or Better Performance */}
                                     {/* ================================================== */}
@@ -134,19 +131,7 @@ export default function BestBuilds() {
                 <Col className='filterBackground large-filter p-3' md={3}>
                     <div className='marginLeft2 filterBoxColor'>
                         <Col className='marginLeft mt-5 mb-5'>
-                            <input type={'search'} placeholder='Search' className='w-100 searchWidth'></input>
-                        </Col>
-                        <p className='mt-4'>Filter</p>
-                        <button className='clearFiltersBtn'>Clear Filters</button>
-                        <hr />
-                        {/* Budget */}
-                        {/* ====================================================================== */}
-                        <p>Budget</p>
-                        <input className='w-75' type='number' placeholder='Min' value={minBudget} onKeyDown={handleMinBudget} onChange={(event) => setMinBudget(event.currentTarget.value)}></input>
-                        <input className='w-75' type='number' placeholder='Max' value={maxBudget} onKeyDown={handleMaxBudget} onChange={(event) => setMaxBudget(event.currentTarget.value)}></input>
-                        {/* PC Components */}
-                        {/* ====================================================================== */}
-                        <p className='mt-5'>Components</p>
+                        <p>Component</p>
                         <Dropdown className='bb-dropdown'>
                             <Dropdown.Toggle className='dropdownSize'>
                                 PC Components
@@ -165,9 +150,6 @@ export default function BestBuilds() {
                                 <OverlayTrigger placement="right" overlay={renderTooltip('Container for all PC Components')}>
                                     <Dropdown.Item onClick={() => handleComponentSelection('Case')}>Case</Dropdown.Item>
                                 </OverlayTrigger>
-                                <OverlayTrigger placement="right" overlay={renderTooltip('Used to draw cooler air into the case from the outside, expel warm air from inside and move air across a heat sink to cool a particular component.')}>
-                                    <Dropdown.Item onClick={() => handleComponentSelection('Fan')}>Fans</Dropdown.Item>
-                                </OverlayTrigger>
                                 <OverlayTrigger placement="right" overlay={renderTooltip('RAMs purpose is to store the short term data that a PC requires to properly operate.')}>
                                     <Dropdown.Item onClick={() => handleComponentSelection('RAM')}>RAM</Dropdown.Item>
                                 </OverlayTrigger>
@@ -182,6 +164,18 @@ export default function BestBuilds() {
                                 </OverlayTrigger>
                             </Dropdown.Menu>
                         </Dropdown>
+                        </Col>
+                        <p className='mt-4'>Filter</p>
+                        <button className='clearFiltersBtn'>Clear Filters</button>
+                        <hr />
+                        {/* Budget */}
+                        {/* ====================================================================== */}
+                        <p>Budget</p>
+                        <input className='w-75' type='number' placeholder='Min' value={minBudget} onKeyDown={handleMinBudget} onChange={(event) => setMinBudget(event.currentTarget.value)}></input>
+                        <input className='w-75' type='number' placeholder='Max' value={maxBudget} onKeyDown={handleMaxBudget} onChange={(event) => setMaxBudget(event.currentTarget.value)}></input>
+                        {/* PC Components */}
+                        {/* ====================================================================== */}
+                        <p className='mt-5'>Components</p>
 
                         {/* Better Price or Better Performance */}
                         {/* ================================================== */}
