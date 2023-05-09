@@ -1,6 +1,26 @@
 
 let userData = {};
 
+interface PeopleData {
+    picture: {
+      medium: string
+    }
+    name: {
+      first: string,
+      last: string
+    }
+    cell: string,
+    email: string,
+    gender: string,
+    location: {
+      country: string
+    }
+  }
+
+  interface PeopleAPIResponse {
+    data: PeopleData[];
+  }
+
 const GetRandomUserData = async () => {
     const response = await fetch('https://bcwebscraper.azurewebsites.net/Data/CPU')
     const data = await response.json();
@@ -49,4 +69,4 @@ const GetLoggedInUserData = async (username: any) => {
     return data;
 }
 
-export { GetRandomUserData, createAccount, login, GetLoggedInUserData };
+export { GetRandomUserData, createAccount, login, GetLoggedInUserData, PeopleAPIResponse, PeopleData };
