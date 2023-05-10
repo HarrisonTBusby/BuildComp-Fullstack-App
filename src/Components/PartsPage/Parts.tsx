@@ -145,7 +145,7 @@ export default function Parts() {
     const [minBudget, setMinBudget] = useState<string>('');
     const [maxBudget, setMaxBudget] = useState<string>('');
     const size = useWindowSize();
-    const [componentData, setComponentData] = useState<Component[]>([]);
+    const [componentData, setComponentData] = useState<any[]>([]);
     const [cpuData, setCpuData] = useState<CpuData[]>([]);
     const [gpuData, setGpuData] = useState<GPUData[]>([]);
     const [motherboardData, setMotherboardData] = useState<MotherboardData[]>([]);
@@ -157,38 +157,8 @@ export default function Parts() {
 
     // For Dropdown values
     function handleComponentSelect(component: Component) {
-        // When a new component is selected, clear the data for any previously selected component
         setSelectedComponent(component);
-        setComponentData([]);
-
-        switch (component) {
-            case 'Cpu':
-                setCpuData([]);
-                break;
-            case 'Gpu':
-                setGpuData([]);
-                break;
-            case 'Motherboard':
-                setMotherboardData([]);
-                break;
-            case 'Power Supply':
-                setPsData([]);
-                break;
-            case 'Case':
-                setCaseData([]);
-                break;
-            case 'Heat Sink':
-                setHeatsinkData([]);
-                break;
-            case 'Hard Drive':
-                setHardDriveData([]);
-                break;
-            case 'RAM':
-                setRamData([]);
-                break;
-            default:
-                break;
-        }
+        console.log(component);
         fetchData();
     }
 
@@ -198,47 +168,53 @@ export default function Parts() {
             return;
         }
 
-        let data;
+        let data: any[];
 
         switch (selectedComponent) {
             case 'Cpu':
                 data = await GetPartData('Cpu');
                 setCpuData(data);
+                console.log(data)
                 break;
             case 'Gpu':
                 data = await GetPartData('Gpu');
                 setGpuData(data);
+                console.log(data)
                 break;
             case 'Motherboard':
                 data = await GetPartData('Motherboard');
                 setMotherboardData(data);
+                console.log(data)
                 break;
             case 'Power Supply':
                 data = await GetPartData('Ps');
                 setPsData(data);
+                console.log(data)
                 break;
             case 'Case':
                 data = await GetPartData('Case');
                 setCaseData(data);
+                console.log(data)
                 break;
             case 'Heat Sink':
                 data = await GetPartData('Heatsink');
                 setHeatsinkData(data);
+                console.log(data)
                 break;
             case 'Hard Drive':
                 data = await GetPartData('HardDrive');
                 setHardDriveData(data);
+                console.log(data)
                 break;
             case 'RAM':
                 data = await GetPartData('Ram');
                 setRamData(data);
+                console.log(data)
                 break;
             default:
                 break;
         }
-
-        setComponentData(data);
-        console.log(data)
+        
     }
     //HandlesPaginationButtons
     const handlePageChange = (selectedPage: { selected: number }) => {
