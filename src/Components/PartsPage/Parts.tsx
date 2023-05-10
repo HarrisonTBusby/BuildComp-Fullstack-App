@@ -140,8 +140,8 @@ export default function Parts() {
         }]
     }
 
-    type Component = 'Cpu' | 'Gpu' | 'Motherboard' | 'Case' | 'RAM' | 'Power Supply' | 'Heat Sink' | 'Hard Drive';
-    const [selectedComponent, setSelectedComponent] = useState<Component | null>(null);
+   
+    const [selectedComponent, setSelectedComponent] = useState<string>('');
     const [minBudget, setMinBudget] = useState<string>('');
     const [maxBudget, setMaxBudget] = useState<string>('');
     const size = useWindowSize();
@@ -156,66 +156,13 @@ export default function Parts() {
     const [hardDriveData, setHardDriveData] = useState<HardDriveData[]>([]);
 
     // For Dropdown values
-    function handleComponentSelect(component: Component) {
-        setSelectedComponent(component);
-        console.log(component);
-        fetchData();
-    }
-
-
-    async function fetchData() {
-        if (!selectedComponent) {
-            return;
-        }
-
-        let data: any[];
-
-        switch (selectedComponent) {
-            case 'Cpu':
-                data = await GetPartData('Cpu');
-                setCpuData(data);
-                console.log(data)
-                break;
-            case 'Gpu':
-                data = await GetPartData('Gpu');
-                setGpuData(data);
-                console.log(data)
-                break;
-            case 'Motherboard':
-                data = await GetPartData('Motherboard');
-                setMotherboardData(data);
-                console.log(data)
-                break;
-            case 'Power Supply':
-                data = await GetPartData('Ps');
-                setPsData(data);
-                console.log(data)
-                break;
-            case 'Case':
-                data = await GetPartData('Case');
-                setCaseData(data);
-                console.log(data)
-                break;
-            case 'Heat Sink':
-                data = await GetPartData('Heatsink');
-                setHeatsinkData(data);
-                console.log(data)
-                break;
-            case 'Hard Drive':
-                data = await GetPartData('HardDrive');
-                setHardDriveData(data);
-                console.log(data)
-                break;
-            case 'RAM':
-                data = await GetPartData('Ram');
-                setRamData(data);
-                console.log(data)
-                break;
-            default:
-                break;
-        }
+    async function handleComponentSelect(component: string) {
         
+        const data = await GetPartData(component);
+        setCpuData(data)
+        console.log(data);
     }
+
     //HandlesPaginationButtons
     const handlePageChange = (selectedPage: { selected: number }) => {
         setCurrentPage(selectedPage.selected);
@@ -343,16 +290,16 @@ export default function Parts() {
                                                 <Dropdown.Item onClick={() => handleComponentSelect('Case')} className='ddButton'>Case</Dropdown.Item>
                                             </OverlayTrigger>
                                             <OverlayTrigger placement="right" overlay={renderTooltip('RAMs purpose is to store the short term data that a PC requires to properly operate.')}>
-                                                <Dropdown.Item onClick={() => handleComponentSelect('RAM')} className='ddButton'>RAM</Dropdown.Item>
+                                                <Dropdown.Item onClick={() => handleComponentSelect('Ram')} className='ddButton'>RAM</Dropdown.Item>
                                             </OverlayTrigger>
                                             <OverlayTrigger placement="right" overlay={renderTooltip('Pulls power from your wall outlet and distribute it throughout your PC.')}>
-                                                <Dropdown.Item onClick={() => handleComponentSelect('Power Supply')} className='ddButton'>Power Supply</Dropdown.Item>
+                                                <Dropdown.Item onClick={() => handleComponentSelect('Ps')} className='ddButton'>Power Supply</Dropdown.Item>
                                             </OverlayTrigger>
                                             <OverlayTrigger placement="right" overlay={renderTooltip('Properly removes heat from device components to improve device performance and extend its life. And usually, a heat sink incorporates a fan or other mechanism to reduce the temperature of a hardware component, such as a processor.')}>
-                                                <Dropdown.Item onClick={() => handleComponentSelect('Heat Sink')} className='ddButton'>Heat Sink</Dropdown.Item>
+                                                <Dropdown.Item onClick={() => handleComponentSelect('Heatsink')} className='ddButton'>Heat Sink</Dropdown.Item>
                                             </OverlayTrigger>
                                             <OverlayTrigger placement="right" overlay={renderTooltip('A hard drive is the hardware component that stores all of your digital content. Your documents, pictures, music, videos, programs, application preferences, and operating system represent digital content stored on a hard drive.')}>
-                                                <Dropdown.Item onClick={() => handleComponentSelect('Hard Drive')} className='ddButton'>Hard Drives</Dropdown.Item>
+                                                <Dropdown.Item onClick={() => handleComponentSelect('HardDrive')} className='ddButton'>Hard Drives</Dropdown.Item>
                                             </OverlayTrigger>
                                         </Dropdown.Menu>
                                     </Dropdown>
@@ -419,16 +366,16 @@ export default function Parts() {
                                     <Dropdown.Item onClick={() => handleComponentSelect('Case')} className='ddButton'>Case</Dropdown.Item>
                                 </OverlayTrigger>
                                 <OverlayTrigger placement="right" overlay={renderTooltip('RAMs purpose is to store the short term data that a PC requires to properly operate.')}>
-                                    <Dropdown.Item onClick={() => handleComponentSelect('RAM')} className='ddButton'>RAM</Dropdown.Item>
+                                    <Dropdown.Item onClick={() => handleComponentSelect('Ram')} className='ddButton'>RAM</Dropdown.Item>
                                 </OverlayTrigger>
                                 <OverlayTrigger placement="right" overlay={renderTooltip('Pulls power from your wall outlet and distribute it throughout your PC.')}>
-                                    <Dropdown.Item onClick={() => handleComponentSelect('Power Supply')} className='ddButton'>Power Supply</Dropdown.Item>
+                                    <Dropdown.Item onClick={() => handleComponentSelect('Ps')} className='ddButton'>Power Supply</Dropdown.Item>
                                 </OverlayTrigger>
                                 <OverlayTrigger placement="right" overlay={renderTooltip('Properly removes heat from device components to improve device performance and extend its life. And usually, a heat sink incorporates a fan or other mechanism to reduce the temperature of a hardware component, such as a processor.')}>
-                                    <Dropdown.Item onClick={() => handleComponentSelect('Heat Sink')} className='ddButton'>Heat Sink</Dropdown.Item>
+                                    <Dropdown.Item onClick={() => handleComponentSelect('Heatsink')} className='ddButton'>Heat Sink</Dropdown.Item>
                                 </OverlayTrigger>
                                 <OverlayTrigger placement="right" overlay={renderTooltip('A hard drive is the hardware component that stores all of your digital content. Your documents, pictures, music, videos, programs, application preferences, and operating system represent digital content stored on a hard drive.')}>
-                                    <Dropdown.Item onClick={() => handleComponentSelect('Hard Drive')} className='ddButton'>Hard Drives</Dropdown.Item>
+                                    <Dropdown.Item onClick={() => handleComponentSelect('HardDrive')} className='ddButton'>Hard Drives</Dropdown.Item>
                                 </OverlayTrigger>
                             </Dropdown.Menu>
                         </Dropdown>
