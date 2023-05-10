@@ -1,6 +1,22 @@
 
 let userData = {};
 
+interface CpuData {
+  cores: number,
+  id: number,
+  image_url: string,
+  item_url: string,
+  perfCoreClock: number,
+  price: string,
+  socketType: string,
+  title: string,
+  type: string
+}
+
+interface AllCpuData {
+  data: CpuData[]
+}
+
 interface PeopleData {
     picture: {
       medium: string
@@ -20,6 +36,7 @@ interface PeopleData {
   interface PeopleAPIResponse {
     data: PeopleData[];
   }
+  
 
 const GetRandomUserData = async () => {
     const response = await fetch('https://bcwebscraper.azurewebsites.net/Data/CPU')
@@ -69,4 +86,10 @@ const GetLoggedInUserData = async (username: any) => {
     return data;
 }
 
-export { GetRandomUserData, createAccount, login, GetLoggedInUserData, PeopleAPIResponse, PeopleData };
+const GetPartData = async (part: string) => {
+  const response = await fetch(`https://buildcompdatabase.azurewebsites.net/Webscraper/GetAll${part}Data`)
+  const data = await response.json();
+  return data;
+}
+
+export { GetRandomUserData, createAccount, login, GetLoggedInUserData, GetPartData, PeopleAPIResponse, PeopleData };

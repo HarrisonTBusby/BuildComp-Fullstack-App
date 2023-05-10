@@ -1,5 +1,5 @@
 import React from 'react';
-import BestBuilds from './Components/BestBuildsPage/BestBuilds';
+import Parts from './Components/PartsPage/Parts';
 import Homepage from './Components/HomePage/Homepage';
 import Login from './Components/LoginPage/Login';
 import PreviousSelections from './Components/PreviousSelectionsPage/PreviousSelections';
@@ -16,7 +16,7 @@ function App() {
         <Route path='/' element={<Homepage />} />
         <Route path='/Login' element={<Login />} />
         <Route path='/SignUp' element={<SignUp />} />
-        <Route path='/BestBuilds' element={<BestBuilds />} />
+        <Route path='/Parts' element={<Parts />} />
         <Route path='/PreviousSelections' element={<PreviousSelections />} />
         <Route path='/Wishlist' element={<Wishlist />} />
       </Routes>
