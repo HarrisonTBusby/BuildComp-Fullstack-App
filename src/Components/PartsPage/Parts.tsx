@@ -9,6 +9,9 @@ import { useWindowSize } from '../../HelperFunctions';
 import { GetPartData } from '../../Services/DataService';
 import Paginate from "react-paginate";
 import { CpuInfo } from 'os';
+import { NumberLiteralType } from 'typescript';
+import { Link, useNavigate } from 'react-router-dom';
+import { autocompleteClasses } from '@mui/material';
 
 interface CpuData {
     cores: number;
@@ -22,11 +25,106 @@ interface CpuData {
     type: string
 }
 
+interface GPUData {
+    id:number;
+    title:string;
+    price:string;
+    image_url:string;
+    item_url:string;
+    type:string;
+    socketType:string;
+    memory:number;
+    perfCoreClock:number;
+    chipset:string;
+}
+
+interface CaseData {
+    id:number;
+    title:string;
+    price:string;
+    image_url:string;
+    item_url:string;
+    type:string;
+    size:string;
+    caseColor:string;
+}
+
+interface HardDrive {
+    id:number;
+    title:string;
+    price:string;
+    image_url:string;
+    item_url:string;
+    type:string;
+    storageCapacity:string;
+    PCIeType:string;
+}
+
+interface MotherboardData {
+    id:number;
+    title:string;
+    price:string;
+    image_url:string;
+    item_url:string;
+    type:string;
+    socketType:string;
+    gpuPort:string;
+    ramType:string;
+    ramMax:number;
+    memorySlots:number;
+    chipset:string;
+    PCIeSlotNumber: number;
+}
+
+interface HeatsinkData {
+    id:number;
+    title:string;
+    price:string;
+    image_url:string;
+    item_url:string;
+    type:string;
+    color:string; 
+    fanRPM: string;
+    fanNoise:number;
+    isWaterCooled:boolean;
+}
+
+interface PowerSupplyData{
+    id:number;
+    title:string;
+    price:string;
+    image_url:string;
+    item_url:string;
+    type:string;
+    wattage:number;
+    color:string;
+    EPS8ConnectorNum:number;
+    PCIe62ConnectorNum:number;
+    PCIe6ConnectorNum:number;
+    SataConnectors:number;
+    Molex4ConnectorNum:number;
+}
+
+interface RamData {
+    id:number;
+    title:string;
+    price:string;
+    image_url:string;
+    item_url:string;
+    type:string;
+    color:string;
+    ramType:string;
+    ramSpeed:string;
+    moduleAmount:string;
+    firstWordLatency:number;
+}
+
 // interface AllCpuData {
 //     data: CpuData[]
 // }
 
 export default function Parts() {
+    const navigate = useNavigate();
 
     const dummyData = {
         data: [{
@@ -80,15 +178,16 @@ export default function Parts() {
                 {itemsToDisplay.map((item: CpuData) => (
                     <div key={item.id}>
                         <Card style={{ width: '16rem', height: '100%' }}>
-                            {/* <Card.Img variant="top" src={item.image_url} /> */}
+                            <Card.Img variant="top" src={item.image_url} style={{width:'auto', height:"254px"}}/>
                             <Card.Body>
-                                <Card.Title>{item.title}</Card.Title>
+                            <Link to={item.item_url} target='_blank'><u>{item.title}</u></Link>
                                 <div>
-                                    <div>{item.cores}</div>
-                                    <div>{item.perfCoreClock}</div>
-                                    {/* <div>{item.type}</div> */}
+                                    <div>${item.price}</div>
+                                    <div>Cores: {item.cores}</div>
+                                    <div>Performance Clock: {item.perfCoreClock}</div>
+                                    <div>{item.type}</div>
                                 </div>
-                                <Button variant="primary">Go somewhere</Button>
+                                
                             </Card.Body>
                         </Card>
                     </div>
