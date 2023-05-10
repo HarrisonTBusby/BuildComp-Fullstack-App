@@ -1,25 +1,119 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import NavbarComponent from '../Navbar/Navbar';
-import { Col, Dropdown, InputGroup, OverlayTrigger, Tooltip, Button } from 'react-bootstrap';
+import { Col, Dropdown, InputGroup, OverlayTrigger, Tooltip, Button, Card } from 'react-bootstrap';
 import Footer from '../Footer/Footer';
 import { PaginationExample } from '../Pagination/Pagination';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { saveToLocalStorageByName } from '../../Services/LocalStorage';
 import { useWindowSize } from '../../HelperFunctions';
+import { GetPartData } from '../../Services/DataService';
+import Paginate from "react-paginate";
+import { CpuInfo } from 'os';
 
-export default function BestBuilds() {
+interface CpuData {
+    cores: number;
+    id: number;
+    image_url: string;
+    item_url: string;
+    perfCoreClock: number;
+    price: string;
+    socketType: string;
+    title: string;
+    type: string
+}
 
-    type Component = 'Cpu' | 'Gpu' | 'Motherboard' | 'Case' | 'Fan' | 'RAM' | 'Power Supply' | 'Heat Sink' | 'Hard Drives';
+// interface AllCpuData {
+//     data: CpuData[]
+// }
+
+export default function Parts() {
+
+    const dummyData = {
+        data: [{
+            cores: 64,
+            id: 1,
+            image_url: 'https',
+            item_url: 'https',
+            perfCoreClock: 6.5,
+            price: '199',
+            socketType: 'AM7',
+            title: 'AMD Ryzen 99',
+            type: 'CPU'
+        }]
+    }
+
+    type Component = 'Cpu' | 'Gpu' | 'Motherboard' | 'Case' | 'RAM' | 'Power Supply' | 'Heat Sink' | 'Hard Drives';
     const [selectedComponent, setSelectedComponent] = useState<Component>('Cpu');
     const [minBudget, setMinBudget] = useState<string>('');
     const [maxBudget, setMaxBudget] = useState<string>('');
     const size = useWindowSize();
-    
+    const [cpuData, setCpuData] = useState<CpuData[]>([]);
+
     // For Dropdown values
     const handleComponentSelection = (component: Component) => {
         setSelectedComponent(component);
-        //console.log(selectedComponent);
+        console.log(selectedComponent);
     };
+
+    //HandlesPaginationButtons
+    const handlePageChange = (selectedPage: { selected: number }) => {
+        setCurrentPage(selectedPage.selected);
+    };
+
+    const [currentPage, setCurrentPage] = useState<number>(0);
+
+    const ITEMS_PER_PAGE = 6;
+
+    let cpuSize = cpuData.length;
+    const TOTAL_ITEMS = cpuSize;
+
+    const totalPages = Math.ceil(TOTAL_ITEMS / ITEMS_PER_PAGE);
+
+    //WHY ONLY WORK ON TYPE ANY!? NEEDS FIX AHHH!!!
+    const ItemList = ({cpuData}: any) => {
+        const startIndex = currentPage * ITEMS_PER_PAGE;
+        const endIndex = startIndex + ITEMS_PER_PAGE;
+        const itemsToDisplay = cpuData.slice(startIndex, endIndex);
+
+        return (
+            <div className='cards'>
+                {itemsToDisplay.map((item: CpuData) => (
+                    <div key={item.id}>
+                        <Card style={{ width: '16rem', height: '100%' }}>
+                            {/* <Card.Img variant="top" src={item.image_url} /> */}
+                            <Card.Body>
+                                <Card.Title>{item.title}</Card.Title>
+                                <div>
+                                    <div>{item.cores}</div>
+                                    <div>{item.perfCoreClock}</div>
+                                    {/* <div>{item.type}</div> */}
+                                </div>
+                                <Button variant="primary">Go somewhere</Button>
+                            </Card.Body>
+                        </Card>
+                    </div>
+                ))}
+            </div>
+        );
+    };
+
+    useEffect(() => {
+        const HandleGetData = async () => {
+            const data = await GetPartData('CPU')
+            setCpuData(data)
+
+
+            console.log(data)
+            //console.log(cpuData)
+            //console.log('why');
+        }
+
+        HandleGetData()
+        //console.log(cpuData)
+    }, [])
+
+    //console.log('once')
+    //HandleGetData()
 
     // For ToolTip on Dropdown
     const renderTooltip = (content: string) => {
@@ -54,9 +148,9 @@ export default function BestBuilds() {
                         <Dropdown.Menu>
                             <Col className='filterBackground p-3' md={3}>
                                 <div className='marginLeft2 filterBoxColor'>
-                                <Col className='marginLeft mt-5 mb-5'>
-                            <input type={'search'} placeholder='Search' className='w-100 searchWidth'></input>
-                        </Col>
+                                    <Col className='marginLeft mt-5 mb-5'>
+                                        <input type={'search'} placeholder='Search' className='w-100 searchWidth'></input>
+                                    </Col>
                                     <p className='mt-4'>Filter</p>
                                     <button className='clearFiltersBtn'>Clear Filters</button>
                                     <hr />
@@ -85,9 +179,6 @@ export default function BestBuilds() {
                                             </OverlayTrigger>
                                             <OverlayTrigger placement="right" overlay={renderTooltip('Container for all PC Components')}>
                                                 <Dropdown.Item onClick={() => handleComponentSelection('Case')}>Case</Dropdown.Item>
-                                            </OverlayTrigger>
-                                            <OverlayTrigger placement="right" overlay={renderTooltip('Used to draw cooler air into the case from the outside, expel warm air from inside and move air across a heat sink to cool a particular component.')}>
-                                                <Dropdown.Item onClick={() => handleComponentSelection('Fan')}>Fans</Dropdown.Item>
                                             </OverlayTrigger>
                                             <OverlayTrigger placement="right" overlay={renderTooltip('RAMs purpose is to store the short term data that a PC requires to properly operate.')}>
                                                 <Dropdown.Item onClick={() => handleComponentSelection('RAM')}>RAM</Dropdown.Item>
@@ -165,9 +256,6 @@ export default function BestBuilds() {
                                 <OverlayTrigger placement="right" overlay={renderTooltip('Container for all PC Components')}>
                                     <Dropdown.Item onClick={() => handleComponentSelection('Case')}>Case</Dropdown.Item>
                                 </OverlayTrigger>
-                                <OverlayTrigger placement="right" overlay={renderTooltip('Used to draw cooler air into the case from the outside, expel warm air from inside and move air across a heat sink to cool a particular component.')}>
-                                    <Dropdown.Item onClick={() => handleComponentSelection('Fan')}>Fans</Dropdown.Item>
-                                </OverlayTrigger>
                                 <OverlayTrigger placement="right" overlay={renderTooltip('RAMs purpose is to store the short term data that a PC requires to properly operate.')}>
                                     <Dropdown.Item onClick={() => handleComponentSelection('RAM')}>RAM</Dropdown.Item>
                                 </OverlayTrigger>
@@ -204,8 +292,21 @@ export default function BestBuilds() {
                         <Button>Apply filters</Button>
                     </div>
                 </Col>
-                <Col md={9} className='cards px-2'>
-                    <PaginationExample />
+                <Col md={9} className='px-2'>
+                    {/* <PaginationExample /> */}
+                    <div className="">
+                        <ItemList cpuData={cpuData}/>
+                        <div className="d-flex justify-content-center mt-4">
+                            <Paginate
+                                previousLabel={"<"}
+                                nextLabel={">"}
+                                pageCount={totalPages}
+                                onPageChange={handlePageChange}
+                                containerClassName={"pagination"}
+                                activeClassName={"active-page"}
+                            />
+                        </div>
+                    </div>
                 </Col>
             </div>
             <Footer />

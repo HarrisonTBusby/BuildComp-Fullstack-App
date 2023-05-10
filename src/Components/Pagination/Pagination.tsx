@@ -22,7 +22,6 @@ const PaginationExample = () => {
   const TOTAL_ITEMS = size;
 
   const totalPages = Math.ceil(TOTAL_ITEMS / ITEMS_PER_PAGE);
-  
 
   const ItemList = ({sortedData}: any) => {
     const startIndex = currentPage * ITEMS_PER_PAGE;
