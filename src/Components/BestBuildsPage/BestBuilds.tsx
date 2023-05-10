@@ -175,8 +175,6 @@ export default function BestBuilds() {
                         <input className='w-75' type='number' placeholder='Max' value={maxBudget} onKeyDown={handleMaxBudget} onChange={(event) => setMaxBudget(event.currentTarget.value)}></input>
                         {/* PC Components */}
                         {/* ====================================================================== */}
-                        <p className='mt-5'>Components</p>
-
                         {/* Better Price or Better Performance */}
                         {/* ================================================== */}
                         <p className='mt-5'>Better Price or Better Performance</p>
@@ -188,13 +186,6 @@ export default function BestBuilds() {
                         </InputGroup>
                         {/*Rgb or No Rgb  */}
                         {/* ========================================================== */}
-                        <p className='mt-5'>RGB</p>
-                        <InputGroup className="mb-3">
-                            <InputGroup.Checkbox />RGB
-                        </InputGroup>
-                        <InputGroup className="mb-3">
-                            <InputGroup.Checkbox />No RGB
-                        </InputGroup>
                         <Button>Apply filters</Button>
                     </div>
                 </Col>
