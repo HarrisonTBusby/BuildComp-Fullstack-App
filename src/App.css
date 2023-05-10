@@ -477,3 +477,12 @@ a {
 .pagination .disabled a {
     color: rgb(190, 190, 190);
 }
+
+.ddButton{
+    background-color: white;
+
+}
+
+.ddButton:hover{
+    background-color: gray;
+}

@@ -26,97 +26,97 @@ interface CpuData {
 }
 
 interface GPUData {
-    id:number;
-    title:string;
-    price:string;
-    image_url:string;
-    item_url:string;
-    type:string;
-    socketType:string;
-    memory:number;
-    perfCoreClock:number;
-    chipset:string;
+    id: number;
+    title: string;
+    price: string;
+    image_url: string;
+    item_url: string;
+    type: string;
+    socketType: string;
+    memory: number;
+    perfCoreClock: number;
+    chipset: string;
 }
 
 interface CaseData {
-    id:number;
-    title:string;
-    price:string;
-    image_url:string;
-    item_url:string;
-    type:string;
-    size:string;
-    caseColor:string;
+    id: number;
+    title: string;
+    price: string;
+    image_url: string;
+    item_url: string;
+    type: string;
+    size: string;
+    caseColor: string;
 }
 
-interface HardDrive {
-    id:number;
-    title:string;
-    price:string;
-    image_url:string;
-    item_url:string;
-    type:string;
-    storageCapacity:string;
-    PCIeType:string;
+interface HardDriveData {
+    id: number;
+    title: string;
+    price: string;
+    image_url: string;
+    item_url: string;
+    type: string;
+    storageCapacity: string;
+    PCIeType: string;
 }
 
 interface MotherboardData {
-    id:number;
-    title:string;
-    price:string;
-    image_url:string;
-    item_url:string;
-    type:string;
-    socketType:string;
-    gpuPort:string;
-    ramType:string;
-    ramMax:number;
-    memorySlots:number;
-    chipset:string;
+    id: number;
+    title: string;
+    price: string;
+    image_url: string;
+    item_url: string;
+    type: string;
+    socketType: string;
+    gpuPort: string;
+    ramType: string;
+    ramMax: number;
+    memorySlots: number;
+    chipset: string;
     PCIeSlotNumber: number;
 }
 
 interface HeatsinkData {
-    id:number;
-    title:string;
-    price:string;
-    image_url:string;
-    item_url:string;
-    type:string;
-    color:string; 
+    id: number;
+    title: string;
+    price: string;
+    image_url: string;
+    item_url: string;
+    type: string;
+    color: string;
     fanRPM: string;
-    fanNoise:number;
-    isWaterCooled:boolean;
+    fanNoise: number;
+    isWaterCooled: boolean;
 }
 
-interface PowerSupplyData{
-    id:number;
-    title:string;
-    price:string;
-    image_url:string;
-    item_url:string;
-    type:string;
-    wattage:number;
-    color:string;
-    EPS8ConnectorNum:number;
-    PCIe62ConnectorNum:number;
-    PCIe6ConnectorNum:number;
-    SataConnectors:number;
-    Molex4ConnectorNum:number;
+interface PowerSupplyData {
+    id: number;
+    title: string;
+    price: string;
+    image_url: string;
+    item_url: string;
+    type: string;
+    wattage: number;
+    color: string;
+    EPS8ConnectorNum: number;
+    PCIe62ConnectorNum: number;
+    PCIe6ConnectorNum: number;
+    SataConnectors: number;
+    Molex4ConnectorNum: number;
 }
 
 interface RamData {
-    id:number;
-    title:string;
-    price:string;
-    image_url:string;
-    item_url:string;
-    type:string;
-    color:string;
-    ramType:string;
-    ramSpeed:string;
-    moduleAmount:string;
-    firstWordLatency:number;
+    id: number;
+    title: string;
+    price: string;
+    image_url: string;
+    item_url: string;
+    type: string;
+    color: string;
+    ramType: string;
+    ramSpeed: string;
+    moduleAmount: string;
+    firstWordLatency: number;
 }
 
 // interface AllCpuData {
@@ -140,19 +140,106 @@ export default function Parts() {
         }]
     }
 
-    type Component = 'Cpu' | 'Gpu' | 'Motherboard' | 'Case' | 'RAM' | 'Power Supply' | 'Heat Sink' | 'Hard Drives';
-    const [selectedComponent, setSelectedComponent] = useState<Component>('Cpu');
+    type Component = 'Cpu' | 'Gpu' | 'Motherboard' | 'Case' | 'RAM' | 'Power Supply' | 'Heat Sink' | 'Hard Drive';
+    const [selectedComponent, setSelectedComponent] = useState<Component | null>(null);
     const [minBudget, setMinBudget] = useState<string>('');
     const [maxBudget, setMaxBudget] = useState<string>('');
     const size = useWindowSize();
+    const [componentData, setComponentData] = useState<Component[]>([]);
     const [cpuData, setCpuData] = useState<CpuData[]>([]);
+    const [gpuData, setGpuData] = useState<GPUData[]>([]);
+    const [motherboardData, setMotherboardData] = useState<MotherboardData[]>([]);
+    const [caseData, setCaseData] = useState<CaseData[]>([]);
+    const [ramData, setRamData] = useState<RamData[]>([]);
+    const [psData, setPsData] = useState<PowerSupplyData[]>([]);
+    const [heatsinkData, setHeatsinkData] = useState<HeatsinkData[]>([]);
+    const [hardDriveData, setHardDriveData] = useState<HardDriveData[]>([]);
 
     // For Dropdown values
-    const handleComponentSelection = (component: Component) => {
+    function handleComponentSelect(component: Component) {
+        // When a new component is selected, clear the data for any previously selected component
         setSelectedComponent(component);
-        console.log(selectedComponent);
-    };
+        setComponentData([]);
 
+        switch (component) {
+            case 'Cpu':
+                setCpuData([]);
+                break;
+            case 'Gpu':
+                setGpuData([]);
+                break;
+            case 'Motherboard':
+                setMotherboardData([]);
+                break;
+            case 'Power Supply':
+                setPsData([]);
+                break;
+            case 'Case':
+                setCaseData([]);
+                break;
+            case 'Heat Sink':
+                setHeatsinkData([]);
+                break;
+            case 'Hard Drive':
+                setHardDriveData([]);
+                break;
+            case 'RAM':
+                setRamData([]);
+                break;
+            default:
+                break;
+        }
+        fetchData();
+    }
+
+
+    async function fetchData() {
+        if (!selectedComponent) {
+            return;
+        }
+
+        let data;
+
+        switch (selectedComponent) {
+            case 'Cpu':
+                data = await GetPartData('Cpu');
+                setCpuData(data);
+                break;
+            case 'Gpu':
+                data = await GetPartData('Gpu');
+                setGpuData(data);
+                break;
+            case 'Motherboard':
+                data = await GetPartData('Motherboard');
+                setMotherboardData(data);
+                break;
+            case 'Power Supply':
+                data = await GetPartData('Ps');
+                setPsData(data);
+                break;
+            case 'Case':
+                data = await GetPartData('Case');
+                setCaseData(data);
+                break;
+            case 'Heat Sink':
+                data = await GetPartData('Heatsink');
+                setHeatsinkData(data);
+                break;
+            case 'Hard Drive':
+                data = await GetPartData('HardDrive');
+                setHardDriveData(data);
+                break;
+            case 'RAM':
+                data = await GetPartData('Ram');
+                setRamData(data);
+                break;
+            default:
+                break;
+        }
+
+        setComponentData(data);
+        console.log(data)
+    }
     //HandlesPaginationButtons
     const handlePageChange = (selectedPage: { selected: number }) => {
         setCurrentPage(selectedPage.selected);
@@ -168,7 +255,7 @@ export default function Parts() {
     const totalPages = Math.ceil(TOTAL_ITEMS / ITEMS_PER_PAGE);
 
     //WHY ONLY WORK ON TYPE ANY!? NEEDS FIX AHHH!!!
-    const ItemList = ({cpuData}: any) => {
+    const ItemList = ({ cpuData }: any) => {
         const startIndex = currentPage * ITEMS_PER_PAGE;
         const endIndex = startIndex + ITEMS_PER_PAGE;
         const itemsToDisplay = cpuData.slice(startIndex, endIndex);
@@ -178,16 +265,16 @@ export default function Parts() {
                 {itemsToDisplay.map((item: CpuData) => (
                     <div key={item.id}>
                         <Card style={{ width: '16rem', height: '100%' }}>
-                            <Card.Img variant="top" src={item.image_url} style={{width:'auto', height:"254px"}}/>
+                            <Card.Img variant="top" src={item.image_url} style={{ width: 'auto', height: "254px" }} />
                             <Card.Body>
-                            <Link to={item.item_url} target='_blank'><u>{item.title}</u></Link>
+                                <Link to={item.item_url} target='_blank'><u>{item.title}</u></Link>
                                 <div>
                                     <div>${item.price}</div>
                                     <div>Cores: {item.cores}</div>
                                     <div>Performance Clock: {item.perfCoreClock}</div>
                                     <div>{item.type}</div>
                                 </div>
-                                
+
                             </Card.Body>
                         </Card>
                     </div>
@@ -196,20 +283,20 @@ export default function Parts() {
         );
     };
 
-    useEffect(() => {
-        const HandleGetData = async () => {
-            const data = await GetPartData('CPU')
-            setCpuData(data)
+    //useEffect(() => {
+    //const HandleGetData = async () => {
+    //const data = await GetPartData("Cpu")
+    //setCpuData(data)
 
 
-            console.log(data)
-            //console.log(cpuData)
-            //console.log('why');
-        }
+    // console.log(data)
+    //console.log(cpuData)
+    //console.log('why');
+    //}
 
-        HandleGetData()
-        //console.log(cpuData)
-    }, [])
+    //HandleGetData()
+    //console.log(cpuData)
+    // }, [])
 
     //console.log('once')
     //HandleGetData()
@@ -266,30 +353,30 @@ export default function Parts() {
                                             PC Components
                                         </Dropdown.Toggle>
 
-                                        <Dropdown.Menu className='ddButton'>
+                                        <Dropdown.Menu >
                                             <OverlayTrigger placement="right" overlay={renderTooltip('Provides the instructions and processing power the computer needs to do its work. The more powerful and updated your processor, the faster your computer can complete its tasks.')}>
-                                                <Dropdown.Item onClick={() => handleComponentSelection('Cpu')}>CPU</Dropdown.Item>
+                                                <Dropdown.Item onClick={() => handleComponentSelect('Cpu')} className='ddButton'>CPU</Dropdown.Item>
                                             </OverlayTrigger>
                                             <OverlayTrigger placement="right" overlay={renderTooltip('Helps handle graphics-related work like graphics, effects, and videos')}>
-                                                <Dropdown.Item onClick={() => handleComponentSelection('Gpu')}>GPU</Dropdown.Item>
+                                                <Dropdown.Item onClick={() => handleComponentSelect('Gpu')} className='ddButton'>GPU</Dropdown.Item>
                                             </OverlayTrigger>
                                             <OverlayTrigger placement="right" overlay={renderTooltip('The circuit board that connects all of your hardware to your processor, distributes electricity from your power supply, and defines the types of storage devices, memory modules, and graphics cards (among other expansion cards) that can connect to your PC.')}>
-                                                <Dropdown.Item onClick={() => handleComponentSelection('Motherboard')}>Motherboard</Dropdown.Item>
+                                                <Dropdown.Item onClick={() => handleComponentSelect('Motherboard')} className='ddButton'>Motherboard</Dropdown.Item>
                                             </OverlayTrigger>
                                             <OverlayTrigger placement="right" overlay={renderTooltip('Container for all PC Components')}>
-                                                <Dropdown.Item onClick={() => handleComponentSelection('Case')}>Case</Dropdown.Item>
+                                                <Dropdown.Item onClick={() => handleComponentSelect('Case')} className='ddButton'>Case</Dropdown.Item>
                                             </OverlayTrigger>
                                             <OverlayTrigger placement="right" overlay={renderTooltip('RAMs purpose is to store the short term data that a PC requires to properly operate.')}>
-                                                <Dropdown.Item onClick={() => handleComponentSelection('RAM')}>RAM</Dropdown.Item>
+                                                <Dropdown.Item onClick={() => handleComponentSelect('RAM')} className='ddButton'>RAM</Dropdown.Item>
                                             </OverlayTrigger>
                                             <OverlayTrigger placement="right" overlay={renderTooltip('Pulls power from your wall outlet and distribute it throughout your PC.')}>
-                                                <Dropdown.Item onClick={() => handleComponentSelection('Power Supply')}>Power Supply</Dropdown.Item>
+                                                <Dropdown.Item onClick={() => handleComponentSelect('Power Supply')} className='ddButton'>Power Supply</Dropdown.Item>
                                             </OverlayTrigger>
                                             <OverlayTrigger placement="right" overlay={renderTooltip('Properly removes heat from device components to improve device performance and extend its life. And usually, a heat sink incorporates a fan or other mechanism to reduce the temperature of a hardware component, such as a processor.')}>
-                                                <Dropdown.Item onClick={() => handleComponentSelection('Heat Sink')}>Heat Sink</Dropdown.Item>
+                                                <Dropdown.Item onClick={() => handleComponentSelect('Heat Sink')} className='ddButton'>Heat Sink</Dropdown.Item>
                                             </OverlayTrigger>
                                             <OverlayTrigger placement="right" overlay={renderTooltip('A hard drive is the hardware component that stores all of your digital content. Your documents, pictures, music, videos, programs, application preferences, and operating system represent digital content stored on a hard drive.')}>
-                                                <Dropdown.Item onClick={() => handleComponentSelection('Hard Drives')}>Hard Drives</Dropdown.Item>
+                                                <Dropdown.Item onClick={() => handleComponentSelect('Hard Drive')} className='ddButton'>Hard Drives</Dropdown.Item>
                                             </OverlayTrigger>
                                         </Dropdown.Menu>
                                     </Dropdown>
@@ -342,30 +429,30 @@ export default function Parts() {
                                 PC Components
                             </Dropdown.Toggle>
 
-                            <Dropdown.Menu className='ddButton'>
+                            <Dropdown.Menu>
                                 <OverlayTrigger placement="right" overlay={renderTooltip('Provides the instructions and processing power the computer needs to do its work. The more powerful and updated your processor, the faster your computer can complete its tasks.')}>
-                                    <Dropdown.Item onClick={() => handleComponentSelection('Cpu')}>CPU</Dropdown.Item>
+                                    <Dropdown.Item onClick={() => handleComponentSelect('Cpu')} className='ddButton'>CPU</Dropdown.Item>
                                 </OverlayTrigger>
                                 <OverlayTrigger placement="right" overlay={renderTooltip('Helps handle graphics-related work like graphics, effects, and videos')}>
-                                    <Dropdown.Item onClick={() => handleComponentSelection('Gpu')}>GPU</Dropdown.Item>
+                                    <Dropdown.Item onClick={() => handleComponentSelect('Gpu')} className='ddButton'>GPU</Dropdown.Item>
                                 </OverlayTrigger>
                                 <OverlayTrigger placement="right" overlay={renderTooltip('The circuit board that connects all of your hardware to your processor, distributes electricity from your power supply, and defines the types of storage devices, memory modules, and graphics cards (among other expansion cards) that can connect to your PC.')}>
-                                    <Dropdown.Item onClick={() => handleComponentSelection('Motherboard')}>Motherboard</Dropdown.Item>
+                                    <Dropdown.Item onClick={() => handleComponentSelect('Motherboard')} className='ddButton'>Motherboard</Dropdown.Item>
                                 </OverlayTrigger>
                                 <OverlayTrigger placement="right" overlay={renderTooltip('Container for all PC Components')}>
-                                    <Dropdown.Item onClick={() => handleComponentSelection('Case')}>Case</Dropdown.Item>
+                                    <Dropdown.Item onClick={() => handleComponentSelect('Case')} className='ddButton'>Case</Dropdown.Item>
                                 </OverlayTrigger>
                                 <OverlayTrigger placement="right" overlay={renderTooltip('RAMs purpose is to store the short term data that a PC requires to properly operate.')}>
-                                    <Dropdown.Item onClick={() => handleComponentSelection('RAM')}>RAM</Dropdown.Item>
+                                    <Dropdown.Item onClick={() => handleComponentSelect('RAM')} className='ddButton'>RAM</Dropdown.Item>
                                 </OverlayTrigger>
                                 <OverlayTrigger placement="right" overlay={renderTooltip('Pulls power from your wall outlet and distribute it throughout your PC.')}>
-                                    <Dropdown.Item onClick={() => handleComponentSelection('Power Supply')}>Power Supply</Dropdown.Item>
+                                    <Dropdown.Item onClick={() => handleComponentSelect('Power Supply')} className='ddButton'>Power Supply</Dropdown.Item>
                                 </OverlayTrigger>
                                 <OverlayTrigger placement="right" overlay={renderTooltip('Properly removes heat from device components to improve device performance and extend its life. And usually, a heat sink incorporates a fan or other mechanism to reduce the temperature of a hardware component, such as a processor.')}>
-                                    <Dropdown.Item onClick={() => handleComponentSelection('Heat Sink')}>Heat Sink</Dropdown.Item>
+                                    <Dropdown.Item onClick={() => handleComponentSelect('Heat Sink')} className='ddButton'>Heat Sink</Dropdown.Item>
                                 </OverlayTrigger>
                                 <OverlayTrigger placement="right" overlay={renderTooltip('A hard drive is the hardware component that stores all of your digital content. Your documents, pictures, music, videos, programs, application preferences, and operating system represent digital content stored on a hard drive.')}>
-                                    <Dropdown.Item onClick={() => handleComponentSelection('Hard Drives')}>Hard Drives</Dropdown.Item>
+                                    <Dropdown.Item onClick={() => handleComponentSelect('Hard Drive')} className='ddButton'>Hard Drives</Dropdown.Item>
                                 </OverlayTrigger>
                             </Dropdown.Menu>
                         </Dropdown>
@@ -386,7 +473,7 @@ export default function Parts() {
                 <Col md={9} className='px-2'>
                     {/* <PaginationExample /> */}
                     <div className="">
-                        <ItemList cpuData={cpuData}/>
+                        <ItemList cpuData={cpuData} />
                         <div className="d-flex justify-content-center mt-4">
                             <Paginate
                                 previousLabel={"<"}
