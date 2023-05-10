@@ -140,7 +140,6 @@ export default function Parts() {
         }]
     }
 
-   
     const [selectedComponent, setSelectedComponent] = useState<string>('');
     const [minBudget, setMinBudget] = useState<string>('');
     const [maxBudget, setMaxBudget] = useState<string>('');
@@ -163,6 +162,60 @@ export default function Parts() {
         console.log(data);
     }
 
+
+    async function fetchData() {
+        if (!selectedComponent) {
+            return;
+        }
+
+        let data: any[];
+
+        switch (selectedComponent) {
+            case 'Cpu':
+                data = await GetPartData('Cpu');
+                setCpuData(data);
+                console.log(data)
+                break;
+            case 'Gpu':
+                data = await GetPartData('Gpu');
+                setGpuData(data);
+                console.log(data)
+                break;
+            case 'Motherboard':
+                data = await GetPartData('Motherboard');
+                setMotherboardData(data);
+                console.log(data)
+                break;
+            case 'Power Supply':
+                data = await GetPartData('Ps');
+                setPsData(data);
+                console.log(data)
+                break;
+            case 'Case':
+                data = await GetPartData('Case');
+                setCaseData(data);
+                console.log(data)
+                break;
+            case 'Heat Sink':
+                data = await GetPartData('Heatsink');
+                setHeatsinkData(data);
+                console.log(data)
+                break;
+            case 'Hard Drive':
+                data = await GetPartData('HardDrive');
+                setHardDriveData(data);
+                console.log(data)
+                break;
+            case 'RAM':
+                data = await GetPartData('Ram');
+                setRamData(data);
+                console.log(data)
+                break;
+            default:
+                break;
+        }
+        
+    }
     //HandlesPaginationButtons
     const handlePageChange = (selectedPage: { selected: number }) => {
         setCurrentPage(selectedPage.selected);
