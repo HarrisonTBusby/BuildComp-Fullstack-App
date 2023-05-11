@@ -254,7 +254,7 @@ export default function Parts() {
                 {itemsToDisplay.map((item: GpuData) => (
                     <div key={item.id}>
                         <Card style={{ width: '16rem', height: '100%' }}>
-                            <Card.Img variant="top" src={item.image_url} style={{ width: 'auto', height: "254px" }} />
+                            <Card.Img className="item-image" variant="top" src={item.image_url} style={{ width: 'auto', height: "254px" }} />
                             <Card.Body>
                                 <Link to={item.item_url} target='_blank'><u>{item.title}</u></Link>
                                 <div>
@@ -283,7 +283,7 @@ export default function Parts() {
                 {itemsToDisplay.map((item: MotherboardData) => (
                     <div key={item.id}>
                         <Card style={{ width: '16rem', height: '100%' }}>
-                            <Card.Img variant="top" src={item.image_url} style={{ width: 'auto', height: "254px" }} />
+                            <Card.Img className="item-image" variant="top" src={item.image_url} style={{ width: 'auto', height: "254px" }} />
                             <Card.Body>
                                 <Link to={item.item_url} target='_blank'><u>{item.title}</u></Link>
                                 <div>
@@ -314,7 +314,7 @@ export default function Parts() {
                 {itemsToDisplay.map((item: CaseData) => (
                     <div key={item.id}>
                         <Card style={{ width: '16rem', height: '100%' }}>
-                            <Card.Img variant="top" src={item.image_url} style={{ width: 'auto', height: "254px" }} />
+                            <Card.Img className="item-image" variant="top" src={item.image_url} style={{ width: 'auto', height: "254px" }} />
                             <Card.Body>
                                 <Link to={item.item_url} target='_blank'><u>{item.title}</u></Link>
                                 <div>
@@ -342,7 +342,7 @@ export default function Parts() {
                 {itemsToDisplay.map((item: RamData) => (
                     <div key={item.id}>
                         <Card style={{ width: '16rem', height: '100%' }}>
-                            <Card.Img variant="top" src={item.image_url} style={{ width: 'auto', height: "254px" }} />
+                            <Card.Img className="item-image" variant="top" src={item.image_url} style={{ width: 'auto', height: "254px" }} />
                             <Card.Body>
                                 <Link to={item.item_url} target='_blank'><u>{item.title}</u></Link>
                                 <div>
@@ -373,7 +373,7 @@ export default function Parts() {
                 {itemsToDisplay.map((item: PowerSupplyData) => (
                     <div key={item.id}>
                         <Card style={{ width: '16rem', height: '100%' }}>
-                            <Card.Img variant="top" src={item.image_url} style={{ width: 'auto', height: "254px" }} />
+                            <Card.Img className="item-image" variant="top" src={item.image_url} style={{ width: 'auto', height: "254px" }} />
                             <Card.Body>
                                 <Link to={item.item_url} target='_blank'><u>{item.title}</u></Link>
                                 <div>
@@ -407,7 +407,7 @@ export default function Parts() {
                 {itemsToDisplay.map((item: HeatsinkData) => (
                     <div key={item.id}>
                         <Card style={{ width: '16rem', height: '100%' }}>
-                            <Card.Img variant="top" src={item.image_url} style={{ width: 'auto', height: "254px" }} />
+                            <Card.Img className="item-image" variant="top" src={item.image_url} style={{ width: 'auto', height: "254px" }} />
                             <Card.Body>
                                 <Link to={item.item_url} target='_blank'><u>{item.title}</u></Link>
                                 <div>
@@ -437,7 +437,7 @@ export default function Parts() {
                 {itemsToDisplay.map((item: HardDriveData) => (
                     <div key={item.id}>
                         <Card style={{ width: '16rem', height: '100%' }}>
-                            <Card.Img variant="top" src={item.image_url} style={{ width: 'auto', height: "254px" }} />
+                            <Card.Img className="item-image" variant="top" src={item.image_url} style={{ width: 'auto', height: "254px" }} />
                             <Card.Body>
                                 <Link to={item.item_url} target='_blank'><u>{item.title}</u></Link>
                                 <div>

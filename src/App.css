@@ -487,6 +487,12 @@ a {
     background-color: gray;
 }
 
+.item-image {
+    cursor: pointer;
+    transform: scale(1);
+    transition: transform 0.45s cubic-bezier(0.165,0.84,0.44,1)
+}
+
 .item-image:hover {
-    scale: .95;
+    transform: scale(.9);
 }
