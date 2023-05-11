@@ -154,6 +154,8 @@ export default function Parts() {
     const [heatsinkData, setHeatsinkData] = useState<HeatsinkData[]>([]);
     const [hardDriveData, setHardDriveData] = useState<HardDriveData[]>([]);
 
+    const [totalItems, setTotalItems] = useState(0);
+
     const [componentType, setComponentType] = useState<string>('default');
     // For Dropdown values
     async function handleComponentSelect(component: string) {
@@ -161,27 +163,36 @@ export default function Parts() {
         const data = await GetPartData(component);
         if(component == "Cpu"){
             setCpuData(data);
+            setTotalItems(data.length)
             setComponentType('Cpu')
         }else if(component == "Gpu"){
             setGpuData(data);
+            setTotalItems(data.length)
             setComponentType('Gpu')
         }else if(component == "Motherboard"){
             setMotherboardData(data);
+            setTotalItems(data.length)
             setComponentType('Motherboard')
         }else if(component == "Case"){
             setCaseData(data)
+            setTotalItems(data.length)
             setComponentType('Case')
         }else if(component == "Ram"){
             setRamData(data)
+            setTotalItems(data.length)
             setComponentType('Ram')
         }else if(component == 'Ps'){
             setPsData(data)
+            setTotalItems(data.length)
             setComponentType('Ps')
         }else if(component == "Heatsink"){
             setHeatsinkData(data)
+            setTotalItems(data.length)
             setComponentType('Heatsink')
-        }else{
+        }else if(component == "HardDrive"){
+            setTotalItems(data.length)
             setHardDriveData(data)
+            setComponentType('HardDrive')
         }
         console.log(data);
         
@@ -199,7 +210,7 @@ export default function Parts() {
     let cpuSize = cpuData.length;
     const TOTAL_ITEMS = cpuSize;
 
-    const totalPages = Math.ceil(TOTAL_ITEMS / ITEMS_PER_PAGE);
+    const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE);
 
     //WHY ONLY WORK ON TYPE ANY!? NEEDS FIX AHHH!!!
     const CpuList = ({ cpuData }: any) => {
@@ -212,7 +223,10 @@ export default function Parts() {
                 {itemsToDisplay.map((item: CpuData) => (
                     <div key={item.id}>
                         <Card style={{ width: '16rem', height: '100%' }}>
-                            <Card.Img variant="top" src={item.image_url} style={{ width: 'auto', height: "254px" }} />
+                            <Link to={item.item_url} target='_blank'>
+                            <Card.Img className='item-image' variant="top" src={item.image_url} style={{ width: 'auto', height: "254px" }} />
+
+                            </Link>
                             <Card.Body>
                                 <Link to={item.item_url} target='_blank'><u>{item.title}</u></Link>
                                 <div>

@@ -486,3 +486,7 @@ a {
 .ddButton:hover{
     background-color: gray;
 }
+
+.item-image:hover {
+    scale: .95;
+}
