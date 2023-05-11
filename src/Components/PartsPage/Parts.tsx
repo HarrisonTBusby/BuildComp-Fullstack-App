@@ -126,20 +126,6 @@ interface RamData {
 export default function Parts() {
     const navigate = useNavigate();
 
-    const dummyData = {
-        data: [{
-            cores: 64,
-            id: 1,
-            image_url: 'https',
-            item_url: 'https',
-            perfCoreClock: 6.5,
-            price: '199',
-            socketType: 'AM7',
-            title: 'AMD Ryzen 99',
-            type: 'CPU'
-        }]
-    }
-
     const [selectedComponent, setSelectedComponent] = useState<string>('');
     const [minBudget, setMinBudget] = useState<string>('');
     const [maxBudget, setMaxBudget] = useState<string>('');
@@ -197,6 +183,18 @@ export default function Parts() {
         console.log(data);
         
     }
+
+    useEffect(() => {
+        async function getData(){
+        const data = await GetPartData('Cpu');
+        setCpuData(data);
+        setTotalItems(data.length)
+        setComponentType('Cpu')
+        }
+        getData()
+       
+    },[])
+        
 
     //HandlesPaginationButtons
     const handlePageChange = (selectedPage: { selected: number }) => {
@@ -510,7 +508,7 @@ export default function Parts() {
     };
 
     const sortByPrice = (items: any[]) => {
-        return items.sort((a, b) => a.price - b.price);
+        return items.sort((minBudget, maxBudget) => minBudget.price - maxBudget.price);
       };
 
     const priceSort = () => {
