@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { ComponentType, useEffect, useState } from 'react';
 import NavbarComponent from '../Navbar/Navbar';
 import { Col, Dropdown, InputGroup, OverlayTrigger, Tooltip, Button, Card } from 'react-bootstrap';
 import Footer from '../Footer/Footer';
@@ -500,17 +500,40 @@ export default function Parts() {
     const handleMinBudget = (event: React.KeyboardEvent<HTMLInputElement>) => {
         if (event.key == 'Enter') {
             setMinBudget(event.currentTarget.value);
-            //console.log(minBudget)
         }
     };
 
     const handleMaxBudget = (event: React.KeyboardEvent<HTMLInputElement>) => {
         if (event.key == 'Enter') {
-
             setMaxBudget(event.currentTarget.value);
-            //console.log(maxBudget)
         }
     };
+
+    const sortByPrice = (items: any[]) => {
+        return items.sort((a, b) => a.price - b.price);
+      };
+
+    const priceSort = () => {
+        if(componentType == 'Cpu'){
+            sortByPrice(cpuData);
+        }else if (componentType == 'Gpu'){
+            sortByPrice(gpuData);
+        }else if(componentType == "Motherboard"){
+            sortByPrice(motherboardData)
+        }else if(componentType == "Case"){
+            sortByPrice(caseData)
+        }else if(componentType == "Ram"){
+            sortByPrice(ramData)
+        }else if(componentType == "Ps"){
+            sortByPrice(psData)
+        }else if(componentType == "Heatsink"){
+            sortByPrice(heatsinkData)
+        }else{
+            sortByPrice(hardDriveData)
+        }
+    }
+
+    
 
     return (
         <div>
@@ -592,7 +615,7 @@ export default function Parts() {
                                     </InputGroup>
                                 </div>
                             </Col>
-                            <Button>Apply filters</Button>
+                            <Button onClick={() => priceSort()}>Apply filters</Button>
                         </Dropdown.Menu>
                     </Dropdown>
 
@@ -658,7 +681,7 @@ export default function Parts() {
                         </InputGroup>
                         {/*Rgb or No Rgb  */}
                         {/* ========================================================== */}
-                        <Button>Apply filters</Button>
+                        <Button onClick={() => priceSort()}>Apply filters</Button>
                     </div>
                 </Col>
                 <Col md={9} className='px-2'>
