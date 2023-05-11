@@ -154,24 +154,32 @@ export default function Parts() {
     const [heatsinkData, setHeatsinkData] = useState<HeatsinkData[]>([]);
     const [hardDriveData, setHardDriveData] = useState<HardDriveData[]>([]);
 
+    const [componentType, setComponentType] = useState<string>('default');
     // For Dropdown values
     async function handleComponentSelect(component: string) {
         
         const data = await GetPartData(component);
         if(component == "Cpu"){
             setCpuData(data);
+            setComponentType('Cpu')
         }else if(component == "Gpu"){
             setGpuData(data);
+            setComponentType('Gpu')
         }else if(component == "Motherboard"){
             setMotherboardData(data);
+            setComponentType('Motherboard')
         }else if(component == "Case"){
             setCaseData(data)
+            setComponentType('Case')
         }else if(component == "Ram"){
             setRamData(data)
+            setComponentType('Ram')
         }else if(component == 'Ps'){
             setPsData(data)
+            setComponentType('Ps')
         }else if(component == "Heatsink"){
             setHeatsinkData(data)
+            setComponentType('Heatsink')
         }else{
             setHardDriveData(data)
         }
@@ -433,6 +441,29 @@ export default function Parts() {
         );
     };
 
+    const SwitchComponent = () => {
+        switch(componentType) {
+            case 'Cpu':
+              return <CpuList cpuData={cpuData} />;
+            case 'Gpu':
+              return <GpuList gpuData={gpuData} />;
+            case 'Motherboard':
+              return <MotherboardList motherboardData={motherboardData} />;
+            case 'Case':
+              return <CaseList caseData={caseData} />;
+            case 'Ram':
+              return <RamList ramData={ramData} />;
+            case 'Ps':
+              return <PsList psData={psData} />;
+            case 'Heatsink':
+              return <HeatsinkList heatsinkData={heatsinkData} />;
+            case 'HardDrive':
+              return <HardDriveList hardDriveData={hardDriveData} />;
+            default:
+              return null;
+          }
+    }
+
     // For ToolTip on Dropdown
     const renderTooltip = (content: string) => {
         return <Tooltip id='button-tooltip'>{content}</Tooltip>;
@@ -606,14 +637,7 @@ export default function Parts() {
                     {/* <PaginationExample /> */}
                     <div className="">
                         
-                        <CpuList cpuData={cpuData} />
-                        <GpuList gpuData={gpuData}/>
-                        <MotherboardList motherboardData={motherboardData}/> 
-                        <CaseList caseData={caseData}/>
-                        <RamList ramData={ramData}/>
-                        <PsList psData={psData}/>
-                        <HeatsinkList heatsinkData={heatsinkData}/>
-                        <HardDriveList hardDriveData={hardDriveData}/>
+                        <SwitchComponent />
 
                         <div className="d-flex justify-content-center mt-4">
                             <Paginate
