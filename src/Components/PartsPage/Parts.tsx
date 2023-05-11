@@ -512,6 +512,7 @@ export default function Parts() {
                             <Col className='filterBackground p-3' md={3}>
                                 <div className='marginLeft2 filterBoxColor'>
                                     <Col className='marginLeft mt-5 mb-5'>
+                                    <p className='mt-5'>Components</p>
                                     <Dropdown className='bb-dropdown'>
                                         <Dropdown.Toggle className='dropdownSize'>
                                             PC Components
@@ -555,7 +556,7 @@ export default function Parts() {
                                     <input className='w-75' type='number' placeholder='Max' value={maxBudget} onKeyDown={handleMaxBudget} onChange={(event) => setMaxBudget(event.currentTarget.value)}></input>
                                     {/* PC Components */}
                                     {/* ====================================================================== */}
-                                    <p className='mt-5'>Components</p>
+                                    
                                     
 
                                     {/* Better Price or Better Performance */}
@@ -588,6 +589,7 @@ export default function Parts() {
                 <Col className='filterBackground large-filter p-3' md={3}>
                     <div className='marginLeft2 filterBoxColor'>
                         <Col className='marginLeft mt-5 mb-5'>
+                        <p className='mt-5'>Components</p>
                         <Dropdown className='bb-dropdown'>
                             <Dropdown.Toggle className='dropdownSize'>
                                 PC Components
@@ -631,7 +633,6 @@ export default function Parts() {
                         <input className='w-75' type='number' placeholder='Max' value={maxBudget} onKeyDown={handleMaxBudget} onChange={(event) => setMaxBudget(event.currentTarget.value)}></input>
                         {/* PC Components */}
                         {/* ====================================================================== */}
-                        <p className='mt-5'>Components</p>
                         
                         {/* Better Price or Better Performance */}
                         {/* ================================================== */}
