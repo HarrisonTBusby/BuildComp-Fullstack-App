@@ -512,19 +512,6 @@ export default function Parts() {
                             <Col className='filterBackground p-3' md={3}>
                                 <div className='marginLeft2 filterBoxColor'>
                                     <Col className='marginLeft mt-5 mb-5'>
-                                        <input type={'search'} placeholder='Search' className='w-100 searchWidth'></input>
-                                    </Col>
-                                    <p className='mt-4'>Filter</p>
-                                    <button className='clearFiltersBtn'>Clear Filters</button>
-                                    <hr />
-                                    {/* Budget */}
-                                    {/* ====================================================================== */}
-                                    <p>Budget</p>
-                                    <input className='w-75' type='number' placeholder='Min' value={minBudget} onKeyDown={handleMinBudget} onChange={(event) => setMinBudget(event.currentTarget.value)}></input>
-                                    <input className='w-75' type='number' placeholder='Max' value={maxBudget} onKeyDown={handleMaxBudget} onChange={(event) => setMaxBudget(event.currentTarget.value)}></input>
-                                    {/* PC Components */}
-                                    {/* ====================================================================== */}
-                                    <p className='mt-5'>Components</p>
                                     <Dropdown className='bb-dropdown'>
                                         <Dropdown.Toggle className='dropdownSize'>
                                             PC Components
@@ -557,6 +544,19 @@ export default function Parts() {
                                             </OverlayTrigger>
                                         </Dropdown.Menu>
                                     </Dropdown>
+                                    </Col>
+                                    <p className='mt-4'>Filter</p>
+                                    <button className='clearFiltersBtn'>Clear Filters</button>
+                                    <hr />
+                                    {/* Budget */}
+                                    {/* ====================================================================== */}
+                                    <p>Budget</p>
+                                    <input className='w-75' type='number' placeholder='Min' value={minBudget} onKeyDown={handleMinBudget} onChange={(event) => setMinBudget(event.currentTarget.value)}></input>
+                                    <input className='w-75' type='number' placeholder='Max' value={maxBudget} onKeyDown={handleMaxBudget} onChange={(event) => setMaxBudget(event.currentTarget.value)}></input>
+                                    {/* PC Components */}
+                                    {/* ====================================================================== */}
+                                    <p className='mt-5'>Components</p>
+                                    
 
                                     {/* Better Price or Better Performance */}
                                     {/* ================================================== */}
@@ -588,19 +588,6 @@ export default function Parts() {
                 <Col className='filterBackground large-filter p-3' md={3}>
                     <div className='marginLeft2 filterBoxColor'>
                         <Col className='marginLeft mt-5 mb-5'>
-                            <input type={'search'} placeholder='Search' className='w-100 searchWidth'></input>
-                        </Col>
-                        <p className='mt-4'>Filter</p>
-                        <button className='clearFiltersBtn'>Clear Filters</button>
-                        <hr />
-                        {/* Budget */}
-                        {/* ====================================================================== */}
-                        <p>Budget</p>
-                        <input className='w-75' type='number' placeholder='Min' value={minBudget} onKeyDown={handleMinBudget} onChange={(event) => setMinBudget(event.currentTarget.value)}></input>
-                        <input className='w-75' type='number' placeholder='Max' value={maxBudget} onKeyDown={handleMaxBudget} onChange={(event) => setMaxBudget(event.currentTarget.value)}></input>
-                        {/* PC Components */}
-                        {/* ====================================================================== */}
-                        <p className='mt-5'>Components</p>
                         <Dropdown className='bb-dropdown'>
                             <Dropdown.Toggle className='dropdownSize'>
                                 PC Components
@@ -633,6 +620,19 @@ export default function Parts() {
                                 </OverlayTrigger>
                             </Dropdown.Menu>
                         </Dropdown>
+                        </Col>
+                        <p className='mt-4'>Filter</p>
+                        <button className='clearFiltersBtn'>Clear Filters</button>
+                        <hr />
+                        {/* Budget */}
+                        {/* ====================================================================== */}
+                        <p>Budget</p>
+                        <input className='w-75' type='number' placeholder='Min' value={minBudget} onKeyDown={handleMinBudget} onChange={(event) => setMinBudget(event.currentTarget.value)}></input>
+                        <input className='w-75' type='number' placeholder='Max' value={maxBudget} onKeyDown={handleMaxBudget} onChange={(event) => setMaxBudget(event.currentTarget.value)}></input>
+                        {/* PC Components */}
+                        {/* ====================================================================== */}
+                        <p className='mt-5'>Components</p>
+                        
                         {/* Better Price or Better Performance */}
                         {/* ================================================== */}
                         <p className='mt-5'>Better Price or Better Performance</p>
