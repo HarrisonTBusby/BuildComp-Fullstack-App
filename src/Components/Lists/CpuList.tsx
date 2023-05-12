@@ -26,7 +26,6 @@ export default function CpuList(props: any) {
                                     <div>Performance Clock: {item.perfCoreClock}</div>
                                     <div>{item.type}</div>
                                 </div>
-
                             </Card.Body>
                         </Card>
                     </div>

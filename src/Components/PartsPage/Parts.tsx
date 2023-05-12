@@ -239,7 +239,7 @@ export default function Parts() {
                                     </Dropdown>
                                     </Col>
                                     <p className='mt-4'>Filter</p>
-                                    <button className='clearFiltersBtn'>Clear Filters</button>
+                                    <button onClick={() => handleComponentSelect(componentType)} className='clearFiltersBtn'>Clear Filters</button>
                                     <hr />
                                     {/* Budget */}
                                     {/* ====================================================================== */}
@@ -317,7 +317,7 @@ export default function Parts() {
                         </Dropdown>
                         </Col>
                         <p className='mt-4'>Filter</p>
-                        <button className='clearFiltersBtn'>Clear Filters</button>
+                        <button onClick={() => handleComponentSelect(componentType)} className='clearFiltersBtn'>Clear Filters</button>
                         <hr />
                         {/* Budget */}
                         {/* ====================================================================== */}
