@@ -2,7 +2,6 @@ import React, { ComponentType, useEffect, useState } from 'react';
 import NavbarComponent from '../Navbar/Navbar';
 import { Col, Dropdown, InputGroup, OverlayTrigger, Tooltip, Button, Card } from 'react-bootstrap';
 import Footer from '../Footer/Footer';
-import { PaginationExample } from '../Pagination/Pagination';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { saveToLocalStorageByName } from '../../Services/LocalStorage';
 import { useWindowSize } from '../../HelperFunctions';
@@ -12,116 +11,15 @@ import { CpuInfo } from 'os';
 import { NumberLiteralType } from 'typescript';
 import { Link, useNavigate } from 'react-router-dom';
 import { autocompleteClasses } from '@mui/material';
-
-interface CpuData {
-    cores: number;
-    id: number;
-    image_url: string;
-    item_url: string;
-    perfCoreClock: number;
-    price: string;
-    socketType: string;
-    title: string;
-    type: string
-}
-
-interface GpuData {
-    id: number;
-    title: string;
-    price: string;
-    image_url: string;
-    item_url: string;
-    type: string;
-    socketType: string;
-    memory: number;
-    perfCoreClock: number;
-    chipset: string;
-}
-
-interface CaseData {
-    id: number;
-    title: string;
-    price: string;
-    image_url: string;
-    item_url: string;
-    type: string;
-    size: string;
-    caseColor: string;
-}
-
-interface HardDriveData {
-    id: number;
-    title: string;
-    price: string;
-    image_url: string;
-    item_url: string;
-    type: string;
-    storageCapacity: string;
-    PCIeType: string;
-}
-
-interface MotherboardData {
-    id: number;
-    title: string;
-    price: string;
-    image_url: string;
-    item_url: string;
-    type: string;
-    socketType: string;
-    gpuPort: string;
-    ramType: string;
-    ramMax: number;
-    memorySlots: number;
-    chipset: string;
-    PCIeSlotNumber: number;
-}
-
-interface HeatsinkData {
-    id: number;
-    title: string;
-    price: string;
-    image_url: string;
-    item_url: string;
-    type: string;
-    color: string;
-    fanRPM: string;
-    fanNoise: number;
-    isWaterCooled: boolean;
-}
-
-interface PowerSupplyData {
-    id: number;
-    title: string;
-    price: string;
-    image_url: string;
-    item_url: string;
-    type: string;
-    wattage: number;
-    color: string;
-    EPS8ConnectorNum: number;
-    PCIe62ConnectorNum: number;
-    PCIe6ConnectorNum: number;
-    SataConnectors: number;
-    Molex4ConnectorNum: number;
-}
-
-interface RamData {
-    id: number;
-    title: string;
-    price: string;
-    image_url: string;
-    item_url: string;
-    type: string;
-    color: string;
-    ramType: string;
-    ramSpeed: string;
-    moduleAmount: string;
-    firstWordLatency: number;
-}
-
-// interface AllCpuData {
-//     data: CpuData[]
-// }
+import CaseList from '../Lists/CaseList';
+import CpuList from '../Lists/CpuList';
+import GpuList from '../Lists/GpuList';
+import MotherboardList from '../Lists/MotherboardList';
+import HardDriveList from '../Lists/HardDriveList';
+import HeatsinkList from '../Lists/HeatsinkList';
+import PsList from '../Lists/PsList';
+import RamList from '../Lists/RamList';
+import { CpuData, GpuData, CaseData, HardDriveData, MotherboardData, HeatsinkData, PowerSupplyData, RamData } from '../../Interfaces/PartDataInterfaces';
 
 export default function Parts() {
     const navigate = useNavigate();
@@ -133,8 +31,8 @@ export default function Parts() {
     const [componentData, setComponentData] = useState<any[]>([]);
     const [cpuData, setCpuData] = useState<CpuData[]>([]);
     const [gpuData, setGpuData] = useState<GpuData[]>([]);
-    const [motherboardData, setMotherboardData] = useState<MotherboardData[]>([]);
     const [caseData, setCaseData] = useState<CaseData[]>([]);
+    const [motherboardData, setMotherboardData] = useState<MotherboardData[]>([]);
     const [ramData, setRamData] = useState<RamData[]>([]);
     const [psData, setPsData] = useState<PowerSupplyData[]>([]);
     const [heatsinkData, setHeatsinkData] = useState<HeatsinkData[]>([]);
@@ -205,285 +103,28 @@ export default function Parts() {
 
     const ITEMS_PER_PAGE = 6;
 
-    let cpuSize = cpuData.length;
-    const TOTAL_ITEMS = cpuSize;
+
 
     const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE);
-
-    //WHY ONLY WORK ON TYPE ANY!? NEEDS FIX AHHH!!!
-    const CpuList = ({ cpuData }: any) => {
-        const startIndex = currentPage * ITEMS_PER_PAGE;
-        const endIndex = startIndex + ITEMS_PER_PAGE;
-        const itemsToDisplay = cpuData.slice(startIndex, endIndex);
-
-        return (
-            <div className='cards'>
-                {itemsToDisplay.map((item: CpuData) => (
-                    <div key={item.id}>
-                        <Card style={{ width: '16rem', height: '100%' }}>
-                            <Link to={item.item_url} target='_blank'>
-                                <Card.Img className='item-image' variant="top" src={item.image_url} style={{ width: '100%', height: '16rem', margin: '0 auto' }} />
-                            </Link>
-                            <Card.Body>
-                                <Link to={item.item_url} target='_blank'><u>{item.title}</u></Link>
-                                <div>
-                                    <div>${item.price}</div>
-                                    <div>Cores: {item.cores}</div>
-                                    <div>Performance Clock: {item.perfCoreClock}</div>
-                                    <div>{item.type}</div>
-                                </div>
-
-                            </Card.Body>
-                        </Card>
-                    </div>
-                ))}
-            </div>
-        );
-    };
-
-    const GpuList = ({ gpuData }: any) => {
-        const startIndex = currentPage * ITEMS_PER_PAGE;
-        const endIndex = startIndex + ITEMS_PER_PAGE;
-        const itemsToDisplay = gpuData.slice(startIndex, endIndex);
-
-        return (
-            <div className='cards'>
-                {itemsToDisplay.map((item: GpuData) => (
-                    <div key={item.id}>
-                        <Card style={{ width: '16rem', height: '100%' }}>
-                            <Link to={item.item_url} target='_blank'>
-                                <Card.Img className='item-image' variant="top" src={item.image_url} style={{ width: '100%', height: "auto" }} />
-                            </Link>
-                            <Card.Body>
-                                <Link to={item.item_url} target='_blank'><u>{item.title}</u></Link>
-                                <div>
-                                    <div>${item.price}</div>
-                                    <div>Memory: {item.memory}</div>
-                                    <div>Performance Clock: {item.perfCoreClock}</div>
-                                    <div>Chipset: {item.chipset}</div>
-                                    <div>{item.type}</div>
-                                </div>
-
-                            </Card.Body>
-                        </Card>
-                    </div>
-                ))}
-            </div>
-        );
-    };
-
-    const MotherboardList = ({ motherboardData }: any) => {
-        const startIndex = currentPage * ITEMS_PER_PAGE;
-        const endIndex = startIndex + ITEMS_PER_PAGE;
-        const itemsToDisplay = motherboardData.slice(startIndex, endIndex);
-
-        return (
-            <div className='cards'>
-                {itemsToDisplay.map((item: MotherboardData) => (
-                    <div key={item.id}>
-                        <Card style={{ width: '16rem', height: '100%' }}>
-                            <Link to={item.item_url} target='_blank'>
-                                <Card.Img className='item-image' variant="top" src={item.image_url} style={{ width: '100%', height: "auto" }} />
-                            </Link>
-                            <Card.Body>
-                                <Link to={item.item_url} target='_blank'><u>{item.title}</u></Link>
-                                <div>
-                                    <div>${item.price}</div>
-                                    <div>Ram Type: {item.ramType}</div>
-                                    <div>Ram Max: {item.ramMax}</div>
-                                    <div>Memory Slots: {item.memorySlots}</div>
-                                    <div>Chipset: {item.chipset}</div>
-                                    <div>{item.type}</div>
-                                    <div># of PCIe Slots: {item.PCIeSlotNumber}</div>
-                                </div>
-
-                            </Card.Body>
-                        </Card>
-                    </div>
-                ))}
-            </div>
-        );
-    };
-
-    const CaseList = ({ caseData }: any) => {
-        const startIndex = currentPage * ITEMS_PER_PAGE;
-        const endIndex = startIndex + ITEMS_PER_PAGE;
-        const itemsToDisplay = caseData.slice(startIndex, endIndex);
-
-        return (
-            <div className='cards'>
-                {itemsToDisplay.map((item: CaseData) => (
-                    <div key={item.id}>
-                        <Card style={{ width: '16rem', height: '100%' }}>
-                            <Link to={item.item_url} target='_blank'>
-                                <Card.Img className='item-image' variant="top" src={item.image_url} style={{ width: '100%', height: "auto" }} />
-                            </Link>
-                            <Card.Body>
-                                <Link to={item.item_url} target='_blank'><u>{item.title}</u></Link>
-                                <div>
-                                    <div>${item.price}</div>
-                                    <div>Size: {item.size}</div>
-                                    <div>Color: {item.caseColor}</div>
-                                    <div>{item.type}</div>
-                                </div>
-
-                            </Card.Body>
-                        </Card>
-                    </div>
-                ))}
-            </div>
-        );
-    };
-
-    const RamList = ({ ramData }: any) => {
-        const startIndex = currentPage * ITEMS_PER_PAGE;
-        const endIndex = startIndex + ITEMS_PER_PAGE;
-        const itemsToDisplay = ramData.slice(startIndex, endIndex);
-
-        return (
-            <div className='cards'>
-                {itemsToDisplay.map((item: RamData) => (
-                    <div key={item.id}>
-                        <Card style={{ width: '16rem', height: '100%' }}>
-                            <Link to={item.item_url} target='_blank'>
-                                <Card.Img className='item-image' variant="top" src={item.image_url} style={{ width: '100%', height: "auto" }} />
-                            </Link>
-                            <Card.Body>
-                                <Link to={item.item_url} target='_blank'><u>{item.title}</u></Link>
-                                <div>
-                                    <div>${item.price}</div>
-                                    <div>Type: {item.ramType}</div>
-                                    <div>Speed: {item.ramSpeed}</div>
-                                    <div>Memory: {item.moduleAmount}</div>
-                                    <div>Latency: {item.firstWordLatency}</div>
-                                    <div>Color: {item.color}</div>
-                                    <div>{item.type}</div>
-                                </div>
-
-                            </Card.Body>
-                        </Card>
-                    </div>
-                ))}
-            </div>
-        );
-    };
-
-    const PsList = ({ psData }: any) => {
-        const startIndex = currentPage * ITEMS_PER_PAGE;
-        const endIndex = startIndex + ITEMS_PER_PAGE;
-        const itemsToDisplay = psData.slice(startIndex, endIndex);
-
-        return (
-            <div className='cards'>
-                {itemsToDisplay.map((item: PowerSupplyData) => (
-                    <div key={item.id}>
-                        <Card style={{ width: '16rem', height: '100%' }}>
-                            <Link to={item.item_url} target='_blank'>
-                                <Card.Img className='item-image' variant="top" src={item.image_url} style={{ width: '100%', height: "auto" }} />
-                            </Link>
-                            <Card.Body>
-                                <Link to={item.item_url} target='_blank'><u>{item.title}</u></Link>
-                                <div>
-                                    <div>${item.price}</div>
-                                    <div>Wattage: {item.wattage}</div>
-                                    <div>Color: {item.color}</div>
-                                    <div>EPS8: {item.EPS8ConnectorNum}</div>
-                                    <div>PCIe 6+2: {item.PCIe62ConnectorNum}</div>
-                                    <div>PCIe 6: {item.PCIe6ConnectorNum}</div>
-                                    <div>Sata: {item.SataConnectors}</div>
-                                    <div>Molex 4: {item.Molex4ConnectorNum}</div>
-                                    <div>Color: {item.color}</div>
-                                    <div>{item.type}</div>
-                                </div>
-
-                            </Card.Body>
-                        </Card>
-                    </div>
-                ))}
-            </div>
-        );
-    };
-
-    const HeatsinkList = ({ heatsinkData }: any) => {
-        const startIndex = currentPage * ITEMS_PER_PAGE;
-        const endIndex = startIndex + ITEMS_PER_PAGE;
-        const itemsToDisplay = heatsinkData.slice(startIndex, endIndex);
-
-        return (
-            <div className='cards'>
-                {itemsToDisplay.map((item: HeatsinkData) => (
-                    <div key={item.id}>
-                        <Card style={{ width: '16rem', height: '100%' }}>
-                            <Link to={item.item_url} target='_blank'>
-                                <Card.Img className='item-image' variant="top" src={item.image_url} style={{height: 'auto', width: '254px'}}/>
-                            </Link>
-                            <Card.Body>
-                                <Link to={item.item_url} target='_blank'><u>{item.title}</u></Link>
-                                <div>
-                                    <div>${item.price}</div>
-                                    <div>Color: {item.color}</div>
-                                    <div>RPM: {item.fanRPM}</div>
-                                    <div>Noise Level: {item.fanNoise}</div>
-                                    <div>Water Cooled: {item.isWaterCooled.toString()}</div>
-                                    <div>{item.type}</div>
-                                </div>
-
-                            </Card.Body>
-                        </Card>
-                    </div>
-                ))}
-            </div>
-        );
-    };
-
-    const HardDriveList = ({ hardDriveData }: any) => {
-        const startIndex = currentPage * ITEMS_PER_PAGE;
-        const endIndex = startIndex + ITEMS_PER_PAGE;
-        const itemsToDisplay = hardDriveData.slice(startIndex, endIndex);
-
-        return (
-            <div className='cards'>
-                {itemsToDisplay.map((item: HardDriveData) => (
-                    <div key={item.id}>
-                        <Card style={{ width: '16rem', height: '100%' }}>
-                            <Link to={item.item_url} target='_blank'>
-                                <Card.Img className='item-image' variant="top" src={item.image_url} style={{ width: '100%', height: "auto" }} />
-                            </Link>
-                            <Card.Body>
-                                <Link to={item.item_url} target='_blank'><u>{item.title}</u></Link>
-                                <div>
-                                    <div>${item.price}</div>
-                                    <div>Storage: {item.storageCapacity}</div>
-                                    <div>PCIe: {item.PCIeType}</div>
-                                    <div>{item.type}</div>
-                                </div>
-
-                            </Card.Body>
-                        </Card>
-                    </div>
-                ))}
-            </div>
-        );
-    };
 
     const SwitchComponent = () => {
         switch(componentType) {
             case 'Cpu':
-              return <CpuList cpuData={cpuData} />;
+              return <CpuList cpuData={cpuData} currentPage={currentPage} setCurrentPage={setCurrentPage}/>;
             case 'Gpu':
-              return <GpuList gpuData={gpuData} />;
+              return <GpuList gpuData={gpuData} currentPage={currentPage} setCurrentPage={setCurrentPage}/>;
             case 'Motherboard':
-              return <MotherboardList motherboardData={motherboardData} />;
+              return <MotherboardList motherboardData={motherboardData} currentPage={currentPage} setCurrentPage={setCurrentPage}/>;
             case 'Case':
-              return <CaseList caseData={caseData} />;
+              return <CaseList caseData={caseData} currentPage={currentPage} setCurrentPage={setCurrentPage}/>;
             case 'Ram':
-              return <RamList ramData={ramData} />;
+              return <RamList ramData={ramData} currentPage={currentPage} setCurrentPage={setCurrentPage}/>;
             case 'Ps':
-              return <PsList psData={psData} />;
+              return <PsList psData={psData} currentPage={currentPage} setCurrentPage={setCurrentPage}/>;
             case 'Heatsink':
-              return <HeatsinkList heatsinkData={heatsinkData} />;
+              return <HeatsinkList heatsinkData={heatsinkData} currentPage={currentPage} setCurrentPage={setCurrentPage}/>;
             case 'HardDrive':
-              return <HardDriveList hardDriveData={hardDriveData} />;
+              return <HardDriveList hardDriveData={hardDriveData} currentPage={currentPage} setCurrentPage={setCurrentPage}/>;
             default:
               return null;
           }
@@ -543,6 +184,7 @@ export default function Parts() {
             sortByPrice(hardDriveData)
         }
     }
+    
 
     
 
