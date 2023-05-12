@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom';
 import { Card } from 'react-bootstrap';
-import Gpu
+import { GpuData } from '../../Interfaces/PartDataInterfaces';
 
 export default function GpuList(props: any) {
     const ITEMS_PER_PAGE = 6;

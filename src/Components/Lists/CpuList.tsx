@@ -1,18 +1,7 @@
 import React, {useState} from 'react'
 import { Link } from 'react-router-dom';
 import { Card } from 'react-bootstrap';
-
-interface CpuData {
-    cores: number;
-    id: number;
-    image_url: string;
-    item_url: string;
-    perfCoreClock: number;
-    price: string;
-    socketType: string;
-    title: string;
-    type: string
-}
+import { CpuData } from '../../Interfaces/PartDataInterfaces';
 
 export default function CpuList(props: any) {
 

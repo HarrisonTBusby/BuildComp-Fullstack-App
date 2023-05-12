@@ -1,17 +1,7 @@
 import React, {useState} from 'react'
 import { Link } from 'react-router-dom';
 import { Card } from 'react-bootstrap';
-
-interface CaseData {
-    id: number;
-    title: string;
-    price: string;
-    image_url: string;
-    item_url: string;
-    type: string;
-    size: string;
-    caseColor: string;
-}
+import { CaseData } from '../../Interfaces/PartDataInterfaces';
 
 export default function CaseList(props: any) {
 
