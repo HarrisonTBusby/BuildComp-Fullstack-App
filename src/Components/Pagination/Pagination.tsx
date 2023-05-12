@@ -97,11 +97,28 @@ const PaginationExample = () => {
     }
   };
 
-  // const sortByPrice = (minPrice: number, maxPrice: number) => {
-  //   let filteredItems = sortedData.filter((value) => sortedData.value > 5);
-  //   filteredArr.sort((a, b) => a - b);
-  //   console.log(filteredArr);
-  // }
+  const sortByPrice = (minPrice: number, maxPrice: number, data: any) => {
+    const newData = [...data].sort((a, b) => {
+      if (a.name.first < b.name.first) {
+        if(sort === 'unsorted'){
+          return -1;
+        }
+        if(sort === 'ascending'){
+          return 1;
+        }
+      }
+
+      if (a.name.first > b.name.first) {
+        if(sort === 'unsorted'){
+          return 1;
+        }
+        if(sort === 'ascending'){
+          return -1;
+        }
+      }
+      return 0;
+    });
+  }
 
   const handleSearch = (input: string) => {
 

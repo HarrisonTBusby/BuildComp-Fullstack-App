@@ -509,9 +509,22 @@ export default function Parts() {
         }
     };
 
-    const sortByPrice = (items: any[]) => {
-        return items.sort((a, b) => a.price - b.price);
-      };
+    function sortByPrice(arr: any) {
+        const newArr = [...arr];
+        newArr.sort((a: any, b: any) => {
+            if(parseFloat(a.price) < parseFloat(b.price)){
+                return -1
+            }
+            if(parseFloat(a.price) > parseFloat(b.price)){
+                return 1;
+            }
+            return 0;
+        })
+
+        setCpuData(newArr);
+        setTotalItems(newArr.length)
+        setComponentType('Cpu')
+    }
 
     const priceSort = () => {
         if(componentType == 'Cpu'){
@@ -624,6 +637,7 @@ export default function Parts() {
                 )}
                 <Col className='filterBackground large-filter p-3' md={3}>
                     <div className='marginLeft2 filterBoxColor'>
+                    <button onClick={() => sortByPrice(cpuData)}>SORT BY PRICE</button>
                         <Col className='marginLeft mt-5 mb-5'>
                         <p className='mt-5'>Components</p>
                         <Dropdown className='bb-dropdown'>
