@@ -160,6 +160,9 @@ export default function Parts() {
             return 0;
         })
 
+        console.log(newArr)
+
+        return newArr
         setCpuData(newArr);
         setTotalItems(newArr.length)
         setComponentType('Cpu')
@@ -167,21 +170,21 @@ export default function Parts() {
 
     const priceSort = () => {
         if(componentType == 'Cpu'){
-            sortByPrice(cpuData);
+            setCpuData(sortByPrice(cpuData));
         }else if (componentType == 'Gpu'){
-            sortByPrice(gpuData);
+            setGpuData(sortByPrice(gpuData));
         }else if(componentType == "Motherboard"){
-            sortByPrice(motherboardData)
+            setMotherboardData(sortByPrice(motherboardData));
         }else if(componentType == "Case"){
-            sortByPrice(caseData)
+            setCaseData(sortByPrice(caseData));
         }else if(componentType == "Ram"){
-            sortByPrice(ramData)
+            setRamData(sortByPrice(ramData));
         }else if(componentType == "Ps"){
-            sortByPrice(psData)
+            setPsData(sortByPrice(psData));
         }else if(componentType == "Heatsink"){
-            sortByPrice(heatsinkData)
+            setHeatsinkData(sortByPrice(heatsinkData));
         }else{
-            sortByPrice(hardDriveData)
+            setHardDriveData(sortByPrice(hardDriveData));
         }
     }
     
@@ -277,7 +280,7 @@ export default function Parts() {
                 )}
                 <Col className='filterBackground large-filter p-3' md={3}>
                     <div className='marginLeft2 filterBoxColor'>
-                    <button onClick={() => sortByPrice(cpuData)}>SORT BY PRICE</button>
+                    <button onClick={() => priceSort()}>SORT BY PRICE</button>
                         <Col className='marginLeft mt-5 mb-5'>
                         <p className='mt-5'>Components</p>
                         <Dropdown className='bb-dropdown'>
