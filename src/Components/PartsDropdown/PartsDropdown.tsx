@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Dropdown, OverlayTrigger, Tooltip } from 'react-bootstrap'
 import { GetPartData } from '../../Services/DataService';
 import React from 'react';
+import CaseFilter from '../Filters/CaseFilter';
 
 interface CpuData {
     cores: number;
