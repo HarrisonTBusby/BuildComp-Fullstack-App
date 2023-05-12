@@ -25,6 +25,7 @@ export default function MotherboardList(props: any){
                                     <div>Ram Type: {item.ramType}</div>
                                     <div>Ram Max: {item.ramMax}</div>
                                     <div>Memory Slots: {item.memorySlots}</div>
+                                    <div>Socket Type: {item.socketType}</div>
                                     <div>Chipset: {item.chipset}</div>
                                     <div>{item.type}</div>
                                     <div># of PCIe Slots: {item.PCIeSlotNumber}</div>
