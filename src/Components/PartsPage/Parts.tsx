@@ -30,6 +30,7 @@ export default function Parts() {
     const size = useWindowSize();
     const [componentData, setComponentData] = useState<any[]>([]);
     const [cpuData, setCpuData] = useState<CpuData[]>([]);
+    const [originalCpuData, setOriginalCpuData] = useState<CpuData[]>([]);
     //const [cpuDataList, setCpuDataList] = useState<CpuData[][]>([]);
     const [gpuData, setGpuData] = useState<GpuData[]>([]);
     const [caseData, setCaseData] = useState<CaseData[]>([]);
@@ -43,7 +44,18 @@ export default function Parts() {
     const [allChecked, setAllChecked] = useState(true);
     const [amdChecked, setAmdChecked] = useState(false);
     const [intelChecked, setIntelChecked] = useState(false);
+    //The three above need to be stored in an array or enumerable
+    const [cpuChecks, setCpuChecks] = useState(['AMD', 'Intel'])
+
     //End
+
+    const [cpuManufacturers, setCpuManufacturers] = useState([{ All: true, AMD: false, Intel: false }])
+
+
+    // const cpuManufactures = {
+    //     AMD: true,
+    //     Intel: true
+    // }
 
     const [totalItems, setTotalItems] = useState(0);
 
@@ -92,6 +104,7 @@ export default function Parts() {
     useEffect(() => {
         async function getData() {
             const data = await GetPartData('Cpu');
+            setOriginalCpuData(data);
             setCpuData(data);
             setTotalItems(data.length)
             setComponentType('Cpu')
@@ -155,18 +168,76 @@ export default function Parts() {
     };
 
     function sortByManufacturer(value: any) {
-        if (value === 'All') {
-            return
-        }
-        else if (value === 'AMD') {
-            const filteredArr = cpuData.filter((product: any) => product.title.includes('AMD'));
-            setCpuData(filteredArr);
-        }
-        else if (value === 'Intel') {
-            const filteredArr = cpuData.filter((product: any) => product.title.includes('Intel'));
-            setCpuData(filteredArr)
-        }
+        // if (value === 'All') {
+        //     return
+        // }
+        // else if (value === 'AMD') {
+        //     const filteredArr = cpuData.filter((product: any) => product.title.includes('AMD'));
+        //     setCpuData(filteredArr);
+        //     setTotalItems(filteredArr.length)
+        // }
+        // else if (value === 'Intel') {
+        //     const filteredArr = cpuData.filter((product: any) => product.title.includes('Intel'));
+        //     setCpuData(filteredArr)
+        //     setTotalItems(filteredArr.length)
+        // }
     }
+
+    useEffect(() => {
+        if (cpuManufacturers[0]['All'] === true) {
+            setCpuData(originalCpuData)
+        } else {
+            //if cpuManufacturers[0]['All'] === true then 
+            //make the displayed data equal to the original data from fetch
+            //else reduce array or filter array so that
+            //only the object with values that are true
+            //render on creen  
+            //for cpuManufacturers[0][key 1, key end] 
+            //if cpuManufacturer[0][key] === true then grab the key of that index and 
+            //filter by the key
+
+            //const filteredCpuData = cpuData.filter(cpu => cpu.title.includes('AMD') || cpu.title.includes('Intel'));
+            
+            let data: any = [];
+
+            const filteredData = originalCpuData.filter((cpu: { title: string, index?: number }) => {
+                let included = false;
+                Object.keys(cpuManufacturers[0]).forEach(key => {
+                    if (cpu.title.includes(key) && cpuManufacturers[0][key as keyof typeof cpuManufacturers[0]]) {
+                        included = true;
+                    }
+                });
+                return included;
+            }).map((cpu) => {
+                //cpu.index = index;
+                return cpu;
+            });
+
+            data = [...data, filteredData]
+            
+
+            // let data: CpuData[] = [];
+            // for (let i = 0; i < cpuChecks.length; i++) {
+            //     const filteredArr = originalCpuData.filter((product: any) => product.title.includes(cpuChecks[i]));
+            //     data = [...data, ...filteredArr];
+            // }
+
+            // const newArr = [...data];
+            // newArr.sort((a: any, b: any) => {
+            //     if (a.id < b.id) {
+            //         return -1
+            //     }
+            //     if (a.id > b.id) {
+            //         return 1;
+            //     }
+            //     return 0;
+            // })
+
+            setCpuData(filteredData);
+            setTotalItems(filteredData.length)
+            // setTotalItems(filteredArr.length)
+        }
+    }, [cpuManufacturers])
 
     function sortByPrice(arr: any) {
         const newArr = [...arr];
@@ -188,6 +259,7 @@ export default function Parts() {
     const priceSort = () => {
         if (componentType == 'Cpu') {
             setCpuData(sortByPrice(cpuData));
+            setTotalItems(cpuData.length)
         } else if (componentType == 'Gpu') {
             setGpuData(sortByPrice(gpuData));
         } else if (componentType == "Motherboard") {
@@ -204,46 +276,49 @@ export default function Parts() {
             setHardDriveData(sortByPrice(hardDriveData));
         }
     }
-    
-    if (amdChecked && intelChecked) {
-        async function getData() {
-            const data = await GetPartData('Cpu');
-            setCpuData(data);
-            setTotalItems(data.length)
-            //setComponentType('Cpu')
-        }
-        getData()
+
+    // if (amdChecked && intelChecked) {
+    //     setCpuData(originalCpuData);
+    // }
+
+    // if (!allChecked && !amdChecked && !intelChecked) {
+    //     setAllChecked(true)
+    // }
+    const allFalse = cpuManufacturers.every((manufacturer) => !Object.values(manufacturer).some((isChecked) => isChecked));
+    if (allFalse) {
+        setCpuManufacturers([{ All: true, AMD: false, Intel: false }])
     }
-
-    if (!allChecked && !amdChecked && !intelChecked) {
-        setAllChecked(true)
-        async function getData() {
-            const data = await GetPartData('Cpu');
-            setCpuData(data);
-            setTotalItems(data.length)
-            //setComponentType('Cpu')
-        }
-        getData()
-    }
-
-    
-
     //Checkbox logic
     const handleCheckboxChange = (value: string, checked: boolean) => {
         if (value === "All") {
-            setAllChecked(true);
-            setAmdChecked(false);
-            setIntelChecked(false);
+            //setAllChecked(true);
+            //setAmdChecked(false);
+            //setIntelChecked(false);
+            setCpuManufacturers([{ All: true, AMD: false, Intel: false }])
         }
 
         if (value === "AMD") {
-            setAllChecked(false)
-            setAmdChecked(checked);
+            //setAllChecked(false)
+            //setAmdChecked(checked);
+            setCpuManufacturers((prev) => [
+                {
+                    ...prev[0],
+                    AMD: checked,
+                    All: false
+                }
+            ]);
         }
 
         if (value === "Intel") {
-            setAllChecked(false)
-            setIntelChecked(checked);
+            //setAllChecked(false)
+            //setIntelChecked(checked);
+            setCpuManufacturers((prev) => [
+                {
+                    ...prev[0],
+                    Intel: checked,
+                    All: false
+                }
+            ]);
         }
     };
 
@@ -401,7 +476,7 @@ export default function Parts() {
                                 <input
                                     type='checkbox'
                                     value='All'
-                                    checked={allChecked}
+                                    checked={cpuManufacturers[0]['All']}
                                     onChange={(e) => handleCheckboxChange(e.target.value, e.target.checked)}
                                     onClick={(e) => sortByManufacturer(e.currentTarget.value)}
                                     className='mr-3 cursor-pointer'
@@ -414,7 +489,7 @@ export default function Parts() {
                                 <input
                                     type='checkbox'
                                     value='AMD'
-                                    checked={amdChecked}
+                                    checked={cpuManufacturers[0]['AMD']}
                                     // checked={checkboxValues.length === 1}
                                     onChange={(e) => handleCheckboxChange(e.target.value, e.target.checked)}
                                     onClick={(e) => sortByManufacturer(e.currentTarget.value)}
@@ -428,7 +503,7 @@ export default function Parts() {
                                 <input
                                     type='checkbox'
                                     value='Intel'
-                                    checked={intelChecked}
+                                    checked={cpuManufacturers[0]['Intel']}
                                     onChange={(e) => handleCheckboxChange(e.target.value, e.target.checked)}
                                     onClick={(e) => sortByManufacturer(e.currentTarget.value)}
                                     className='mr-3 cursor-pointer'
