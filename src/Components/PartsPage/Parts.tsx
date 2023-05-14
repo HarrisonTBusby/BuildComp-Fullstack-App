@@ -30,6 +30,7 @@ export default function Parts() {
     const size = useWindowSize();
     const [componentData, setComponentData] = useState<any[]>([]);
     const [cpuData, setCpuData] = useState<CpuData[]>([]);
+    //const [cpuDataList, setCpuDataList] = useState<CpuData[][]>([]);
     const [gpuData, setGpuData] = useState<GpuData[]>([]);
     const [caseData, setCaseData] = useState<CaseData[]>([]);
     const [motherboardData, setMotherboardData] = useState<MotherboardData[]>([]);
@@ -38,61 +39,66 @@ export default function Parts() {
     const [heatsinkData, setHeatsinkData] = useState<HeatsinkData[]>([]);
     const [hardDriveData, setHardDriveData] = useState<HardDriveData[]>([]);
 
+    //For checkbox
+    const [allChecked, setAllChecked] = useState(true);
+    const [amdChecked, setAmdChecked] = useState(false);
+    const [intelChecked, setIntelChecked] = useState(false);
+    //End
+
     const [totalItems, setTotalItems] = useState(0);
 
     const [componentType, setComponentType] = useState<string>('default');
     // For Dropdown values
     async function handleComponentSelect(component: string) {
-        
+
         const data = await GetPartData(component);
-        if(component == "Cpu"){
+        if (component == "Cpu") {
             setCpuData(data);
             setTotalItems(data.length)
             setComponentType('Cpu')
-        }else if(component == "Gpu"){
+        } else if (component == "Gpu") {
             setGpuData(data);
             setTotalItems(data.length)
             setComponentType('Gpu')
-        }else if(component == "Motherboard"){
+        } else if (component == "Motherboard") {
             setMotherboardData(data);
             setTotalItems(data.length)
             setComponentType('Motherboard')
-        }else if(component == "Case"){
+        } else if (component == "Case") {
             setCaseData(data)
             setTotalItems(data.length)
             setComponentType('Case')
-        }else if(component == "Ram"){
+        } else if (component == "Ram") {
             setRamData(data)
             setTotalItems(data.length)
             setComponentType('Ram')
-        }else if(component == 'Ps'){
+        } else if (component == 'Ps') {
             setPsData(data)
             setTotalItems(data.length)
             setComponentType('Ps')
-        }else if(component == "Heatsink"){
+        } else if (component == "Heatsink") {
             setHeatsinkData(data)
             setTotalItems(data.length)
             setComponentType('Heatsink')
-        }else if(component == "HardDrive"){
+        } else if (component == "HardDrive") {
             setTotalItems(data.length)
             setHardDriveData(data)
             setComponentType('HardDrive')
         }
         console.log(data);
-        
+
     }
 
     useEffect(() => {
-        async function getData(){
-        const data = await GetPartData('Cpu');
-        setCpuData(data);
-        setTotalItems(data.length)
-        setComponentType('Cpu')
+        async function getData() {
+            const data = await GetPartData('Cpu');
+            setCpuData(data);
+            setTotalItems(data.length)
+            setComponentType('Cpu')
         }
         getData()
-       
-    },[])
-        
+
+    }, [])
 
     //HandlesPaginationButtons
     const handlePageChange = (selectedPage: { selected: number }) => {
@@ -108,26 +114,26 @@ export default function Parts() {
     const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE);
 
     const SwitchComponent = () => {
-        switch(componentType) {
+        switch (componentType) {
             case 'Cpu':
-              return <CpuList cpuData={cpuData} currentPage={currentPage} setCurrentPage={setCurrentPage}/>;
+                return <CpuList cpuData={cpuData} currentPage={currentPage} setCurrentPage={setCurrentPage} />;
             case 'Gpu':
-              return <GpuList gpuData={gpuData} currentPage={currentPage} setCurrentPage={setCurrentPage}/>;
+                return <GpuList gpuData={gpuData} currentPage={currentPage} setCurrentPage={setCurrentPage} />;
             case 'Motherboard':
-              return <MotherboardList motherboardData={motherboardData} currentPage={currentPage} setCurrentPage={setCurrentPage}/>;
+                return <MotherboardList motherboardData={motherboardData} currentPage={currentPage} setCurrentPage={setCurrentPage} />;
             case 'Case':
-              return <CaseList caseData={caseData} currentPage={currentPage} setCurrentPage={setCurrentPage}/>;
+                return <CaseList caseData={caseData} currentPage={currentPage} setCurrentPage={setCurrentPage} />;
             case 'Ram':
-              return <RamList ramData={ramData} currentPage={currentPage} setCurrentPage={setCurrentPage}/>;
+                return <RamList ramData={ramData} currentPage={currentPage} setCurrentPage={setCurrentPage} />;
             case 'Ps':
-              return <PsList psData={psData} currentPage={currentPage} setCurrentPage={setCurrentPage}/>;
+                return <PsList psData={psData} currentPage={currentPage} setCurrentPage={setCurrentPage} />;
             case 'Heatsink':
-              return <HeatsinkList heatsinkData={heatsinkData} currentPage={currentPage} setCurrentPage={setCurrentPage}/>;
+                return <HeatsinkList heatsinkData={heatsinkData} currentPage={currentPage} setCurrentPage={setCurrentPage} />;
             case 'HardDrive':
-              return <HardDriveList hardDriveData={hardDriveData} currentPage={currentPage} setCurrentPage={setCurrentPage}/>;
+                return <HardDriveList hardDriveData={hardDriveData} currentPage={currentPage} setCurrentPage={setCurrentPage} />;
             default:
-              return null;
-          }
+                return null;
+        }
     }
 
     // For ToolTip on Dropdown
@@ -148,13 +154,27 @@ export default function Parts() {
         }
     };
 
+    function sortByManufacturer(value: any) {
+        if (value === 'All') {
+            return
+        }
+        else if (value === 'AMD') {
+            const filteredArr = cpuData.filter((product: any) => product.title.includes('AMD'));
+            setCpuData(filteredArr);
+        }
+        else if (value === 'Intel') {
+            const filteredArr = cpuData.filter((product: any) => product.title.includes('Intel'));
+            setCpuData(filteredArr)
+        }
+    }
+
     function sortByPrice(arr: any) {
         const newArr = [...arr];
         newArr.sort((a: any, b: any) => {
-            if(parseFloat(a.price) < parseFloat(b.price)){
+            if (parseFloat(a.price) < parseFloat(b.price)) {
                 return -1
             }
-            if(parseFloat(a.price) > parseFloat(b.price)){
+            if (parseFloat(a.price) > parseFloat(b.price)) {
                 return 1;
             }
             return 0;
@@ -163,33 +183,70 @@ export default function Parts() {
         console.log(newArr)
 
         return newArr
-        setCpuData(newArr);
-        setTotalItems(newArr.length)
-        setComponentType('Cpu')
     }
 
     const priceSort = () => {
-        if(componentType == 'Cpu'){
+        if (componentType == 'Cpu') {
             setCpuData(sortByPrice(cpuData));
-        }else if (componentType == 'Gpu'){
+        } else if (componentType == 'Gpu') {
             setGpuData(sortByPrice(gpuData));
-        }else if(componentType == "Motherboard"){
+        } else if (componentType == "Motherboard") {
             setMotherboardData(sortByPrice(motherboardData));
-        }else if(componentType == "Case"){
+        } else if (componentType == "Case") {
             setCaseData(sortByPrice(caseData));
-        }else if(componentType == "Ram"){
+        } else if (componentType == "Ram") {
             setRamData(sortByPrice(ramData));
-        }else if(componentType == "Ps"){
+        } else if (componentType == "Ps") {
             setPsData(sortByPrice(psData));
-        }else if(componentType == "Heatsink"){
+        } else if (componentType == "Heatsink") {
             setHeatsinkData(sortByPrice(heatsinkData));
-        }else{
+        } else {
             setHardDriveData(sortByPrice(hardDriveData));
         }
     }
     
+    if (amdChecked && intelChecked) {
+        async function getData() {
+            const data = await GetPartData('Cpu');
+            setCpuData(data);
+            setTotalItems(data.length)
+            //setComponentType('Cpu')
+        }
+        getData()
+    }
+
+    if (!allChecked && !amdChecked && !intelChecked) {
+        setAllChecked(true)
+        async function getData() {
+            const data = await GetPartData('Cpu');
+            setCpuData(data);
+            setTotalItems(data.length)
+            //setComponentType('Cpu')
+        }
+        getData()
+    }
 
     
+
+    //Checkbox logic
+    const handleCheckboxChange = (value: string, checked: boolean) => {
+        if (value === "All") {
+            setAllChecked(true);
+            setAmdChecked(false);
+            setIntelChecked(false);
+        }
+
+        if (value === "AMD") {
+            setAllChecked(false)
+            setAmdChecked(checked);
+        }
+
+        if (value === "Intel") {
+            setAllChecked(false)
+            setIntelChecked(checked);
+        }
+    };
+
 
     return (
         <div>
@@ -204,39 +261,39 @@ export default function Parts() {
                             <Col className='filterBackground p-3' md={3}>
                                 <div className='marginLeft2 filterBoxColor'>
                                     <Col className='marginLeft mt-5 mb-5'>
-                                    <p className='mt-5'>Components</p>
-                                    <Dropdown className='bb-dropdown'>
-                                        <Dropdown.Toggle className='dropdownSize'>
-                                            PC Components
-                                        </Dropdown.Toggle>
+                                        <p className='mt-5'>Components</p>
+                                        <Dropdown className='bb-dropdown'>
+                                            <Dropdown.Toggle className='dropdownSize'>
+                                                PC Components
+                                            </Dropdown.Toggle>
 
-                                        <Dropdown.Menu >
-                                            <OverlayTrigger placement="right" overlay={renderTooltip('Provides the instructions and processing power the computer needs to do its work. The more powerful and updated your processor, the faster your computer can complete its tasks.')}>
-                                                <Dropdown.Item onClick={() => handleComponentSelect('Cpu')} className='ddButton'>CPU</Dropdown.Item>
-                                            </OverlayTrigger>
-                                            <OverlayTrigger placement="right" overlay={renderTooltip('Helps handle graphics-related work like graphics, effects, and videos')}>
-                                                <Dropdown.Item onClick={() => handleComponentSelect('Gpu')} className='ddButton'>GPU</Dropdown.Item>
-                                            </OverlayTrigger>
-                                            <OverlayTrigger placement="right" overlay={renderTooltip('The circuit board that connects all of your hardware to your processor, distributes electricity from your power supply, and defines the types of storage devices, memory modules, and graphics cards (among other expansion cards) that can connect to your PC.')}>
-                                                <Dropdown.Item onClick={() => handleComponentSelect('Motherboard')} className='ddButton'>Motherboard</Dropdown.Item>
-                                            </OverlayTrigger>
-                                            <OverlayTrigger placement="right" overlay={renderTooltip('Container for all PC Components')}>
-                                                <Dropdown.Item onClick={() => handleComponentSelect('Case')} className='ddButton'>Case</Dropdown.Item>
-                                            </OverlayTrigger>
-                                            <OverlayTrigger placement="right" overlay={renderTooltip('RAMs purpose is to store the short term data that a PC requires to properly operate.')}>
-                                                <Dropdown.Item onClick={() => handleComponentSelect('Ram')} className='ddButton'>RAM</Dropdown.Item>
-                                            </OverlayTrigger>
-                                            <OverlayTrigger placement="right" overlay={renderTooltip('Pulls power from your wall outlet and distribute it throughout your PC.')}>
-                                                <Dropdown.Item onClick={() => handleComponentSelect('Ps')} className='ddButton'>Power Supply</Dropdown.Item>
-                                            </OverlayTrigger>
-                                            <OverlayTrigger placement="right" overlay={renderTooltip('Properly removes heat from device components to improve device performance and extend its life. And usually, a heat sink incorporates a fan or other mechanism to reduce the temperature of a hardware component, such as a processor.')}>
-                                                <Dropdown.Item onClick={() => handleComponentSelect('Heatsink')} className='ddButton'>Heat Sink</Dropdown.Item>
-                                            </OverlayTrigger>
-                                            <OverlayTrigger placement="right" overlay={renderTooltip('A hard drive is the hardware component that stores all of your digital content. Your documents, pictures, music, videos, programs, application preferences, and operating system represent digital content stored on a hard drive.')}>
-                                                <Dropdown.Item onClick={() => handleComponentSelect('HardDrive')} className='ddButton'>Hard Drives</Dropdown.Item>
-                                            </OverlayTrigger>
-                                        </Dropdown.Menu>
-                                    </Dropdown>
+                                            <Dropdown.Menu >
+                                                <OverlayTrigger placement="right" overlay={renderTooltip('Provides the instructions and processing power the computer needs to do its work. The more powerful and updated your processor, the faster your computer can complete its tasks.')}>
+                                                    <Dropdown.Item onClick={() => handleComponentSelect('Cpu')} className='ddButton'>CPU</Dropdown.Item>
+                                                </OverlayTrigger>
+                                                <OverlayTrigger placement="right" overlay={renderTooltip('Helps handle graphics-related work like graphics, effects, and videos')}>
+                                                    <Dropdown.Item onClick={() => handleComponentSelect('Gpu')} className='ddButton'>GPU</Dropdown.Item>
+                                                </OverlayTrigger>
+                                                <OverlayTrigger placement="right" overlay={renderTooltip('The circuit board that connects all of your hardware to your processor, distributes electricity from your power supply, and defines the types of storage devices, memory modules, and graphics cards (among other expansion cards) that can connect to your PC.')}>
+                                                    <Dropdown.Item onClick={() => handleComponentSelect('Motherboard')} className='ddButton'>Motherboard</Dropdown.Item>
+                                                </OverlayTrigger>
+                                                <OverlayTrigger placement="right" overlay={renderTooltip('Container for all PC Components')}>
+                                                    <Dropdown.Item onClick={() => handleComponentSelect('Case')} className='ddButton'>Case</Dropdown.Item>
+                                                </OverlayTrigger>
+                                                <OverlayTrigger placement="right" overlay={renderTooltip('RAMs purpose is to store the short term data that a PC requires to properly operate.')}>
+                                                    <Dropdown.Item onClick={() => handleComponentSelect('Ram')} className='ddButton'>RAM</Dropdown.Item>
+                                                </OverlayTrigger>
+                                                <OverlayTrigger placement="right" overlay={renderTooltip('Pulls power from your wall outlet and distribute it throughout your PC.')}>
+                                                    <Dropdown.Item onClick={() => handleComponentSelect('Ps')} className='ddButton'>Power Supply</Dropdown.Item>
+                                                </OverlayTrigger>
+                                                <OverlayTrigger placement="right" overlay={renderTooltip('Properly removes heat from device components to improve device performance and extend its life. And usually, a heat sink incorporates a fan or other mechanism to reduce the temperature of a hardware component, such as a processor.')}>
+                                                    <Dropdown.Item onClick={() => handleComponentSelect('Heatsink')} className='ddButton'>Heat Sink</Dropdown.Item>
+                                                </OverlayTrigger>
+                                                <OverlayTrigger placement="right" overlay={renderTooltip('A hard drive is the hardware component that stores all of your digital content. Your documents, pictures, music, videos, programs, application preferences, and operating system represent digital content stored on a hard drive.')}>
+                                                    <Dropdown.Item onClick={() => handleComponentSelect('HardDrive')} className='ddButton'>Hard Drives</Dropdown.Item>
+                                                </OverlayTrigger>
+                                            </Dropdown.Menu>
+                                        </Dropdown>
                                     </Col>
                                     <p className='mt-4'>Filter</p>
                                     <button onClick={() => handleComponentSelect(componentType)} className='clearFiltersBtn'>Clear Filters</button>
@@ -248,8 +305,8 @@ export default function Parts() {
                                     <input className='w-75' type='number' placeholder='Max' value={maxBudget} onKeyDown={handleMaxBudget} onChange={(event) => setMaxBudget(event.currentTarget.value)}></input>
                                     {/* PC Components */}
                                     {/* ====================================================================== */}
-                                    
-                                    
+
+
 
                                     {/* Better Price or Better Performance */}
                                     {/* ================================================== */}
@@ -260,6 +317,7 @@ export default function Parts() {
                                     <InputGroup className="mb-3">
                                         <InputGroup.Checkbox />Better performance
                                     </InputGroup>
+                                    <p className='mt-5'>Manufacturer</p>
                                     {/*Rgb or No Rgb  */}
                                     {/* ========================================================== */}
                                     <p className='mt-5'>RGB</p>
@@ -280,41 +338,41 @@ export default function Parts() {
                 )}
                 <Col className='filterBackground large-filter p-3' md={3}>
                     <div className='marginLeft2 filterBoxColor'>
-                    <button onClick={() => priceSort()}>SORT BY PRICE</button>
+                        <button onClick={() => priceSort()}>SORT BY PRICE</button>
                         <Col className='marginLeft mt-5 mb-5'>
-                        <p className='mt-5'>Components</p>
-                        <Dropdown className='bb-dropdown'>
-                            <Dropdown.Toggle className='dropdownSize'>
-                                PC Components
-                            </Dropdown.Toggle>
+                            <p className='mt-5'>Components</p>
+                            <Dropdown className='bb-dropdown'>
+                                <Dropdown.Toggle className='dropdownSize'>
+                                    PC Components
+                                </Dropdown.Toggle>
 
-                            <Dropdown.Menu>
-                                <OverlayTrigger placement="right" overlay={renderTooltip('Provides the instructions and processing power the computer needs to do its work. The more powerful and updated your processor, the faster your computer can complete its tasks.')}>
-                                    <Dropdown.Item onClick={() => handleComponentSelect('Cpu')} className='ddButton'>CPU</Dropdown.Item>
-                                </OverlayTrigger>
-                                <OverlayTrigger placement="right" overlay={renderTooltip('Helps handle graphics-related work like graphics, effects, and videos')}>
-                                    <Dropdown.Item onClick={() => handleComponentSelect('Gpu')} className='ddButton'>GPU</Dropdown.Item>
-                                </OverlayTrigger>
-                                <OverlayTrigger placement="right" overlay={renderTooltip('The circuit board that connects all of your hardware to your processor, distributes electricity from your power supply, and defines the types of storage devices, memory modules, and graphics cards (among other expansion cards) that can connect to your PC.')}>
-                                    <Dropdown.Item onClick={() => handleComponentSelect('Motherboard')} className='ddButton'>Motherboard</Dropdown.Item>
-                                </OverlayTrigger>
-                                <OverlayTrigger placement="right" overlay={renderTooltip('Container for all PC Components')}>
-                                    <Dropdown.Item onClick={() => handleComponentSelect('Case')} className='ddButton'>Case</Dropdown.Item>
-                                </OverlayTrigger>
-                                <OverlayTrigger placement="right" overlay={renderTooltip('RAMs purpose is to store the short term data that a PC requires to properly operate.')}>
-                                    <Dropdown.Item onClick={() => handleComponentSelect('Ram')} className='ddButton'>RAM</Dropdown.Item>
-                                </OverlayTrigger>
-                                <OverlayTrigger placement="right" overlay={renderTooltip('Pulls power from your wall outlet and distribute it throughout your PC.')}>
-                                    <Dropdown.Item onClick={() => handleComponentSelect('Ps')} className='ddButton'>Power Supply</Dropdown.Item>
-                                </OverlayTrigger>
-                                <OverlayTrigger placement="right" overlay={renderTooltip('Properly removes heat from device components to improve device performance and extend its life. And usually, a heat sink incorporates a fan or other mechanism to reduce the temperature of a hardware component, such as a processor.')}>
-                                    <Dropdown.Item onClick={() => handleComponentSelect('Heatsink')} className='ddButton'>Heat Sink</Dropdown.Item>
-                                </OverlayTrigger>
-                                <OverlayTrigger placement="right" overlay={renderTooltip('A hard drive is the hardware component that stores all of your digital content. Your documents, pictures, music, videos, programs, application preferences, and operating system represent digital content stored on a hard drive.')}>
-                                    <Dropdown.Item onClick={() => handleComponentSelect('HardDrive')} className='ddButton'>Hard Drives</Dropdown.Item>
-                                </OverlayTrigger>
-                            </Dropdown.Menu>
-                        </Dropdown>
+                                <Dropdown.Menu>
+                                    <OverlayTrigger placement="right" overlay={renderTooltip('Provides the instructions and processing power the computer needs to do its work. The more powerful and updated your processor, the faster your computer can complete its tasks.')}>
+                                        <Dropdown.Item onClick={() => handleComponentSelect('Cpu')} className='ddButton'>CPU</Dropdown.Item>
+                                    </OverlayTrigger>
+                                    <OverlayTrigger placement="right" overlay={renderTooltip('Helps handle graphics-related work like graphics, effects, and videos')}>
+                                        <Dropdown.Item onClick={() => handleComponentSelect('Gpu')} className='ddButton'>GPU</Dropdown.Item>
+                                    </OverlayTrigger>
+                                    <OverlayTrigger placement="right" overlay={renderTooltip('The circuit board that connects all of your hardware to your processor, distributes electricity from your power supply, and defines the types of storage devices, memory modules, and graphics cards (among other expansion cards) that can connect to your PC.')}>
+                                        <Dropdown.Item onClick={() => handleComponentSelect('Motherboard')} className='ddButton'>Motherboard</Dropdown.Item>
+                                    </OverlayTrigger>
+                                    <OverlayTrigger placement="right" overlay={renderTooltip('Container for all PC Components')}>
+                                        <Dropdown.Item onClick={() => handleComponentSelect('Case')} className='ddButton'>Case</Dropdown.Item>
+                                    </OverlayTrigger>
+                                    <OverlayTrigger placement="right" overlay={renderTooltip('RAMs purpose is to store the short term data that a PC requires to properly operate.')}>
+                                        <Dropdown.Item onClick={() => handleComponentSelect('Ram')} className='ddButton'>RAM</Dropdown.Item>
+                                    </OverlayTrigger>
+                                    <OverlayTrigger placement="right" overlay={renderTooltip('Pulls power from your wall outlet and distribute it throughout your PC.')}>
+                                        <Dropdown.Item onClick={() => handleComponentSelect('Ps')} className='ddButton'>Power Supply</Dropdown.Item>
+                                    </OverlayTrigger>
+                                    <OverlayTrigger placement="right" overlay={renderTooltip('Properly removes heat from device components to improve device performance and extend its life. And usually, a heat sink incorporates a fan or other mechanism to reduce the temperature of a hardware component, such as a processor.')}>
+                                        <Dropdown.Item onClick={() => handleComponentSelect('Heatsink')} className='ddButton'>Heat Sink</Dropdown.Item>
+                                    </OverlayTrigger>
+                                    <OverlayTrigger placement="right" overlay={renderTooltip('A hard drive is the hardware component that stores all of your digital content. Your documents, pictures, music, videos, programs, application preferences, and operating system represent digital content stored on a hard drive.')}>
+                                        <Dropdown.Item onClick={() => handleComponentSelect('HardDrive')} className='ddButton'>Hard Drives</Dropdown.Item>
+                                    </OverlayTrigger>
+                                </Dropdown.Menu>
+                            </Dropdown>
                         </Col>
                         <p className='mt-4'>Filter</p>
                         <button onClick={() => handleComponentSelect(componentType)} className='clearFiltersBtn'>Clear Filters</button>
@@ -326,7 +384,7 @@ export default function Parts() {
                         <input className='w-75' type='number' placeholder='Max' value={maxBudget} onKeyDown={handleMaxBudget} onChange={(event) => setMaxBudget(event.currentTarget.value)}></input>
                         {/* PC Components */}
                         {/* ====================================================================== */}
-                        
+
                         {/* Better Price or Better Performance */}
                         {/* ================================================== */}
                         <p className='mt-5'>Better Price or Better Performance</p>
@@ -336,6 +394,54 @@ export default function Parts() {
                         <InputGroup className="mb-3">
                             <InputGroup.Checkbox />Better performance
                         </InputGroup>
+                        <hr></hr>
+                        <p>Manufacturer</p>
+                        <div className='flex justify-content-center gap-2'>
+                            <label className='cursor-pointer'>
+                                <input
+                                    type='checkbox'
+                                    value='All'
+                                    checked={allChecked}
+                                    onChange={(e) => handleCheckboxChange(e.target.value, e.target.checked)}
+                                    onClick={(e) => sortByManufacturer(e.currentTarget.value)}
+                                    className='mr-3 cursor-pointer'
+                                />
+                                All
+                            </label>
+                        </div>
+                        <div className='flex justify-content-center gap-2'>
+                            <label className='cursor-pointer'>
+                                <input
+                                    type='checkbox'
+                                    value='AMD'
+                                    checked={amdChecked}
+                                    // checked={checkboxValues.length === 1}
+                                    onChange={(e) => handleCheckboxChange(e.target.value, e.target.checked)}
+                                    onClick={(e) => sortByManufacturer(e.currentTarget.value)}
+                                    className='mr-3 cursor-pointer'
+                                />
+                                AMD
+                            </label>
+                        </div>
+                        <div className='flex justify-content-center gap-2'>
+                            <label className='cursor-pointer'>
+                                <input
+                                    type='checkbox'
+                                    value='Intel'
+                                    checked={intelChecked}
+                                    onChange={(e) => handleCheckboxChange(e.target.value, e.target.checked)}
+                                    onClick={(e) => sortByManufacturer(e.currentTarget.value)}
+                                    className='mr-3 cursor-pointer'
+                                />
+                                Intel
+                            </label>
+                        </div>
+                        <InputGroup className="mb-3 flex align-items-center gap-2">
+                            <InputGroup.Checkbox />AMD
+                        </InputGroup>
+                        <InputGroup className="mb-3 flex align-items-center gap-2">
+                            <InputGroup.Checkbox />Intel
+                        </InputGroup>
                         {/*Rgb or No Rgb  */}
                         {/* ========================================================== */}
                         <Button onClick={() => priceSort()}>Apply filters</Button>
@@ -344,7 +450,7 @@ export default function Parts() {
                 <Col md={9} className='px-2'>
                     {/* <PaginationExample /> */}
                     <div className="">
-                        
+
                         <SwitchComponent />
 
                         <div className="d-flex justify-content-center mt-4">
