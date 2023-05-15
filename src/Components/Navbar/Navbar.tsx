@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Container, Navbar, Nav } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 const logo = require('../../Assets/Images/BlackLogo.png');
 
 interface NavLink {
@@ -10,7 +10,30 @@ interface NavLink {
 }
 
 export default function NavbarComponent() {
+  const navigate = useNavigate();
   const location = useLocation();
+
+  const handleSignOut = () => {
+    localStorage.setItem('Token', 'guest');
+    navigate('/')
+  }
+
+  const LoggerComponent = () => {
+    let token = localStorage.getItem("Token");
+    if(token == "guest"){
+      return (
+        <Nav.Link as={Link} to="/Login" className="fontColor mx-3">
+          Login
+        </Nav.Link>
+      )
+    }else {
+      return (
+        <Nav.Link onClick={() => handleSignOut()} className="fontColor mx-3">
+          Sign out
+        </Nav.Link>
+      )
+    }
+  }
 
   return (
     <Navbar expand="lg" className="NavBackground">
@@ -27,9 +50,7 @@ export default function NavbarComponent() {
         <Navbar.Brand as={Link} to="/" className="fontColor">
           <img className="logoSize" src={logo} />BuildComp
         </Navbar.Brand>
-        <Nav.Link as={Link} to="/Login" className="fontColor mx-3">
-          Login
-        </Nav.Link>
+        <LoggerComponent/>
       </Container>
     </Navbar>
   );

@@ -3,6 +3,7 @@ import { Container, Row, Col, Dropdown, Button, OverlayTrigger, Tooltip } from '
 import NavbarComponent from '../Navbar/Navbar';
 import Footer from '../Footer/Footer';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { getLocalStorage } from '../../Services/LocalStorage';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 
 export default function Homepage() {
@@ -12,6 +13,7 @@ export default function Homepage() {
             {text}
         </Tooltip>
     );
+
 
     const [cpuValue, setCpuValue] = useState<string>('');
     const [title, setTitle] = useState<string>('PC Components')

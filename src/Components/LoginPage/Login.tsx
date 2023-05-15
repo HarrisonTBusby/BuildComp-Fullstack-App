@@ -20,9 +20,13 @@ const Login = () => {
         let token = await login(userData);
         if (token.token != null) {
             localStorage.setItem('Token', token.token);
-            // await GetLoggedInUserData(username);
             navigate('/');
         }
+    }
+
+    const handleGuest = () => {
+        localStorage.setItem('Token', 'guest');
+        navigate('/');
     }
 
     return (
@@ -66,7 +70,7 @@ const Login = () => {
                                 <hr ></hr>
                                 <p className='or'>or</p>
                             </div>
-                            <button className='login-btn' onClick={() => navigate('/')}>Continue as guest</button>
+                            <button className='login-btn' onClick={() => handleGuest()}>Continue as guest</button>
                             <p className='create-account'>Don't have an account? <span onClick={() => navigate('/SignUp')}>Sign up</span></p>
                         </Col>
                     </Row>
