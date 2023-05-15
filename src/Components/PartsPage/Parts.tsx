@@ -40,22 +40,7 @@ export default function Parts() {
     const [heatsinkData, setHeatsinkData] = useState<HeatsinkData[]>([]);
     const [hardDriveData, setHardDriveData] = useState<HardDriveData[]>([]);
 
-    //For checkbox
-    const [allChecked, setAllChecked] = useState(true);
-    const [amdChecked, setAmdChecked] = useState(false);
-    const [intelChecked, setIntelChecked] = useState(false);
-    //The three above need to be stored in an array or enumerable
-    const [cpuChecks, setCpuChecks] = useState(['AMD', 'Intel'])
-
-    //End
-
     const [cpuManufacturers, setCpuManufacturers] = useState([{ All: true, AMD: false, Intel: false }])
-
-
-    // const cpuManufactures = {
-    //     AMD: true,
-    //     Intel: true
-    // }
 
     const [totalItems, setTotalItems] = useState(0);
 
@@ -97,7 +82,6 @@ export default function Parts() {
             setHardDriveData(data)
             setComponentType('HardDrive')
         }
-        console.log(data);
 
     }
 
@@ -167,25 +151,11 @@ export default function Parts() {
         }
     };
 
-    function sortByManufacturer(value: any) {
-        // if (value === 'All') {
-        //     return
-        // }
-        // else if (value === 'AMD') {
-        //     const filteredArr = cpuData.filter((product: any) => product.title.includes('AMD'));
-        //     setCpuData(filteredArr);
-        //     setTotalItems(filteredArr.length)
-        // }
-        // else if (value === 'Intel') {
-        //     const filteredArr = cpuData.filter((product: any) => product.title.includes('Intel'));
-        //     setCpuData(filteredArr)
-        //     setTotalItems(filteredArr.length)
-        // }
-    }
 
     useEffect(() => {
         if (cpuManufacturers[0]['All'] === true) {
             setCpuData(originalCpuData)
+            setTotalItems(originalCpuData.length)
         } else {
             //if cpuManufacturers[0]['All'] === true then 
             //make the displayed data equal to the original data from fetch
@@ -251,8 +221,6 @@ export default function Parts() {
             return 0;
         })
 
-        console.log(newArr)
-
         return newArr
     }
 
@@ -276,30 +244,18 @@ export default function Parts() {
             setHardDriveData(sortByPrice(hardDriveData));
         }
     }
-
-    // if (amdChecked && intelChecked) {
-    //     setCpuData(originalCpuData);
-    // }
-
-    // if (!allChecked && !amdChecked && !intelChecked) {
-    //     setAllChecked(true)
-    // }
     const allFalse = cpuManufacturers.every((manufacturer) => !Object.values(manufacturer).some((isChecked) => isChecked));
     if (allFalse) {
         setCpuManufacturers([{ All: true, AMD: false, Intel: false }])
     }
+
     //Checkbox logic
     const handleCheckboxChange = (value: string, checked: boolean) => {
         if (value === "All") {
-            //setAllChecked(true);
-            //setAmdChecked(false);
-            //setIntelChecked(false);
             setCpuManufacturers([{ All: true, AMD: false, Intel: false }])
         }
 
         if (value === "AMD") {
-            //setAllChecked(false)
-            //setAmdChecked(checked);
             setCpuManufacturers((prev) => [
                 {
                     ...prev[0],
@@ -310,8 +266,6 @@ export default function Parts() {
         }
 
         if (value === "Intel") {
-            //setAllChecked(false)
-            //setIntelChecked(checked);
             setCpuManufacturers((prev) => [
                 {
                     ...prev[0],
@@ -341,7 +295,6 @@ export default function Parts() {
                                             <Dropdown.Toggle className='dropdownSize'>
                                                 PC Components
                                             </Dropdown.Toggle>
-
                                             <Dropdown.Menu >
                                                 <OverlayTrigger placement="right" overlay={renderTooltip('Provides the instructions and processing power the computer needs to do its work. The more powerful and updated your processor, the faster your computer can complete its tasks.')}>
                                                     <Dropdown.Item onClick={() => handleComponentSelect('Cpu')} className='ddButton'>CPU</Dropdown.Item>
@@ -478,7 +431,6 @@ export default function Parts() {
                                     value='All'
                                     checked={cpuManufacturers[0]['All']}
                                     onChange={(e) => handleCheckboxChange(e.target.value, e.target.checked)}
-                                    onClick={(e) => sortByManufacturer(e.currentTarget.value)}
                                     className='mr-3 cursor-pointer'
                                 />
                                 All
@@ -490,9 +442,7 @@ export default function Parts() {
                                     type='checkbox'
                                     value='AMD'
                                     checked={cpuManufacturers[0]['AMD']}
-                                    // checked={checkboxValues.length === 1}
                                     onChange={(e) => handleCheckboxChange(e.target.value, e.target.checked)}
-                                    onClick={(e) => sortByManufacturer(e.currentTarget.value)}
                                     className='mr-3 cursor-pointer'
                                 />
                                 AMD
@@ -505,7 +455,6 @@ export default function Parts() {
                                     value='Intel'
                                     checked={cpuManufacturers[0]['Intel']}
                                     onChange={(e) => handleCheckboxChange(e.target.value, e.target.checked)}
-                                    onClick={(e) => sortByManufacturer(e.currentTarget.value)}
                                     className='mr-3 cursor-pointer'
                                 />
                                 Intel
