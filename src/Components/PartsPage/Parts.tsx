@@ -332,25 +332,9 @@ export default function Parts() {
                                     <p className='mt-4'>Filter</p>
                                     <button onClick={() => handleComponentSelect(componentType)} className='clearFiltersBtn'>Clear Filters</button>
                                     <hr />
-                                    {/* Budget */}
-                                    {/* ====================================================================== */}
-                                    <p>Budget</p>
-                                    <input className='w-75' type='number' placeholder='Min' value={minBudget} onKeyDown={handleMinBudget} onChange={(event) => setMinBudget(event.currentTarget.value)}></input>
-                                    <input className='w-75' type='number' placeholder='Max' value={maxBudget} onKeyDown={handleMaxBudget} onChange={(event) => setMaxBudget(event.currentTarget.value)}></input>
-                                    {/* PC Components */}
-                                    {/* ====================================================================== */}
+                                    
 
 
-
-                                    {/* Better Price or Better Performance */}
-                                    {/* ================================================== */}
-                                    <p className='mt-5'>Better Price or Better Performance</p>
-                                    <InputGroup className="mb-3">
-                                        <InputGroup.Checkbox />Better price
-                                    </InputGroup>
-                                    <InputGroup className="mb-3">
-                                        <InputGroup.Checkbox />Better performance
-                                    </InputGroup>
                                     <p>Manufacturer</p>
                                     <div className='flex justify-content-center gap-2'>
                                         <label className='cursor-pointer'>
