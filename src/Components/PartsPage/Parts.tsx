@@ -172,7 +172,7 @@ export default function Parts() {
             //filter by the key
 
             //const filteredCpuData = cpuData.filter(cpu => cpu.title.includes('AMD') || cpu.title.includes('Intel'));
-            
+
             let data: any = [];
 
             const filteredData = originalCpuData.filter((cpu: { title: string, index?: number }) => {
@@ -189,7 +189,7 @@ export default function Parts() {
             });
 
             data = [...data, filteredData]
-            
+
 
             // let data: CpuData[] = [];
             // for (let i = 0; i < cpuChecks.length; i++) {
@@ -294,6 +294,7 @@ export default function Parts() {
                         <Dropdown.Menu>
                             <Col className='filterBackground p-3' md={3}>
                                 <div className='marginLeft2 filterBoxColor'>
+                                <button onClick={() => priceSort()}>SORT BY PRICE</button>
                                     <Col className='marginLeft mt-5 mb-5'>
                                         <p className='mt-5'>Components</p>
                                         <Dropdown className='bb-dropdown'>
@@ -350,15 +351,48 @@ export default function Parts() {
                                     <InputGroup className="mb-3">
                                         <InputGroup.Checkbox />Better performance
                                     </InputGroup>
-                                    <p className='mt-5'>Manufacturer</p>
-                                    {/*Rgb or No Rgb  */}
-                                    {/* ========================================================== */}
-                                    <p className='mt-5'>RGB</p>
-                                    <InputGroup className="mb-3">
-                                        <InputGroup.Checkbox />RGB
+                                    <p>Manufacturer</p>
+                                    <div className='flex justify-content-center gap-2'>
+                                        <label className='cursor-pointer'>
+                                            <input
+                                                type='checkbox'
+                                                value='All'
+                                                checked={cpuManufacturers[0]['All']}
+                                                onChange={(e) => handleCheckboxChange(e.target.value, e.target.checked)}
+                                                className='mr-3 cursor-pointer'
+                                            />
+                                            All
+                                        </label>
+                                    </div>
+                                    <div className='flex justify-content-center gap-2'>
+                                        <label className='cursor-pointer'>
+                                            <input
+                                                type='checkbox'
+                                                value='AMD'
+                                                checked={cpuManufacturers[0]['AMD']}
+                                                onChange={(e) => handleCheckboxChange(e.target.value, e.target.checked)}
+                                                className='mr-3 cursor-pointer'
+                                            />
+                                            AMD
+                                        </label>
+                                    </div>
+                                    <div className='flex justify-content-center gap-2'>
+                                        <label className='cursor-pointer'>
+                                            <input
+                                                type='checkbox'
+                                                value='Intel'
+                                                checked={cpuManufacturers[0]['Intel']}
+                                                onChange={(e) => handleCheckboxChange(e.target.value, e.target.checked)}
+                                                className='mr-3 cursor-pointer'
+                                            />
+                                            Intel
+                                        </label>
+                                    </div>
+                                    <InputGroup className="mb-3 flex align-items-center gap-2">
+                                        <InputGroup.Checkbox />AMD
                                     </InputGroup>
-                                    <InputGroup className="mb-3">
-                                        <InputGroup.Checkbox />No RGB
+                                    <InputGroup className="mb-3 flex align-items-center gap-2">
+                                        <InputGroup.Checkbox />Intel
                                     </InputGroup>
                                 </div>
                             </Col>
