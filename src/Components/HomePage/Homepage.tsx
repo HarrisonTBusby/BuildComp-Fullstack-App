@@ -15,12 +15,6 @@ export default function Homepage() {
         </Tooltip>
     );
 
-    useEffect(() => {
-    localStorage.setItem('BuildCompToken', 'guest');
-
-    }, [])
-
-
     const [cpuValue, setCpuValue] = useState<string>('');
     const [title, setTitle] = useState<string>('PC Components')
     return (
