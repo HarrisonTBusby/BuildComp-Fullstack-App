@@ -45,7 +45,7 @@ const GetRandomUserData = async () => {
 }
 
 const createAccount = async (createdUser: any) => {
-    const response = await fetch('https://buildcomp.azurewebsites.net/User/AddUser/', {
+    const response = await fetch('https://buildcompdatabase.azurewebsites.net/User/AddUser/', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -61,7 +61,7 @@ const createAccount = async (createdUser: any) => {
 }
 
 const login = async (loginUser: any) => {
-    const response = await fetch('https://buildcomp.azurewebsites.net/User/Login/', {
+    const response = await fetch('https://buildcompdatabase.azurewebsites.net/User/Login/', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

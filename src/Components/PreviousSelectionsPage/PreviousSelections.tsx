@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import NavbarComponent from '../Navbar/Navbar';
 import Footer from '../Footer/Footer'
-import {Button, Modal, }  from 'react-bootstrap';
+import { Button, Modal, } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 
 export default function PreviousSelections() {
@@ -12,36 +12,54 @@ export default function PreviousSelections() {
 
   const GuestView = () => {
     let token = localStorage.getItem('Token');
-     if(token == 'guest'){
-       return (
-         <>
-   
-       <Modal
-         show={show}
-         onHide={handleClose}
-         backdrop="static"
-         keyboard={false}
-       >
-         <Modal.Body>
-           You will need to sign up to see more features
-         </Modal.Body>
-         <Modal.Footer className='d-flex justify-content-between'>
-           <Button variant="primary" onClick={() => navigate('/SignUp')}>Create Account?</Button>
-           <Button variant="primary" onClick={() => navigate('/Login')}>Login</Button>
-         </Modal.Footer>
-       </Modal>
-       </>
-       )
-     }else{
-       return null;
-     }
-   }
+    if (token == 'guest') {
+      return (
+        <>
+
+          <Modal
+            show={show}
+            onHide={handleClose}
+            backdrop="static"
+            keyboard={false}
+            className='d-flex justify-content-center align-items-center'
+          >
+            <Modal.Body>
+              You will need to sign up to see more features
+            </Modal.Body>
+            <Modal.Footer className='d-flex justify-content-between'>
+              <Button variant="primary" onClick={() => navigate('/SignUp')}>Create Account?</Button>
+              <Button variant="primary" onClick={() => navigate('/Login')}>Login</Button>
+            </Modal.Footer>
+          </Modal>
+        </>
+      )
+    } else {
+      return (
+        <Modal
+          show={show}
+          onHide={handleClose}
+          backdrop="static"
+          keyboard={false}
+          className='d-flex justify-content-center align-items-center'
+        >
+          <Modal.Body className='d-flex justify-content-center'>
+            This page is currently in development
+          </Modal.Body>
+          <Modal.Footer className='d-flex justify-content-center'>
+            <Button variant="primary" onClick={() => navigate('/')}>Back to home?</Button>
+          </Modal.Footer>
+        </Modal>
+      )
+    }
+  }
+
+
 
   return (
     <>
       <NavbarComponent />
       <div className='mt-4'>
-        <GuestView/>
+        <GuestView />
       </div>
       <Footer />
     </>

@@ -27,6 +27,7 @@ const GuestView = () => {
       onHide={handleClose}
       backdrop="static"
       keyboard={false}
+      className='d-flex justify-content-center align-items-center'
     >
       <Modal.Body>
         You will need to sign up to see more features
