@@ -14,12 +14,12 @@ export default function NavbarComponent() {
   const location = useLocation();
 
   const handleSignOut = () => {
-    localStorage.setItem('Token', 'guest');
+    localStorage.setItem('BuildCompToken', 'guest');
     navigate('/')
   }
 
   const LoggerComponent = () => {
-    let token = localStorage.getItem("Token");
+    let token = localStorage.getItem("BuildCompToken");
     if(token == "guest"){
       return (
         <Nav.Link as={Link} to="/Login" className="fontColor mx-3">
