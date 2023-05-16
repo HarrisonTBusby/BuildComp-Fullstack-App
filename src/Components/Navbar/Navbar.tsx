@@ -20,16 +20,17 @@ export default function NavbarComponent() {
 
   const LoggerComponent = () => {
     let token = localStorage.getItem("BuildCompToken");
-    if(token == "guest"){
-      return (
-        <Nav.Link as={Link} to="/Login" className="fontColor mx-3">
-          Login
-        </Nav.Link>
-      )
-    }else {
+    if(token != "guest"){
       return (
         <Nav.Link onClick={() => handleSignOut()} className="fontColor mx-3">
           Sign out
+        </Nav.Link>
+        
+      )
+    }else {
+      return (
+        <Nav.Link as={Link} to="/Login" className="fontColor mx-3">
+          Login
         </Nav.Link>
       )
     }
