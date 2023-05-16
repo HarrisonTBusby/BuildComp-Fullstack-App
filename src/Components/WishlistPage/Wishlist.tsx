@@ -17,7 +17,7 @@ const Wishlist = () => {
 
 
 const GuestView = () => {
- let token = localStorage.getItem('Token');
+ let token = localStorage.getItem('BuildCompToken');
   if(token == 'guest'){
     return (
       <>

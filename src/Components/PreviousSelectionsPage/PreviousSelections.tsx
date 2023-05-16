@@ -11,7 +11,7 @@ export default function PreviousSelections() {
   const handleShow = () => setShow(true);
 
   const GuestView = () => {
-    let token = localStorage.getItem('Token');
+    let token = localStorage.getItem('BuildCompToken');
     if (token == 'guest') {
       return (
         <>
