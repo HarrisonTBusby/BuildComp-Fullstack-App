@@ -23,7 +23,7 @@ export default function Footer() {
                     <p>harrisontbusby@gmail.com</p>
                 </Col>
             </Row>
-            <p className='mt-4 text-center'>Created by Harrison Busby, Carlos Felipe, and Reed Goodwin</p>
+            <p className='mt-4 text-center'>Created by Harrison Busby & Carlos Felipe</p>
         </footer>
     )
 }
