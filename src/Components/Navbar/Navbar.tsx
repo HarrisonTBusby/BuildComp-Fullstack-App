@@ -12,11 +12,13 @@ interface NavLink {
 export default function NavbarComponent() {
   const navigate = useNavigate();
   const location = useLocation();
-
+  localStorage.setItem('BuildCompToken', 'guest');
+  
   const handleSignOut = () => {
     localStorage.setItem('BuildCompToken', 'guest');
     navigate('/')
   }
+  
 
   const LoggerComponent = () => {
     let token = localStorage.getItem("BuildCompToken");
