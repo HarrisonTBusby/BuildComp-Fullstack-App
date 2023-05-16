@@ -82,6 +82,11 @@ export default function Parts() {
             setHardDriveData(data)
             setComponentType('HardDrive')
         }
+        setCpuManufacturers([{
+            All: true,
+            AMD: false,
+            Intel: false
+        }])
 
     }
 
