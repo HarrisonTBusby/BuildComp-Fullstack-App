@@ -41,6 +41,12 @@ export default function Parts() {
     const [hardDriveData, setHardDriveData] = useState<HardDriveData[]>([]);
 
     const [cpuManufacturers, setCpuManufacturers] = useState([{ All: true, AMD: false, Intel: false }])
+    const [cpuSocket, setCpuSocket] = useState({ All: true, AM4: false, LGA1150: false, LGA1151: false, LGA1155: false, LGA1200: false, LGA1700: false, LGA2011: false })
+
+    const [cpuFilters, setCpuFilters] = useState({
+        manufacturers: { All: true, AMD: false, Intel: false },
+        socketTypes: { All: true, AM4: false, LGA1150: false, LGA1151: false, LGA1155: false, LGA1200: false, LGA1700: false, LGA2011: false }
+    });
 
     const [totalItems, setTotalItems] = useState(0);
 
@@ -92,6 +98,7 @@ export default function Parts() {
             setCpuData(data);
             setTotalItems(data.length)
             setComponentType('Cpu')
+            console.log(data)
         }
         getData()
 
@@ -151,26 +158,14 @@ export default function Parts() {
         }
     };
 
-
-    useEffect(() => {
+    const handleCpuManufacturer = () => {
         if (cpuManufacturers[0]['All'] === true) {
             setCpuData(originalCpuData)
             setTotalItems(originalCpuData.length)
         } else {
-            //if cpuManufacturers[0]['All'] === true then 
-            //make the displayed data equal to the original data from fetch
-            //else reduce array or filter array so that
-            //only the object with values that are true
-            //render on creen  
-            //for cpuManufacturers[0][key 1, key end] 
-            //if cpuManufacturer[0][key] === true then grab the key of that index and 
-            //filter by the key
-
-            //const filteredCpuData = cpuData.filter(cpu => cpu.title.includes('AMD') || cpu.title.includes('Intel'));
-            
             let data: any = [];
 
-            const filteredData = originalCpuData.filter((cpu: { title: string, index?: number }) => {
+            const filteredData = cpuData.filter((cpu: { title: string, index?: number }) => {
                 let included = false;
                 Object.keys(cpuManufacturers[0]).forEach(key => {
                     if (cpu.title.includes(key) && cpuManufacturers[0][key as keyof typeof cpuManufacturers[0]]) {
@@ -184,30 +179,160 @@ export default function Parts() {
             });
 
             data = [...data, filteredData]
-            
-
-            // let data: CpuData[] = [];
-            // for (let i = 0; i < cpuChecks.length; i++) {
-            //     const filteredArr = originalCpuData.filter((product: any) => product.title.includes(cpuChecks[i]));
-            //     data = [...data, ...filteredArr];
-            // }
-
-            // const newArr = [...data];
-            // newArr.sort((a: any, b: any) => {
-            //     if (a.id < b.id) {
-            //         return -1
-            //     }
-            //     if (a.id > b.id) {
-            //         return 1;
-            //     }
-            //     return 0;
-            // })
 
             setCpuData(filteredData);
             setTotalItems(filteredData.length)
-            // setTotalItems(filteredArr.length)
         }
-    }, [cpuManufacturers])
+    }
+
+    const handleCpuFiltersCheckbox = () => {
+        if (cpuFilters.manufacturers.All && cpuFilters.socketTypes.All) {
+            setCpuData(originalCpuData);
+            setTotalItems(originalCpuData.length);
+        } else if (cpuFilters.manufacturers.All && !cpuFilters.socketTypes.All) {
+
+            let data: any[] = [];
+            const filteredData = originalCpuData.filter((cpu: { socketType: string, index?: number }) => {
+                let included = false;
+                const { socketTypes } = cpuFilters;
+
+                Object.keys(socketTypes).forEach((key) => {
+                    if (cpu.socketType.includes(key) && socketTypes[key as keyof typeof socketTypes]) {
+                        included = true;
+                    }
+                });
+
+                return included;
+            }).map((cpu) => {
+                //cpu.index = index;
+                return cpu;
+            });
+
+            data = [...data, filteredData];
+
+            setCpuData(filteredData);
+            setTotalItems(filteredData.length);
+
+        } else if (!cpuFilters.manufacturers.All && cpuFilters.socketTypes.All) {
+            let data: any[] = [];
+            const filteredData = originalCpuData.filter((cpu: { title: string, index?: number }) => {
+                let included = false;
+                const { manufacturers } = cpuFilters;
+
+                Object.keys(manufacturers).forEach((key) => {
+                    if (cpu.title.includes(key) && manufacturers[key as keyof typeof manufacturers]) {
+                        included = true;
+                    }
+                });
+
+                return included;
+            }).map((cpu) => {
+                //cpu.index = index;
+                return cpu;
+            });
+
+            data = [...data, filteredData];
+
+            setCpuData(filteredData);
+            setTotalItems(filteredData.length);
+
+        
+        }
+    //DEBUG THISSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS 
+    //DEBUG THISSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS 
+    //DEBUG THISSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS 
+    //DEBUG THISSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS 
+    //DEBUG THISSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS 
+    //DEBUG THISSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS 
+    //DEBUG THISSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS 
+    //DEBUG THISSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS 
+        else {
+            let data: any[] = [];
+            const filteredData = originalCpuData.filter((cpu: { socketType: string, index?: number }) => {
+                let included = false;
+                Object.keys(cpuSocket).forEach((key) => {
+                    if (cpu.socketType.includes(key) && cpuSocket[key as keyof typeof cpuSocket]) {
+                        included = true;
+                    }
+                });
+                return included;
+            }).map((cpu) => {
+                //cpu.index = index;
+                return cpu;
+            });
+
+            data = [...data, filteredData];
+
+            let data3: any[] = [];
+            const data2 = filteredData.filter((cpu: { title: string, index?: number }) => {
+                let included = false;
+                const { manufacturers } = cpuFilters;
+
+                Object.keys(manufacturers).forEach((key) => {
+                    if (cpu.title.includes(key) && manufacturers[key as keyof typeof manufacturers]) {
+                        included = true;
+                    }
+                });
+
+                return included;
+            }).map((cpu) => {
+                //cpu.index = index;
+                return cpu;
+            });
+
+            data3 = [...data3, data2]
+
+            setCpuData(data2);
+            setTotalItems(data2.length);
+        }
+    }
+
+    const handleCpuSocketType = () => {
+        if (cpuSocket.All === true) {
+            setCpuData(originalCpuData);
+            setTotalItems(originalCpuData.length);
+        } else {
+            let data: any[] = [];
+
+            const filteredData = cpuData.filter((cpu: { socketType: string, index?: number }) => {
+                let included = false;
+                Object.keys(cpuSocket).forEach((key) => {
+                    if (cpu.socketType.includes(key) && cpuSocket[key as keyof typeof cpuSocket]) {
+                        included = true;
+                    }
+                });
+                return included;
+            }).map((cpu) => {
+                //cpu.index = index;
+                return cpu;
+            });
+
+            data = [...data, filteredData];
+
+            setCpuData(filteredData);
+            setTotalItems(filteredData.length);
+        }
+    }
+
+    useEffect(() => {
+        if (componentType == 'Cpu') {
+            handleCpuFiltersCheckbox()
+        } else if (componentType == 'Gpu') {
+            setGpuData(sortByPrice(gpuData));
+        } else if (componentType == "Motherboard") {
+            setMotherboardData(sortByPrice(motherboardData));
+        } else if (componentType == "Case") {
+            setCaseData(sortByPrice(caseData));
+        } else if (componentType == "Ram") {
+            setRamData(sortByPrice(ramData));
+        } else if (componentType == "Ps") {
+            setPsData(sortByPrice(psData));
+        } else if (componentType == "Heatsink") {
+            setHeatsinkData(sortByPrice(heatsinkData));
+        } else {
+            setHardDriveData(sortByPrice(hardDriveData));
+        }
+    }, [cpuFilters])
 
     function sortByPrice(arr: any) {
         const newArr = [...arr];
@@ -244,14 +369,31 @@ export default function Parts() {
             setHardDriveData(sortByPrice(hardDriveData));
         }
     }
+
     const allFalse = cpuManufacturers.every((manufacturer) => !Object.values(manufacturer).some((isChecked) => isChecked));
     if (allFalse) {
         setCpuManufacturers([{ All: true, AMD: false, Intel: false }])
     }
 
+    const isAllSocketTypesFalse = Object.values(cpuFilters.socketTypes).every(value => value === false);
+    if (isAllSocketTypesFalse) {
+        setCpuFilters((prev) => ({
+            ...prev,
+            socketTypes: { ...prev.socketTypes, All: true }
+        }))
+    }
+
+    const isAllManufacturerTypesFalse = Object.values(cpuFilters.manufacturers).every(value => value === false);
+    if (isAllManufacturerTypesFalse) {
+        setCpuFilters((prev) => ({
+            ...prev,
+            manufacturers: { ...prev.manufacturers, All: true }
+        }))
+    }
+
     //Checkbox logic
     const handleCheckboxChange = (value: string, checked: boolean) => {
-        if (value === "All") {
+        if (value === "ManufacturerAll") {
             setCpuManufacturers([{ All: true, AMD: false, Intel: false }])
         }
 
@@ -273,6 +415,69 @@ export default function Parts() {
                     All: false
                 }
             ]);
+        }
+    };
+
+    const handleCpuManufacturerCheckbox = (value: string, checked: boolean) => {
+        if (value === 'ManufacturerAll') {
+            setCpuFilters((prev) => ({
+                ...prev,
+                manufacturers: { All: true, AMD: false, Intel: false }
+            }))
+        } else if (value === 'AMD') {
+            setCpuFilters((prev) => ({
+                ...prev,
+                manufacturers: { ...prev.manufacturers, All: false, AMD: checked }
+            }))
+        } else if (value === 'Intel') {
+            setCpuFilters((prev) => ({
+                ...prev,
+                manufacturers: { ...prev.manufacturers, All: false, Intel: checked }
+            }))
+        }
+    }
+
+    const handleCpuSocketCheckbox = (value: string, checked: boolean) => {
+        if (value === 'SocketAll') {
+            setCpuFilters((prev) => ({
+                ...prev,
+                socketTypes: { All: true, AM4: false, LGA1150: false, LGA1151: false, LGA1155: false, LGA1200: false, LGA1700: false, LGA2011: false },
+            }))
+        } else if (value === 'AM4') {
+            setCpuFilters((prev) => ({
+                ...prev,
+                socketTypes: { ...prev.socketTypes, All: false, AM4: checked }
+            }))
+        } else if (value === 'LGA1150') {
+            setCpuFilters((prev) => ({
+                ...prev,
+                socketTypes: { ...prev.socketTypes, All: false, LGA1150: checked }
+            }))
+        } else if (value === 'LGA1151') {
+            setCpuFilters((prev) => ({
+                ...prev,
+                socketTypes: { ...prev.socketTypes, All: false, LGA1151: checked }
+            }))
+        } else if (value === 'LGA1155') {
+            setCpuFilters((prev) => ({
+                ...prev,
+                socketTypes: { ...prev.socketTypes, All: false, LGA1155: checked }
+            }))
+        } else if (value === 'LGA1200') {
+            setCpuFilters((prev) => ({
+                ...prev,
+                socketTypes: { ...prev.socketTypes, All: false, LGA1200: checked }
+            }))
+        } else if (value === 'LGA1700') {
+            setCpuFilters((prev) => ({
+                ...prev,
+                socketTypes: { ...prev.socketTypes, All: false, LGA1700: checked }
+            }))
+        } else if (value === 'LGA2011') {
+            setCpuFilters((prev) => ({
+                ...prev,
+                socketTypes: { ...prev.socketTypes, All: false, LGA2011: checked }
+            }))
         }
     };
 
@@ -428,9 +633,9 @@ export default function Parts() {
                             <label className='cursor-pointer'>
                                 <input
                                     type='checkbox'
-                                    value='All'
-                                    checked={cpuManufacturers[0]['All']}
-                                    onChange={(e) => handleCheckboxChange(e.target.value, e.target.checked)}
+                                    value='ManufacturerAll'
+                                    checked={cpuFilters.manufacturers.All}
+                                    onChange={(e) => handleCpuManufacturerCheckbox(e.target.value, e.target.checked)}
                                     className='mr-3 cursor-pointer'
                                 />
                                 All
@@ -441,8 +646,8 @@ export default function Parts() {
                                 <input
                                     type='checkbox'
                                     value='AMD'
-                                    checked={cpuManufacturers[0]['AMD']}
-                                    onChange={(e) => handleCheckboxChange(e.target.value, e.target.checked)}
+                                    checked={cpuFilters.manufacturers.AMD}
+                                    onChange={(e) => handleCpuManufacturerCheckbox(e.target.value, e.target.checked)}
                                     className='mr-3 cursor-pointer'
                                 />
                                 AMD
@@ -453,11 +658,110 @@ export default function Parts() {
                                 <input
                                     type='checkbox'
                                     value='Intel'
-                                    checked={cpuManufacturers[0]['Intel']}
-                                    onChange={(e) => handleCheckboxChange(e.target.value, e.target.checked)}
+                                    checked={cpuFilters.manufacturers.Intel}
+                                    onChange={(e) => handleCpuManufacturerCheckbox(e.target.value, e.target.checked)}
                                     className='mr-3 cursor-pointer'
                                 />
                                 Intel
+                            </label>
+                        </div>
+
+                        <hr></hr>
+                        <p>Socket Type</p>
+                        <div className='flex justify-content-center gap-2'>
+                            <label className='cursor-pointer'>
+                                <input
+                                    type='checkbox'
+                                    value='SocketAll'
+                                    checked={cpuFilters.socketTypes.All}
+                                    onChange={(e) => handleCpuSocketCheckbox(e.target.value, e.target.checked)}
+                                    className='mr-3 cursor-pointer'
+                                />
+                                All
+                            </label>
+                        </div>
+                        <div className='flex justify-content-center gap-2'>
+                            <label className='cursor-pointer'>
+                                <input
+                                    type='checkbox'
+                                    value='AM4'
+                                    checked={cpuFilters.socketTypes.AM4}
+                                    onChange={(e) => handleCpuSocketCheckbox(e.target.value, e.target.checked)}
+                                    className='mr-3 cursor-pointer'
+                                />
+                                AM4
+                            </label>
+                        </div>
+                        <div className='flex justify-content-center gap-2'>
+                            <label className='cursor-pointer'>
+                                <input
+                                    type='checkbox'
+                                    value='LGA1150'
+                                    checked={cpuFilters.socketTypes.LGA1150}
+                                    onChange={(e) => handleCpuSocketCheckbox(e.target.value, e.target.checked)}
+                                    className='mr-3 cursor-pointer'
+                                />
+                                LGA1150
+                            </label>
+                        </div>
+                        <div className='flex justify-content-center gap-2'>
+                            <label className='cursor-pointer'>
+                                <input
+                                    type='checkbox'
+                                    value='LGA1151'
+                                    checked={cpuFilters.socketTypes.LGA1151}
+                                    onChange={(e) => handleCpuSocketCheckbox(e.target.value, e.target.checked)}
+                                    className='mr-3 cursor-pointer'
+                                />
+                                LGA1151
+                            </label>
+                        </div>
+                        <div className='flex justify-content-center gap-2'>
+                            <label className='cursor-pointer'>
+                                <input
+                                    type='checkbox'
+                                    value='LGA1155'
+                                    checked={cpuFilters.socketTypes.LGA1155}
+                                    onChange={(e) => handleCpuSocketCheckbox(e.target.value, e.target.checked)}
+                                    className='mr-3 cursor-pointer'
+                                />
+                                LGA1155
+                            </label>
+                        </div>
+                        <div className='flex justify-content-center gap-2'>
+                            <label className='cursor-pointer'>
+                                <input
+                                    type='checkbox'
+                                    value='LGA1200'
+                                    checked={cpuFilters.socketTypes.LGA1200}
+                                    onChange={(e) => handleCpuSocketCheckbox(e.target.value, e.target.checked)}
+                                    className='mr-3 cursor-pointer'
+                                />
+                                LGA1200
+                            </label>
+                        </div>
+                        <div className='flex justify-content-center gap-2'>
+                            <label className='cursor-pointer'>
+                                <input
+                                    type='checkbox'
+                                    value='LGA1700'
+                                    checked={cpuFilters.socketTypes.LGA1700}
+                                    onChange={(e) => handleCpuSocketCheckbox(e.target.value, e.target.checked)}
+                                    className='mr-3 cursor-pointer'
+                                />
+                                LGA1700
+                            </label>
+                        </div>
+                        <div className='flex justify-content-center gap-2'>
+                            <label className='cursor-pointer'>
+                                <input
+                                    type='checkbox'
+                                    value='LGA2011'
+                                    checked={cpuFilters.socketTypes.LGA2011}
+                                    onChange={(e) => handleCpuSocketCheckbox(e.target.value, e.target.checked)}
+                                    className='mr-3 cursor-pointer'
+                                />
+                                LGA2011
                             </label>
                         </div>
                         <InputGroup className="mb-3 flex align-items-center gap-2">
