@@ -523,9 +523,9 @@ export default function Parts() {
                                         <label className='cursor-pointer'>
                                             <input
                                                 type='checkbox'
-                                                value='All'
-                                                checked={cpuManufacturers[0]['All']}
-                                                onChange={(e) => handleCheckboxChange(e.target.value, e.target.checked)}
+                                                value='ManufacturerAll'
+                                                checked={cpuFilters.manufacturers.All}
+                                                onChange={(e) => handleCpuManufacturerCheckbox(e.target.value, e.target.checked)}
                                                 className='mr-3 cursor-pointer'
                                             />
                                             All
@@ -536,8 +536,8 @@ export default function Parts() {
                                             <input
                                                 type='checkbox'
                                                 value='AMD'
-                                                checked={cpuManufacturers[0]['AMD']}
-                                                onChange={(e) => handleCheckboxChange(e.target.value, e.target.checked)}
+                                                checked={cpuFilters.manufacturers.AMD}
+                                                onChange={(e) => handleCpuManufacturerCheckbox(e.target.value, e.target.checked)}
                                                 className='mr-3 cursor-pointer'
                                             />
                                             AMD
@@ -548,13 +548,14 @@ export default function Parts() {
                                             <input
                                                 type='checkbox'
                                                 value='Intel'
-                                                checked={cpuManufacturers[0]['Intel']}
-                                                onChange={(e) => handleCheckboxChange(e.target.value, e.target.checked)}
+                                                checked={cpuFilters.manufacturers.Intel}
+                                                onChange={(e) => handleCpuManufacturerCheckbox(e.target.value, e.target.checked)}
                                                 className='mr-3 cursor-pointer'
                                             />
                                             Intel
                                         </label>
                                     </div>
+
                                     <hr></hr>
                                     <p>Socket Type</p>
                                     <div className='flex justify-content-center gap-2'>
