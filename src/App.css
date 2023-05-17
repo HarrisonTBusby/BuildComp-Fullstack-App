@@ -47,6 +47,11 @@
     .bb-content {
         flex-direction: column;
     }
+
+    .filterBackground {
+        height: 50vh;
+    overflow: auto;
+    }
 }
 
 .cursor-pointer:hover {
