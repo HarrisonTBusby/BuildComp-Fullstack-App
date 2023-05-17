@@ -12,7 +12,7 @@ export default function Footer() {
                         <Row>
                             <Nav.Link as={Link} to='/Login'>Login</Nav.Link>
                             <Nav.Link as={Link} to='/'>Home</Nav.Link>
-                            <Nav.Link as={Link} to='/BestBuilds'>Best Builds</Nav.Link>
+                            <Nav.Link as={Link} to='/Parts'>Parts</Nav.Link>
                             <Nav.Link as={Link} to='/Wishlist'>Wishlist</Nav.Link>
                             <Nav.Link as={Link} to='/PreviousSelections'>Previous Selections</Nav.Link>
                         </Row>
@@ -23,7 +23,7 @@ export default function Footer() {
                     <p>harrisontbusby@gmail.com</p>
                 </Col>
             </Row>
-            <p className='mt-4 text-center'>Created by Harrison Busby, Carlos Felipe, and Reed Goodwin</p>
+            <p className='mt-4 text-center'>Created by Harrison Busby & Carlos Felipe</p>
         </footer>
     )
 }

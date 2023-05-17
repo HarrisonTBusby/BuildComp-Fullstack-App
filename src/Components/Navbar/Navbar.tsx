@@ -12,24 +12,27 @@ interface NavLink {
 export default function NavbarComponent() {
   const navigate = useNavigate();
   const location = useLocation();
+ 
 
   const handleSignOut = () => {
-    localStorage.setItem('Token', 'guest');
+    localStorage.setItem('BuildCompToken', 'guest');
     navigate('/')
   }
+  
 
   const LoggerComponent = () => {
-    let token = localStorage.getItem("Token");
-    if(token == "guest"){
-      return (
-        <Nav.Link as={Link} to="/Login" className="fontColor mx-3">
-          Login
-        </Nav.Link>
-      )
-    }else {
+    let token = localStorage.getItem("BuildCompToken");
+    if(token != "guest"){
       return (
         <Nav.Link onClick={() => handleSignOut()} className="fontColor mx-3">
           Sign out
+        </Nav.Link>
+        
+      )
+    }else {
+      return (
+        <Nav.Link as={Link} to="/Login" className="fontColor mx-3">
+          Login
         </Nav.Link>
       )
     }

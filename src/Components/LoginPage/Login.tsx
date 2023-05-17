@@ -19,13 +19,13 @@ const Login = () => {
         console.log(userData);
         let token = await login(userData);
         if (token.token != null) {
-            localStorage.setItem('Token', token.token);
+            localStorage.setItem('BuildCompToken', token.token);
             navigate('/');
         }
     }
 
     const handleGuest = () => {
-        localStorage.setItem('Token', 'guest');
+        localStorage.setItem('BuildCompToken', 'guest');
         navigate('/');
     }
 

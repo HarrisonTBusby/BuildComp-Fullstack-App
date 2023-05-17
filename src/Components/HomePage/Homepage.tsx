@@ -5,6 +5,7 @@ import Footer from '../Footer/Footer';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { getLocalStorage } from '../../Services/LocalStorage';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 
 export default function Homepage() {
     const navigate = useNavigate();
@@ -13,7 +14,6 @@ export default function Homepage() {
             {text}
         </Tooltip>
     );
-
 
     const [cpuValue, setCpuValue] = useState<string>('');
     const [title, setTitle] = useState<string>('PC Components')
