@@ -867,14 +867,8 @@ export default function Parts() {
                                 LGA2011
                             </label>
                         </div>
-                        <InputGroup className="mb-3 flex align-items-center gap-2">
-                            <InputGroup.Checkbox />AMD
-                        </InputGroup>
-                        <InputGroup className="mb-3 flex align-items-center gap-2">
-                            <InputGroup.Checkbox />Intel
-                        </InputGroup>
-                        {/*Rgb or No Rgb  */}
-                        {/* ========================================================== */}
+                        <br/>
+                        <hr/>
                         <Button onClick={() => priceSort()}>Apply filters</Button>
                     </div>
                 </Col>
