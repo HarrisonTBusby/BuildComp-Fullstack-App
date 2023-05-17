@@ -100,7 +100,7 @@ export default function Parts() {
             setComponentType('Cpu')
         }
         getData()
-        
+
     }, [])
 
     //HandlesPaginationButtons
@@ -115,7 +115,7 @@ export default function Parts() {
     const SwitchComponent = () => {
         switch (componentType) {
             case 'Cpu':
-                return <CpuList cpuData={cpuData} currentPage={currentPage} setCurrentPage={setCurrentPage}/>;
+                return <CpuList cpuData={cpuData} currentPage={currentPage} setCurrentPage={setCurrentPage} />;
             case 'Gpu':
                 return <GpuList gpuData={gpuData} currentPage={currentPage} setCurrentPage={setCurrentPage} />;
             case 'Motherboard':
@@ -224,10 +224,10 @@ export default function Parts() {
             setCpuData(filteredData);
             setTotalItems(filteredData.length);
 
-        
+
         }
-   
-        else if(!cpuFilters.manufacturers.All && !cpuFilters.socketTypes.All){
+
+        else if (!cpuFilters.manufacturers.All && !cpuFilters.socketTypes.All) {
             let data = originalCpuData.filter((cpu: { title: string, index?: number }) => {
                 let included = false;
                 const { manufacturers } = cpuFilters;
@@ -553,6 +553,104 @@ export default function Parts() {
                                                 className='mr-3 cursor-pointer'
                                             />
                                             Intel
+                                        </label>
+                                    </div>
+                                    <hr></hr>
+                                    <p>Socket Type</p>
+                                    <div className='flex justify-content-center gap-2'>
+                                        <label className='cursor-pointer'>
+                                            <input
+                                                type='checkbox'
+                                                value='SocketAll'
+                                                checked={cpuFilters.socketTypes.All}
+                                                onChange={(e) => handleCpuSocketCheckbox(e.target.value, e.target.checked)}
+                                                className='mr-3 cursor-pointer'
+                                            />
+                                            All
+                                        </label>
+                                    </div>
+                                    <div className='flex justify-content-center gap-2'>
+                                        <label className='cursor-pointer'>
+                                            <input
+                                                type='checkbox'
+                                                value='AM4'
+                                                checked={cpuFilters.socketTypes.AM4}
+                                                onChange={(e) => handleCpuSocketCheckbox(e.target.value, e.target.checked)}
+                                                className='mr-3 cursor-pointer'
+                                            />
+                                            AM4
+                                        </label>
+                                    </div>
+                                    <div className='flex justify-content-center gap-2'>
+                                        <label className='cursor-pointer'>
+                                            <input
+                                                type='checkbox'
+                                                value='LGA1150'
+                                                checked={cpuFilters.socketTypes.LGA1150}
+                                                onChange={(e) => handleCpuSocketCheckbox(e.target.value, e.target.checked)}
+                                                className='mr-3 cursor-pointer'
+                                            />
+                                            LGA1150
+                                        </label>
+                                    </div>
+                                    <div className='flex justify-content-center gap-2'>
+                                        <label className='cursor-pointer'>
+                                            <input
+                                                type='checkbox'
+                                                value='LGA1151'
+                                                checked={cpuFilters.socketTypes.LGA1151}
+                                                onChange={(e) => handleCpuSocketCheckbox(e.target.value, e.target.checked)}
+                                                className='mr-3 cursor-pointer'
+                                            />
+                                            LGA1151
+                                        </label>
+                                    </div>
+                                    <div className='flex justify-content-center gap-2'>
+                                        <label className='cursor-pointer'>
+                                            <input
+                                                type='checkbox'
+                                                value='LGA1155'
+                                                checked={cpuFilters.socketTypes.LGA1155}
+                                                onChange={(e) => handleCpuSocketCheckbox(e.target.value, e.target.checked)}
+                                                className='mr-3 cursor-pointer'
+                                            />
+                                            LGA1155
+                                        </label>
+                                    </div>
+                                    <div className='flex justify-content-center gap-2'>
+                                        <label className='cursor-pointer'>
+                                            <input
+                                                type='checkbox'
+                                                value='LGA1200'
+                                                checked={cpuFilters.socketTypes.LGA1200}
+                                                onChange={(e) => handleCpuSocketCheckbox(e.target.value, e.target.checked)}
+                                                className='mr-3 cursor-pointer'
+                                            />
+                                            LGA1200
+                                        </label>
+                                    </div>
+                                    <div className='flex justify-content-center gap-2'>
+                                        <label className='cursor-pointer'>
+                                            <input
+                                                type='checkbox'
+                                                value='LGA1700'
+                                                checked={cpuFilters.socketTypes.LGA1700}
+                                                onChange={(e) => handleCpuSocketCheckbox(e.target.value, e.target.checked)}
+                                                className='mr-3 cursor-pointer'
+                                            />
+                                            LGA1700
+                                        </label>
+                                    </div>
+                                    <div className='flex justify-content-center gap-2'>
+                                        <label className='cursor-pointer'>
+                                            <input
+                                                type='checkbox'
+                                                value='LGA2011'
+                                                checked={cpuFilters.socketTypes.LGA2011}
+                                                onChange={(e) => handleCpuSocketCheckbox(e.target.value, e.target.checked)}
+                                                className='mr-3 cursor-pointer'
+                                            />
+                                            LGA2011
                                         </label>
                                     </div>
                                 </div>
