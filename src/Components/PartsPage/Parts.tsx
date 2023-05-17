@@ -25,8 +25,6 @@ export default function Parts() {
     const navigate = useNavigate();
     const size = useWindowSize();
 
-    const [currentPage, setCurrentPage] = useState<number>(0);
-
     const [selectedComponent, setSelectedComponent] = useState<string>('');
     const [minBudget, setMinBudget] = useState<number>(0);
     const [maxBudget, setMaxBudget] = useState<number>(0);
@@ -56,44 +54,44 @@ export default function Parts() {
     async function handleComponentSelect(component: string) {
 
         const data = await GetPartData(component);
-        if (component === "Cpu") {
+        if (component == "Cpu") {
             setCpuData(data);
             setTotalItems(data.length)
             setComponentType('Cpu')
-        } else if (component === "Gpu") {
+        } else if (component == "Gpu") {
             setGpuData(data);
             setTotalItems(data.length)
             setComponentType('Gpu')
-        } else if (component === "Motherboard") {
+        } else if (component == "Motherboard") {
             setMotherboardData(data);
             setTotalItems(data.length)
             setComponentType('Motherboard')
-        } else if (component === "Case") {
+        } else if (component == "Case") {
             setCaseData(data)
             setTotalItems(data.length)
             setComponentType('Case')
-        } else if (component === "Ram") {
+        } else if (component == "Ram") {
             setRamData(data)
             setTotalItems(data.length)
             setComponentType('Ram')
-        } else if (component === 'Ps') {
+        } else if (component == 'Ps') {
             setPsData(data)
             setTotalItems(data.length)
             setComponentType('Ps')
-        } else if (component === "Heatsink") {
+        } else if (component == "Heatsink") {
             setHeatsinkData(data)
             setTotalItems(data.length)
             setComponentType('Heatsink')
-        } else if (component === "HardDrive") {
+        } else if (component == "HardDrive") {
             setTotalItems(data.length)
             setHardDriveData(data)
             setComponentType('HardDrive')
         }
-        // setCpuManufacturers([{
-        //     All: true,
-        //     AMD: false,
-        //     Intel: false
-        // }])
+        setCpuManufacturers([{
+            All: true,
+            AMD: false,
+            Intel: false
+        }])
 
     }
 
@@ -104,9 +102,10 @@ export default function Parts() {
             setCpuData(data);
             setTotalItems(data.length)
             setComponentType('Cpu')
+            console.log(data)
         }
         getData()
-        
+
     }, [])
 
     //HandlesPaginationButtons
@@ -114,14 +113,18 @@ export default function Parts() {
         setCurrentPage(selectedPage.selected);
     };
 
+    const [currentPage, setCurrentPage] = useState<number>(0);
+
     const ITEMS_PER_PAGE = 6;
+
+
 
     const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE);
 
     const SwitchComponent = () => {
         switch (componentType) {
             case 'Cpu':
-                return <CpuList cpuData={cpuData} currentPage={currentPage} setCurrentPage={setCurrentPage}/>;
+                return <CpuList cpuData={cpuData} currentPage={currentPage} setCurrentPage={setCurrentPage} />;
             case 'Gpu':
                 return <GpuList gpuData={gpuData} currentPage={currentPage} setCurrentPage={setCurrentPage} />;
             case 'Motherboard':
@@ -155,31 +158,32 @@ export default function Parts() {
         setMaxBudget(value);
     };
 
-    // const handleCpuManufacturer = () => {
-    //     if (cpuManufacturers[0]['All'] === true) {
-    //         setCpuData(originalCpuData)
-    //         setTotalItems(originalCpuData.length)
-    //     } else {
-    //         let data: any = [];
+    const handleCpuManufacturer = () => {
+        if (cpuManufacturers[0]['All'] === true) {
+            setCpuData(originalCpuData)
+            setTotalItems(originalCpuData.length)
+        } else {
+            let data: any = [];
 
-    //         const filteredData = cpuData.filter((cpu: { title: string, index?: number }) => {
-    //             let included = false;
-    //             Object.keys(cpuManufacturers[0]).forEach(key => {
-    //                 if (cpu.title.includes(key) && cpuManufacturers[0][key as keyof typeof cpuManufacturers[0]]) {
-    //                     included = true;
-    //                 }
-    //             });
-    //             return included;
-    //         }).map((cpu) => {
-    //             return cpu;
-    //         });
+            const filteredData = cpuData.filter((cpu: { title: string, index?: number }) => {
+                let included = false;
+                Object.keys(cpuManufacturers[0]).forEach(key => {
+                    if (cpu.title.includes(key) && cpuManufacturers[0][key as keyof typeof cpuManufacturers[0]]) {
+                        included = true;
+                    }
+                });
+                return included;
+            }).map((cpu) => {
+                //cpu.index = index;
+                return cpu;
+            });
 
-    //         data = [...data, filteredData]
+            data = [...data, filteredData]
 
-    //         setCpuData(filteredData);
-    //         setTotalItems(filteredData.length)
-    //     }
-    // }
+            setCpuData(filteredData);
+            setTotalItems(filteredData.length)
+        }
+    }
 
     const handleCpuFiltersCheckbox = () => {
         if (cpuFilters.manufacturers.All && cpuFilters.socketTypes.All) {
@@ -200,6 +204,7 @@ export default function Parts() {
 
                 return included;
             }).map((cpu) => {
+                //cpu.index = index;
                 return cpu;
             });
 
@@ -222,6 +227,7 @@ export default function Parts() {
 
                 return included;
             }).map((cpu) => {
+                //cpu.index = index;
                 return cpu;
             });
 
@@ -230,11 +236,35 @@ export default function Parts() {
             setCpuData(filteredData);
             setTotalItems(filteredData.length);
 
-        
+
         }
-   
-        else if(!cpuFilters.manufacturers.All && !cpuFilters.socketTypes.All){
-            let data = originalCpuData.filter((cpu: { title: string, index?: number }) => {
+        //DEBUG THISSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS 
+        //DEBUG THISSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS 
+        //DEBUG THISSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS 
+        //DEBUG THISSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS 
+        //DEBUG THISSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS 
+        //DEBUG THISSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS 
+        //DEBUG THISSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS 
+        //DEBUG THISSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS 
+        else {
+            let data: any[] = [];
+            const filteredData = originalCpuData.filter((cpu: { socketType: string, index?: number }) => {
+                let included = false;
+                Object.keys(cpuSocket).forEach((key) => {
+                    if (cpu.socketType.includes(key) && cpuSocket[key as keyof typeof cpuSocket]) {
+                        included = true;
+                    }
+                });
+                return included;
+            }).map((cpu) => {
+                //cpu.index = index;
+                return cpu;
+            });
+
+            data = [...data, filteredData];
+
+            let data3: any[] = [];
+            const data2 = filteredData.filter((cpu: { title: string, index?: number }) => {
                 let included = false;
                 const { manufacturers } = cpuFilters;
 
@@ -246,72 +276,58 @@ export default function Parts() {
 
                 return included;
             }).map((cpu) => {
+                //cpu.index = index;
                 return cpu;
             });
 
-            data = data.filter((cpu: { socketType: string, index?: number }) => {
-                let included = false;
-                const { socketTypes } = cpuFilters;
+            data3 = [...data3, data2]
 
-                Object.keys(socketTypes).forEach((key) => {
-                    if (cpu.socketType.includes(key) && socketTypes[key as keyof typeof socketTypes]) {
+            setCpuData(data2);
+            setTotalItems(data2.length);
+        }
+    }
+
+    const handleCpuSocketType = () => {
+        if (cpuSocket.All === true) {
+            setCpuData(originalCpuData);
+            setTotalItems(originalCpuData.length);
+        } else {
+            let data: any[] = [];
+
+            const filteredData = cpuData.filter((cpu: { socketType: string, index?: number }) => {
+                let included = false;
+                Object.keys(cpuSocket).forEach((key) => {
+                    if (cpu.socketType.includes(key) && cpuSocket[key as keyof typeof cpuSocket]) {
                         included = true;
                     }
                 });
-
                 return included;
             }).map((cpu) => {
+                //cpu.index = index;
                 return cpu;
             });
 
-            setCpuData(data);
-            setTotalItems(data.length);
-            console.log(data)
+            data = [...data, filteredData];
+
+            setCpuData(filteredData);
+            setTotalItems(filteredData.length);
         }
-        setCurrentPage(1)
     }
 
-    // const handleCpuSocketType = () => {
-    //     if (cpuSocket.All === true) {
-    //         setCpuData(originalCpuData);
-    //         setTotalItems(originalCpuData.length);
-    //     } else {
-    //         let data: any[] = [];
-
-    //         const filteredData = cpuData.filter((cpu: { socketType: string, index?: number }) => {
-    //             let included = false;
-    //             Object.keys(cpuSocket).forEach((key) => {
-    //                 if (cpu.socketType.includes(key) && cpuSocket[key as keyof typeof cpuSocket]) {
-    //                     included = true;
-    //                 }
-    //             });
-    //             return included;
-    //         }).map((cpu) => {
-    //             //cpu.index = index;
-    //             return cpu;
-    //         });
-
-    //         data = [...data, filteredData];
-
-    //         setCpuData(filteredData);
-    //         setTotalItems(filteredData.length);
-    //     }
-    // }
-
     useEffect(() => {
-        if (componentType === 'Cpu') {
+        if (componentType == 'Cpu') {
             handleCpuFiltersCheckbox()
-        } else if (componentType === 'Gpu') {
+        } else if (componentType == 'Gpu') {
             setGpuData(sortByPrice(gpuData));
-        } else if (componentType === "Motherboard") {
+        } else if (componentType == "Motherboard") {
             setMotherboardData(sortByPrice(motherboardData));
-        } else if (componentType === "Case") {
+        } else if (componentType == "Case") {
             setCaseData(sortByPrice(caseData));
-        } else if (componentType === "Ram") {
+        } else if (componentType == "Ram") {
             setRamData(sortByPrice(ramData));
-        } else if (componentType === "Ps") {
+        } else if (componentType == "Ps") {
             setPsData(sortByPrice(psData));
-        } else if (componentType === "Heatsink") {
+        } else if (componentType == "Heatsink") {
             setHeatsinkData(sortByPrice(heatsinkData));
         } else {
             setHardDriveData(sortByPrice(hardDriveData));
@@ -478,7 +494,7 @@ export default function Parts() {
                         <Dropdown.Menu>
                             <Col className='filterBackground p-3' md={3}>
                                 <div className='marginLeft2 filterBoxColor'>
-                                    <Button onClick={() => priceSort()}>SORT BY PRICE</Button>
+                                <Button onClick={() => priceSort()}>SORT BY PRICE</Button>
                                     <Col className='marginLeft mt-5 mb-5'>
                                         <p className='mt-5'>Components</p>
                                         <Dropdown className='bb-dropdown'>
@@ -529,9 +545,9 @@ export default function Parts() {
                                         <label className='cursor-pointer'>
                                             <input
                                                 type='checkbox'
-                                                value='All'
-                                                checked={cpuManufacturers[0]['All']}
-                                                onChange={(e) => handleCheckboxChange(e.target.value, e.target.checked)}
+                                                value='ManufacturerAll'
+                                                checked={cpuFilters.manufacturers.All}
+                                                onChange={(e) => handleCpuManufacturerCheckbox(e.target.value, e.target.checked)}
                                                 className='mr-3 cursor-pointer'
                                             />
                                             All
@@ -542,8 +558,8 @@ export default function Parts() {
                                             <input
                                                 type='checkbox'
                                                 value='AMD'
-                                                checked={cpuManufacturers[0]['AMD']}
-                                                onChange={(e) => handleCheckboxChange(e.target.value, e.target.checked)}
+                                                checked={cpuFilters.manufacturers.AMD}
+                                                onChange={(e) => handleCpuManufacturerCheckbox(e.target.value, e.target.checked)}
                                                 className='mr-3 cursor-pointer'
                                             />
                                             AMD
@@ -554,11 +570,109 @@ export default function Parts() {
                                             <input
                                                 type='checkbox'
                                                 value='Intel'
-                                                checked={cpuManufacturers[0]['Intel']}
-                                                onChange={(e) => handleCheckboxChange(e.target.value, e.target.checked)}
+                                                checked={cpuFilters.manufacturers.Intel}
+                                                onChange={(e) => handleCpuManufacturerCheckbox(e.target.value, e.target.checked)}
                                                 className='mr-3 cursor-pointer'
                                             />
                                             Intel
+                                        </label>
+                                    </div>
+                                    <hr></hr>
+                                    <p>Socket Type</p>
+                                    <div className='flex justify-content-center gap-2'>
+                                        <label className='cursor-pointer'>
+                                            <input
+                                                type='checkbox'
+                                                value='SocketAll'
+                                                checked={cpuFilters.socketTypes.All}
+                                                onChange={(e) => handleCpuSocketCheckbox(e.target.value, e.target.checked)}
+                                                className='mr-3 cursor-pointer'
+                                            />
+                                            All
+                                        </label>
+                                    </div>
+                                    <div className='flex justify-content-center gap-2'>
+                                        <label className='cursor-pointer'>
+                                            <input
+                                                type='checkbox'
+                                                value='AM4'
+                                                checked={cpuFilters.socketTypes.AM4}
+                                                onChange={(e) => handleCpuSocketCheckbox(e.target.value, e.target.checked)}
+                                                className='mr-3 cursor-pointer'
+                                            />
+                                            AM4
+                                        </label>
+                                    </div>
+                                    <div className='flex justify-content-center gap-2'>
+                                        <label className='cursor-pointer'>
+                                            <input
+                                                type='checkbox'
+                                                value='LGA1150'
+                                                checked={cpuFilters.socketTypes.LGA1150}
+                                                onChange={(e) => handleCpuSocketCheckbox(e.target.value, e.target.checked)}
+                                                className='mr-3 cursor-pointer'
+                                            />
+                                            LGA1150
+                                        </label>
+                                    </div>
+                                    <div className='flex justify-content-center gap-2'>
+                                        <label className='cursor-pointer'>
+                                            <input
+                                                type='checkbox'
+                                                value='LGA1151'
+                                                checked={cpuFilters.socketTypes.LGA1151}
+                                                onChange={(e) => handleCpuSocketCheckbox(e.target.value, e.target.checked)}
+                                                className='mr-3 cursor-pointer'
+                                            />
+                                            LGA1151
+                                        </label>
+                                    </div>
+                                    <div className='flex justify-content-center gap-2'>
+                                        <label className='cursor-pointer'>
+                                            <input
+                                                type='checkbox'
+                                                value='LGA1155'
+                                                checked={cpuFilters.socketTypes.LGA1155}
+                                                onChange={(e) => handleCpuSocketCheckbox(e.target.value, e.target.checked)}
+                                                className='mr-3 cursor-pointer'
+                                            />
+                                            LGA1155
+                                        </label>
+                                    </div>
+                                    <div className='flex justify-content-center gap-2'>
+                                        <label className='cursor-pointer'>
+                                            <input
+                                                type='checkbox'
+                                                value='LGA1200'
+                                                checked={cpuFilters.socketTypes.LGA1200}
+                                                onChange={(e) => handleCpuSocketCheckbox(e.target.value, e.target.checked)}
+                                                className='mr-3 cursor-pointer'
+                                            />
+                                            LGA1200
+                                        </label>
+                                    </div>
+                                    <div className='flex justify-content-center gap-2'>
+                                        <label className='cursor-pointer'>
+                                            <input
+                                                type='checkbox'
+                                                value='LGA1700'
+                                                checked={cpuFilters.socketTypes.LGA1700}
+                                                onChange={(e) => handleCpuSocketCheckbox(e.target.value, e.target.checked)}
+                                                className='mr-3 cursor-pointer'
+                                            />
+                                            LGA1700
+                                        </label>
+                                    </div>
+                                    <div className='flex justify-content-center gap-2'>
+                                        <label className='cursor-pointer'>
+                                            <input
+                                                type='checkbox'
+                                                value='LGA2011'
+                                                checked={cpuFilters.socketTypes.LGA2011}
+                                                onChange={(e) => handleCpuSocketCheckbox(e.target.value, e.target.checked)}
+                                                className='mr-3 cursor-pointer'
+                                            />
+                                            LGA2011
                                         </label>
                                     </div>
                                 </div>
@@ -753,15 +867,15 @@ export default function Parts() {
                                 LGA2011
                             </label>
                         </div>
-                        {/* <InputGroup className="mb-3 flex align-items-center gap-2">
+                        <InputGroup className="mb-3 flex align-items-center gap-2">
                             <InputGroup.Checkbox />AMD
                         </InputGroup>
                         <InputGroup className="mb-3 flex align-items-center gap-2">
                             <InputGroup.Checkbox />Intel
-                        </InputGroup> */}
+                        </InputGroup>
                         {/*Rgb or No Rgb  */}
                         {/* ========================================================== */}
-                        {/* <Button onClick={() => priceSort()}>Apply filters</Button> */}
+                        <Button onClick={() => priceSort()}>Apply filters</Button>
                     </div>
                 </Col>
                 <Col md={9} className='px-2'>

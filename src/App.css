@@ -1,9 +1,10 @@
 /* PARTS */
 .filterBackground {
     background-color: #E2E2E2;
-    height: fit-content;
     padding: 1rem;
     border-radius: 5px;
+    height: 50vh;
+    overflow: auto;
 }
 
 .clearFiltersBtn {
