@@ -89,12 +89,6 @@ export default function Parts() {
             setHardDriveData(data)
             setComponentType('HardDrive')
         }
-        // setCpuManufacturers([{
-        //     All: true,
-        //     AMD: false,
-        //     Intel: false
-        // }])
-
     }
 
     useEffect(() => {
@@ -268,7 +262,7 @@ export default function Parts() {
             setTotalItems(data.length);
             console.log(data)
         }
-        setCurrentPage(1)
+        //setCurrentPage(1)
     }
 
     // const handleCpuSocketType = () => {
