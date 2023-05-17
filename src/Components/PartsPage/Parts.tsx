@@ -23,15 +23,14 @@ import { CpuData, GpuData, CaseData, HardDriveData, MotherboardData, HeatsinkDat
 
 export default function Parts() {
     const navigate = useNavigate();
+    const size = useWindowSize();
 
     const [selectedComponent, setSelectedComponent] = useState<string>('');
-    const [minBudget, setMinBudget] = useState<string>('');
-    const [maxBudget, setMaxBudget] = useState<string>('');
-    const size = useWindowSize();
+    const [minBudget, setMinBudget] = useState<number>(0);
+    const [maxBudget, setMaxBudget] = useState<number>(0);
     const [componentData, setComponentData] = useState<any[]>([]);
     const [cpuData, setCpuData] = useState<CpuData[]>([]);
     const [originalCpuData, setOriginalCpuData] = useState<CpuData[]>([]);
-    //const [cpuDataList, setCpuDataList] = useState<CpuData[][]>([]);
     const [gpuData, setGpuData] = useState<GpuData[]>([]);
     const [caseData, setCaseData] = useState<CaseData[]>([]);
     const [motherboardData, setMotherboardData] = useState<MotherboardData[]>([]);
@@ -144,16 +143,12 @@ export default function Parts() {
     };
 
     // For Budget values
-    const handleMinBudget = (event: React.KeyboardEvent<HTMLInputElement>) => {
-        if (event.key == 'Enter') {
-            setMinBudget(event.currentTarget.value);
-        }
+    const handleMinBudget = (value: number) => {
+        setMinBudget(value);
     };
 
-    const handleMaxBudget = (event: React.KeyboardEvent<HTMLInputElement>) => {
-        if (event.key == 'Enter') {
-            setMaxBudget(event.currentTarget.value);
-        }
+    const handleMaxBudget = (value: number) => {
+        setMaxBudget(value);
     };
 
 
@@ -281,6 +276,15 @@ export default function Parts() {
         }
     };
 
+    function filterByPriceRange(minValue: number, maxValue: number) {
+        let newArr = [...cpuData];
+        newArr = newArr.filter(obj => parseFloat(obj.price) >= minValue && parseFloat(obj.price) <= maxValue);
+        setCpuData(newArr);
+        console.log(minValue, maxValue);
+
+        return newArr;
+    }
+
 
     return (
         <div>
@@ -294,7 +298,7 @@ export default function Parts() {
                         <Dropdown.Menu>
                             <Col className='filterBackground p-3' md={3}>
                                 <div className='marginLeft2 filterBoxColor'>
-                                <button onClick={() => priceSort()}>SORT BY PRICE</button>
+                                    <Button onClick={() => priceSort()}>SORT BY PRICE</Button>
                                     <Col className='marginLeft mt-5 mb-5'>
                                         <p className='mt-5'>Components</p>
                                         <Dropdown className='bb-dropdown'>
@@ -329,11 +333,16 @@ export default function Parts() {
                                             </Dropdown.Menu>
                                         </Dropdown>
                                     </Col>
+                                    <Button onClick={() => priceSort()}>SORT BY PRICE</Button>
+                                    <hr />
                                     <p className='mt-4'>Filter</p>
                                     <button onClick={() => handleComponentSelect(componentType)} className='clearFiltersBtn'>Clear Filters</button>
                                     <hr />
-                                    
-
+                                    <p>Budget</p>
+                                    <input className='w-75' type='number' placeholder='Min' value={minBudget} onChange={(e) => setMinBudget(parseInt(e.target.value))}></input>
+                                    <input className='w-75' type='number' placeholder='Max' value={maxBudget} onChange={(e) => setMaxBudget(parseInt(e.target.value))}></input>
+                                    <button onClick={() => filterByPriceRange(minBudget, maxBudget)} className='clearFiltersBtn'>Results</button>
+                                    <hr />
 
                                     <p>Manufacturer</p>
                                     <div className='flex justify-content-center gap-2'>
@@ -372,15 +381,8 @@ export default function Parts() {
                                             Intel
                                         </label>
                                     </div>
-                                    <InputGroup className="mb-3 flex align-items-center gap-2">
-                                        <InputGroup.Checkbox />AMD
-                                    </InputGroup>
-                                    <InputGroup className="mb-3 flex align-items-center gap-2">
-                                        <InputGroup.Checkbox />Intel
-                                    </InputGroup>
                                 </div>
                             </Col>
-                            <Button onClick={() => priceSort()}>Apply filters</Button>
                         </Dropdown.Menu>
                     </Dropdown>
 
@@ -389,7 +391,7 @@ export default function Parts() {
                 )}
                 <Col className='filterBackground large-filter p-3' md={3}>
                     <div className='marginLeft2 filterBoxColor'>
-                        <button onClick={() => priceSort()}>SORT BY PRICE</button>
+
                         <Col className='marginLeft mt-5 mb-5'>
                             <p className='mt-5'>Components</p>
                             <Dropdown className='bb-dropdown'>
@@ -425,27 +427,16 @@ export default function Parts() {
                                 </Dropdown.Menu>
                             </Dropdown>
                         </Col>
+                        <Button onClick={() => priceSort()}>SORT BY PRICE</Button>
+                        <hr />
                         <p className='mt-4'>Filter</p>
                         <button onClick={() => handleComponentSelect(componentType)} className='clearFiltersBtn'>Clear Filters</button>
                         <hr />
-                        {/* Budget */}
-                        {/* ====================================================================== */}
                         <p>Budget</p>
-                        <input className='w-75' type='number' placeholder='Min' value={minBudget} onKeyDown={handleMinBudget} onChange={(event) => setMinBudget(event.currentTarget.value)}></input>
-                        <input className='w-75' type='number' placeholder='Max' value={maxBudget} onKeyDown={handleMaxBudget} onChange={(event) => setMaxBudget(event.currentTarget.value)}></input>
-                        {/* PC Components */}
-                        {/* ====================================================================== */}
-
-                        {/* Better Price or Better Performance */}
-                        {/* ================================================== */}
-                        <p className='mt-5'>Better Price or Better Performance</p>
-                        <InputGroup className="mb-3">
-                            <InputGroup.Checkbox />Better price
-                        </InputGroup>
-                        <InputGroup className="mb-3">
-                            <InputGroup.Checkbox />Better performance
-                        </InputGroup>
-                        <hr></hr>
+                        <input className='w-75' type='number' placeholder='Min' value={minBudget} onChange={(e) => setMinBudget(parseInt(e.target.value))}></input>
+                        <input className='w-75' type='number' placeholder='Max' value={maxBudget} onChange={(e) => setMaxBudget(parseInt(e.target.value))}></input>
+                        <button onClick={() => filterByPriceRange(minBudget, maxBudget)} className='clearFiltersBtn'>Results</button>
+                        <hr />
                         <p>Manufacturer</p>
                         <div className='flex justify-content-center gap-2'>
                             <label className='cursor-pointer'>
@@ -483,15 +474,6 @@ export default function Parts() {
                                 Intel
                             </label>
                         </div>
-                        <InputGroup className="mb-3 flex align-items-center gap-2">
-                            <InputGroup.Checkbox />AMD
-                        </InputGroup>
-                        <InputGroup className="mb-3 flex align-items-center gap-2">
-                            <InputGroup.Checkbox />Intel
-                        </InputGroup>
-                        {/*Rgb or No Rgb  */}
-                        {/* ========================================================== */}
-                        <Button onClick={() => priceSort()}>Apply filters</Button>
                     </div>
                 </Col>
                 <Col md={9} className='px-2'>
