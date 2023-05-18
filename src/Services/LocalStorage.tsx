@@ -1,25 +1,24 @@
-function saveToLocalStorageByName(name:any){
-    let favorites = getLocalStorage();
+function saveToSessionStorageByName(name:any){
+    let favorites = getSessionStorage();
     favorites.push(name);
-    localStorage.setItem('Favorites', JSON.stringify(favorites));
+    sessionStorage.setItem('Favorites', JSON.stringify(favorites));
 }
 
-function getLocalStorage(){
-    let localStorageData = localStorage.getItem('Favorites');
-    if(localStorageData == null){
+function getSessionStorage(){
+    let sessionStorageData = sessionStorage.getItem('Favorites');
+    if(sessionStorageData == null){
        return []; 
     }
-    return JSON.parse(localStorageData);
+    return JSON.parse(sessionStorageData);
 }
 
-
-function removeFromLocalStorage(name :any){
-    let favorites = getLocalStorage();
+function removeFromSessionStorage(name :any){
+    let favorites = getSessionStorage();
     let nameIndex = favorites.indexOf(name);
     favorites.splice(nameIndex,1);
-    localStorage.setItem('Favorites', JSON.stringify(favorites));
+    sessionStorage.setItem('Favorites', JSON.stringify(favorites));
 }
 
-export { getLocalStorage, saveToLocalStorageByName, removeFromLocalStorage }
+export { getSessionStorage, saveToSessionStorageByName, removeFromSessionStorage }
 
 
