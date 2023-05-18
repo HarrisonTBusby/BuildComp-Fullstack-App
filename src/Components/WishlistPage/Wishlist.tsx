@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 import Navbar from '../Navbar/Navbar';
 import Footer from '../Footer/Footer';
-import { Col, Card, Modal, Button } from 'react-bootstrap';
+import { Col, Card, Modal, Button, Row } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { getSessionStorage } from '../../Services/LocalStorage';
 import CpuList from '../Lists/CpuList';
@@ -12,10 +12,9 @@ import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 
 
 const Wishlist = () => {
+  const ITEMS_PER_PAGE = 6;
   const navigate = useNavigate();
-
   const [show, setShow] = useState(true);
-
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
@@ -52,17 +51,19 @@ const Wishlist = () => {
   const data = getSessionStorage();
 
   const SwitchSession = () => {
-    if(data.map((x:any) => x.type == "CPU")){
-    return data.map((x: CpuData) => {
-          return (
-            <>
+    if (data.map((x: any) => x.type == "CPU")) {
+      return data.map((x: CpuData) => {
+        return (
+          <>
+          <Col className='wishlistCards'>
+            <div className='d-grid justify-content-center 2fr'>
               <div key={x.id}>
-                <Card style={{ width: '16rem', height: '100%' }}>
+                <Card style={{ width: '16rem', height: '100%', overflow: 'hidden' }}>
                   <Link to={x.item_url} target='_blank'>
                     <Card.Img className='item-image' variant="top" src={x.image_url} style={{ width: '100%', height: '16rem', margin: '0 auto' }} />
                   </Link>
                   <Card.Body>
-                    <Link to={x.item_url} target='_blank'><u>{x.title}</u></Link>
+                    <Link to={x.item_url} target='_blank'><u className='title'>{x.title}</u></Link>
                     <div>
                       <div>${x.price}<a className='DeleteWishlistBtn'><HighlightOffIcon /></a></div>
                       <div>{x.type}</div>
@@ -70,38 +71,175 @@ const Wishlist = () => {
                   </Card.Body>
                 </Card>
               </div>
-            </>
-          );
-    });
-  }else if(data.map((x:any) => x.type == "GPU")){
-    data.map((x: GpuData) => {
-      return (
-        <>
-        <div key={x.id}>
-                    <Card style={{ width: '16rem', height: '100%' }}>
-                        <Link to={x.item_url} target='_blank'>
-                            <Card.Img className='item-image' variant="top" src={x.image_url} style={{ width: '100%', height: "auto" }} />
-                        </Link>
-                        <Card.Body>
-                            <Link to={x.item_url} target='_blank'><u>{x.title}</u></Link>
-                            <div>
-                                <div>${x.price}<a className='WishlistBtn'><HighlightOffIcon /></a></div>
-                                <div>{x.type}</div>
-                            </div>
-                        </Card.Body>
-                    </Card>
-                </div>
-                </>
-      )
-    })
+            </div>
+            </Col>
+          </>
+        );
+      });
+    } else if (data.map((x: any) => x.type == "GPU")) {
+      data.map((x: GpuData) => {
+        return (
+          <>
+          <Col className='wishlistCards'>
+            <div key={x.id}>
+              <Card style={{ width: '16rem', height: '100%' }}>
+                <Link to={x.item_url} target='_blank'>
+                  <Card.Img className='item-image' variant="top" src={x.image_url} style={{ width: '100%', height: "auto" }} />
+                </Link>
+                <Card.Body>
+                  <Link to={x.item_url} target='_blank'><u className='title'>{x.title}</u></Link>
+                  <div>
+                    <div>${x.price}<a className='WishlistBtn'><HighlightOffIcon /></a></div>
+                    <div>{x.type}</div>
+                  </div>
+                </Card.Body>
+              </Card>
+            </div>
+            </Col>
+          </>
+        )
+      })
+    } else if (data.map((x: any) => x.type == "Case")) {
+      data.map((x: CaseData) => {
+        return (
+          <>
+          <Col className='wishlistCards'>
+            <div key={x.id}>
+              <Card style={{ width: '16rem', height: '100%' }}>
+                <Link to={x.item_url} target='_blank'>
+                  <Card.Img className='item-image' variant="top" src={x.image_url} style={{ width: '100%', height: "auto" }} />
+                </Link>
+                <Card.Body>
+                  <Link to={x.item_url} target='_blank'><u className='title'>{x.title}</u></Link>
+                  <div>
+                    <div>${x.price}<a className='WishlistBtn'><HighlightOffIcon /></a></div>
+                    <div>{x.type}</div>
+                  </div>
+                </Card.Body>
+              </Card>
+            </div>
+            </Col>
+          </>
+        )
+      })
+    } else if (data.map((x: any) => x.type == "Motherboard")) {
+      data.map((x: MotherboardData) => {
+        return (
+          <>
+          <Col className='wishlistCards'>
+            <div key={x.id}>
+              <Card style={{ width: '16rem', height: '100%' }}>
+                <Link to={x.item_url} target='_blank'>
+                  <Card.Img className='item-image' variant="top" src={x.image_url} style={{ width: '100%', height: "auto" }} />
+                </Link>
+                <Card.Body>
+                  <Link to={x.item_url} target='_blank'><u className='title'>{x.title}</u></Link>
+                  <div>
+                    <div>${x.price}<a className='WishlistBtn'><HighlightOffIcon /></a></div>
+                    <div>{x.type}</div>
+                  </div>
+                </Card.Body>
+              </Card>
+            </div>
+            </Col>
+          </>
+        )
+      })
+    } else if (data.map((x: any) => x.type == "RAM")) {
+      data.map((x: RamData) => {
+        return (
+          <>
+          <Col className='wishlistCards'>
+            <div key={x.id}>
+              <Card style={{ width: '16rem', height: '100%' }}>
+                <Link to={x.item_url} target='_blank'>
+                  <Card.Img className='item-image' variant="top" src={x.image_url} style={{ width: '100%', height: "auto" }} />
+                </Link>
+                <Card.Body>
+                  <Link to={x.item_url} target='_blank'><u className='title'>{x.title}</u></Link>
+                  <div>
+                    <div>${x.price}<a className='WishlistBtn'><HighlightOffIcon /></a></div>
+                    <div>{x.type}</div>
+                  </div>
+                </Card.Body>
+              </Card>
+            </div>
+            </Col>
+          </>
+        )
+      })
+    } else if (data.map((x: any) => x.type == "Power Supply")) {
+      data.map((x: PowerSupplyData) => {
+        return (
+          <>
+          <Col className='wishlistCards'>
+            <div key={x.id}>
+              <Card style={{ width: '16rem', height: '100%' }}>
+                <Link to={x.item_url} target='_blank'>
+                  <Card.Img className='item-image' variant="top" src={x.image_url} style={{ width: '100%', height: "auto" }} />
+                </Link>
+                <Card.Body>
+                  <Link to={x.item_url} target='_blank'><u className='title'>{x.title}</u></Link>
+                  <div>
+                    <div>${x.price}<a className='WishlistBtn'><HighlightOffIcon /></a></div>
+                    <div>{x.type}</div>
+                  </div>
+                </Card.Body>
+              </Card>
+            </div>
+            </Col>
+          </>
+        )
+      })
+    } else if (data.map((x: any) => x.type == "Heatsink")) {
+      data.map((x: HeatsinkData) => {
+        return (
+          <>
+          <Col className='wishlistCards'>
+            <div key={x.id}>
+              <Card style={{ width: '16rem', height: '100%' }}>
+                <Link to={x.item_url} target='_blank'>
+                  <Card.Img className='item-image' variant="top" src={x.image_url} style={{ width: '100%', height: "auto" }} />
+                </Link>
+                <Card.Body>
+                  <Link to={x.item_url} target='_blank'><u className='title'>{x.title}</u></Link>
+                  <div>
+                    <div>${x.price}<a className='WishlistBtn'><HighlightOffIcon /></a></div>
+                    <div>{x.type}</div>
+                  </div>
+                </Card.Body>
+              </Card>
+            </div>
+            </Col>
+          </>
+        )
+      })
+    } else {
+      data.map((x: HardDriveData) => {
+        return (
+          <>
+          <Col className='wishlistCards'>
+            <div key={x.id}>
+              <Card style={{ width: '16rem', height: '100%' }}>
+                <Link to={x.item_url} target='_blank'>
+                  <Card.Img className='item-image' variant="top" src={x.image_url} style={{ width: '100%', height: "auto" }} />
+                </Link>
+                <Card.Body>
+                  <Link to={x.item_url} target='_blank'><u className='title'>{x.title}</u></Link>
+                  <div>
+                    <div>${x.price}<a className='WishlistBtn'><HighlightOffIcon /></a></div>
+                    <div>{x.type}</div>
+                  </div>
+                </Card.Body>
+              </Card>
+            </div>
+            </Col>
+          </>
+        )
+      })
+    }
+
   }
-  }
-
-
-
-  useEffect(() => {
-
-  }, [])
 
   return (
     <div>
@@ -110,7 +248,9 @@ const Wishlist = () => {
       <div className='d-flex justify-content-center'>
         <Col className='wishlist-content'>
           <GuestView />
-          <SwitchSession />
+          <Row>
+            <SwitchSession />
+          </Row>
         </Col>
       </div>
       <Footer />
