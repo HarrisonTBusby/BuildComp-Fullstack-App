@@ -307,6 +307,7 @@ export default function Parts() {
             setTotalPages(Math.ceil(cpuData.length) / 6)
         } else if (componentType == 'Gpu') {
             setGpuData(sortByPrice(gpuData));
+            setTotalPages(Math.ceil(gpuData.length / 6))
         } else if (componentType == "Motherboard") {
             setMotherboardData(sortByPrice(motherboardData));
         } else if (componentType == "Case") {
@@ -320,6 +321,90 @@ export default function Parts() {
         } else {
             setHardDriveData(sortByPrice(hardDriveData));
         }
+    }
+
+    const cpuCoreSort = () => {
+        const newArr= [...cpuData]
+        newArr.sort((a: any, b: any) => {
+            if (parseFloat(a.cores) < parseFloat(b.cores)) {
+                return -1
+            }
+            if (parseFloat(a.cores) > parseFloat(b.cores)) {
+                return 1;
+            }
+            return 0;
+        })
+        setCpuData(newArr)
+    }
+
+    const cpuClockSort = () => {
+        const newArr= [...cpuData]
+        newArr.sort((a: any, b: any) => {
+            if (parseFloat(a.perfCoreClock) < parseFloat(b.perfCoreClock)) {
+                return -1
+            }
+            if (parseFloat(a.perfCoreClock) > parseFloat(b.perfCoreClock)) {
+                return 1;
+            }
+            return 0;
+        })
+        setCpuData(newArr)
+    }
+
+    const gpuMemorySort = () => {
+        const newArr= [...gpuData]
+        newArr.sort((a: any, b: any) => {
+            if (parseInt(a.memory) < parseInt(b.memory)) {
+                return -1
+            }
+            if (parseInt(a.memory) > parseInt(b.memory)) {
+                return 1;
+            }
+            return 0;
+        })
+        setGpuData(newArr)
+    }
+
+    const gpuClockSort = () => {
+        const newArr = [...gpuData]
+        newArr.sort((a: any, b: any) => {
+            if(parseInt(a.perfCoreClock) < parseInt(b.perfCoreClock)){
+                return -1
+            }
+            if(parseInt(a.perfCoreClock) > parseInt(b.perfCoreClock)){
+                return 0
+            }
+            return 0
+        })
+        setGpuData(newArr)
+    }
+
+    const motherboardRamSort = () => {
+        const newArr = [...motherboardData]
+        newArr.sort((a: any, b: any) => {
+            if(parseInt(a.ramMax) < parseInt(b.ramMax)){
+                return -1
+            }
+            if(parseInt(a.ramMax) > parseInt(b.ramMax)){
+                return 0
+            }
+            return 0
+        })
+        setMotherboardData(newArr)
+    }
+
+    const motherboardMemorySlotsSort = () => {
+        const newArr = [...motherboardData]
+        newArr.sort((a: any, b: any) => {
+            if(parseInt(a.memorySlots) < parseInt(b.memorySlots)){
+                return -1
+            }
+            if(parseInt(a.memorySlots) > parseInt(b.memorySlots)){
+                return 0
+            }
+            return 0
+        })
+        setMotherboardData(newArr)
     }
 
     const isAllCpuSocketUnchecked = Object.values(cpuFilters.socketTypes).every(value => value === false);
@@ -506,6 +591,8 @@ export default function Parts() {
                                         </Dropdown>
                                     </Col>
                                     <Button onClick={() => priceSort()}>SORT BY PRICE</Button>
+                                    <Button className={componentType !== 'Gpu' ? 'd-none' : ''} onClick={() => gpuMemorySort()}>SORT BY MEMORY</Button>
+
                                     <hr />
                                     <p className='mt-4'>Filter</p>
                                     <button onClick={() => handleComponentSelect(componentType)} className='clearFiltersBtn'>Clear Filters</button>
@@ -698,7 +785,15 @@ export default function Parts() {
                             </Dropdown>
                         </Col>
                     </div>
-                    <Button onClick={() => priceSort()}>SORT BY PRICE</Button>
+                    <Button className='mb-2' onClick={() => priceSort()}>SORT BY PRICE</Button>
+                    
+                    <Button className={componentType !== 'Cpu' ? 'd-none' : 'mb-2'} onClick={() => cpuClockSort()}>SORT BY CLOCK</Button>
+                    <Button className={componentType !== 'Cpu' ? 'd-none' : 'mb-2'} onClick={() => cpuCoreSort()}>SORT BY CORES</Button>
+                    <Button className={componentType !== 'Gpu' ? 'd-none' : 'mb-2'} onClick={() => gpuMemorySort()}>SORT BY MEMORY</Button>
+                    <Button className={componentType !== 'Gpu' ? 'd-none' : 'mb-2'} onClick={() => gpuClockSort()}>SORT BY CLOCK</Button>
+                    <Button className={componentType !== 'Motherboard' ? 'd-none' : 'mb-2'} onClick={() => motherboardRamSort()}>SORT BY MAX RAM</Button>
+                    <Button className={componentType !== 'Motherboard' ? 'd-none' : 'mb-2'} onClick={() => motherboardMemorySlotsSort()}>SORT BY MEMORY SLOTS</Button>
+
                     <hr />
                     <p className='mt-4'>Filter</p>
                     <button onClick={() => handleComponentSelect(componentType)} className='clearFiltersBtn'>Clear Filters</button>
