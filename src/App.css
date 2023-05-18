@@ -513,3 +513,18 @@ a {
 .item-image:hover {
     transform: scale(.9);
 }
+
+.WishlistBtn, .DeleteWishlistBtn{
+    color: gray;
+    position: relative;
+    left: 60%;
+}
+
+.WishlistBtn :hover{ 
+    color: rgb(0, 157, 255);
+}
+
+.DeleteWishlistBtn :hover{
+    color: red;
+}
+

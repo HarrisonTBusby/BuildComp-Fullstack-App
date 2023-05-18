@@ -3,7 +3,7 @@ import { Container, Row, Col, Dropdown, Button, OverlayTrigger, Tooltip } from '
 import NavbarComponent from '../Navbar/Navbar';
 import Footer from '../Footer/Footer';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { getLocalStorage } from '../../Services/LocalStorage';
+import { getSessionStorage } from '../../Services/LocalStorage';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 

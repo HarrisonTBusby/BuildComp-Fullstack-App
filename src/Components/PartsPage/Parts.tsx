@@ -3,7 +3,7 @@ import NavbarComponent from '../Navbar/Navbar';
 import { Col, Dropdown, InputGroup, OverlayTrigger, Tooltip, Button, Card } from 'react-bootstrap';
 import Footer from '../Footer/Footer';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { saveToLocalStorageByName } from '../../Services/LocalStorage';
+import { saveToSessionStorageByName } from '../../Services/LocalStorage';
 import { useWindowSize } from '../../HelperFunctions';
 import { GetPartData } from '../../Services/DataService';
 import Paginate from "react-paginate";

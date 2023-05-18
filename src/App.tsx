@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { createContext } from 'react';
 import Parts from './Components/PartsPage/Parts';
 import Homepage from './Components/HomePage/Homepage';
 import Login from './Components/LoginPage/Login';
@@ -7,10 +7,14 @@ import SignUp from './Components/SignUpPage/SignUp';
 import Wishlist from './Components/WishlistPage/Wishlist';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './App.css';
-// import './Components/LoginPage/Login.css'
+import { getSessionStorage } from './Services/LocalStorage';;
 
 function App() {
+const WishlistContext = createContext<any>(null);
+const data = getSessionStorage();
+
   return (
+    <WishlistContext.Provider value={data}>
     <BrowserRouter>
       <Routes>
         <Route path='/' element={<Homepage />} />
@@ -21,6 +25,7 @@ function App() {
         <Route path='/Wishlist' element={<Wishlist />} />
       </Routes>
     </BrowserRouter>
+    </WishlistContext.Provider>
     );
 }
 
