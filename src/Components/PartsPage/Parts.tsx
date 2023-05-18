@@ -26,6 +26,7 @@ export default function Parts() {
     const size = useWindowSize();
 
     const [currentPage, setCurrentPage] = useState<number>(0);
+    const [totalPages, setTotalPages] = useState(6);
 
     const [selectedComponent, setSelectedComponent] = useState<string>('');
     const [minBudget, setMinBudget] = useState<number>(0);
@@ -34,6 +35,7 @@ export default function Parts() {
     const [cpuData, setCpuData] = useState<CpuData[]>([]);
     const [originalCpuData, setOriginalCpuData] = useState<CpuData[]>([]);
     const [gpuData, setGpuData] = useState<GpuData[]>([]);
+    const [originalGpuData, setOriginalGpuData] = useState<GpuData[]>([]);
     const [caseData, setCaseData] = useState<CaseData[]>([]);
     const [motherboardData, setMotherboardData] = useState<MotherboardData[]>([]);
     const [ramData, setRamData] = useState<RamData[]>([]);
@@ -41,54 +43,69 @@ export default function Parts() {
     const [heatsinkData, setHeatsinkData] = useState<HeatsinkData[]>([]);
     const [hardDriveData, setHardDriveData] = useState<HardDriveData[]>([]);
 
-    const [cpuManufacturers, setCpuManufacturers] = useState([{ All: true, AMD: false, Intel: false }])
-    const [cpuSocket, setCpuSocket] = useState({ All: true, AM4: false, LGA1150: false, LGA1151: false, LGA1155: false, LGA1200: false, LGA1700: false, LGA2011: false })
-
     const [cpuFilters, setCpuFilters] = useState({
         manufacturers: { All: true, AMD: false, Intel: false },
         socketTypes: { All: true, AM4: false, LGA1150: false, LGA1151: false, LGA1155: false, LGA1200: false, LGA1700: false, LGA2011: false }
     });
 
-    const [totalItems, setTotalItems] = useState(0);
+    const originalCpuFilters = {
+        manufacturers: { All: true, AMD: false, Intel: false },
+        socketTypes: { All: true, AM4: false, LGA1150: false, LGA1151: false, LGA1155: false, LGA1200: false, LGA1700: false, LGA2011: false }
+    }
+
+    const [gpuFilters, setGpuFilters] = useState({
+        manufacturers: { All: true, MSI: false, EVGA: false, Gigabyte: false, PowerColor: false, Asus: false, XFX: false, Zotac: false }
+    })
+
+    const originalGpuFilters = {
+        manufacturers: { All: true, MSI: false, EVGA: false, Gigabyte: false, PowerColor: false, Asus: false, XFX: false, Zotac: false }
+    }
 
     const [componentType, setComponentType] = useState<string>('default');
     // For Dropdown values
     async function handleComponentSelect(component: string) {
-
+        if (component == selectedComponent) return
         const data = await GetPartData(component);
         if (component === "Cpu") {
             setCpuData(data);
-            setTotalItems(data.length)
+            //setOriginalCpu(data) is not needed, already called on first useEffect
+            setTotalPages(Math.ceil(data.length / 6))
             setComponentType('Cpu')
+            //set checkboxes with value 'All' to true 
+            setCpuFilters(originalCpuFilters)
         } else if (component === "Gpu") {
             setGpuData(data);
-            setTotalItems(data.length)
+            setOriginalGpuData(data)
+            setTotalPages(Math.ceil(data.length / 6))
             setComponentType('Gpu')
+            //set checkboxes with value 'ALl' to true
+            setGpuFilters(originalGpuFilters)
         } else if (component === "Motherboard") {
             setMotherboardData(data);
-            setTotalItems(data.length)
+            setTotalPages(Math.ceil(data.length / 6))
             setComponentType('Motherboard')
         } else if (component === "Case") {
             setCaseData(data)
-            setTotalItems(data.length)
+            setTotalPages(Math.ceil(data.length / 6))
             setComponentType('Case')
         } else if (component === "Ram") {
             setRamData(data)
-            setTotalItems(data.length)
+            setTotalPages(Math.ceil(data.length / 6))
             setComponentType('Ram')
         } else if (component === 'Ps') {
             setPsData(data)
-            setTotalItems(data.length)
+            setTotalPages(Math.ceil(data.length / 6))
             setComponentType('Ps')
         } else if (component === "Heatsink") {
             setHeatsinkData(data)
-            setTotalItems(data.length)
+            setTotalPages(Math.ceil(data.length / 6))
             setComponentType('Heatsink')
         } else if (component === "HardDrive") {
-            setTotalItems(data.length)
+            setTotalPages(Math.ceil(data.length / 6))
             setHardDriveData(data)
             setComponentType('HardDrive')
         }
+        console.log(data)
     }
 
     useEffect(() => {
@@ -96,21 +113,23 @@ export default function Parts() {
             const data = await GetPartData('Cpu');
             setOriginalCpuData(data);
             setCpuData(data);
-            setTotalItems(data.length)
+            setTotalPages(Math.ceil(data.length / 6))
             setComponentType('Cpu')
         }
         getData()
 
     }, [])
 
+    useEffect(() => {
+        if (currentPage != totalPages) {
+            setCurrentPage(0);
+        }
+    }, [totalPages]);
+
     //HandlesPaginationButtons
     const handlePageChange = (selectedPage: { selected: number }) => {
         setCurrentPage(selectedPage.selected);
     };
-
-    const ITEMS_PER_PAGE = 6;
-
-    const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE);
 
     const SwitchComponent = () => {
         switch (componentType) {
@@ -149,40 +168,14 @@ export default function Parts() {
         setMaxBudget(value);
     };
 
-    // const handleCpuManufacturer = () => {
-    //     if (cpuManufacturers[0]['All'] === true) {
-    //         setCpuData(originalCpuData)
-    //         setTotalItems(originalCpuData.length)
-    //     } else {
-    //         let data: any = [];
-
-    //         const filteredData = cpuData.filter((cpu: { title: string, index?: number }) => {
-    //             let included = false;
-    //             Object.keys(cpuManufacturers[0]).forEach(key => {
-    //                 if (cpu.title.includes(key) && cpuManufacturers[0][key as keyof typeof cpuManufacturers[0]]) {
-    //                     included = true;
-    //                 }
-    //             });
-    //             return included;
-    //         }).map((cpu) => {
-    //             return cpu;
-    //         });
-
-    //         data = [...data, filteredData]
-
-    //         setCpuData(filteredData);
-    //         setTotalItems(filteredData.length)
-    //     }
-    // }
-
     const handleCpuFiltersCheckbox = () => {
         if (cpuFilters.manufacturers.All && cpuFilters.socketTypes.All) {
             setCpuData(originalCpuData);
-            setTotalItems(originalCpuData.length);
+            setTotalPages(Math.ceil(originalCpuData.length / 6))
+            //setTotalItems(originalCpuData.length);
         } else if (cpuFilters.manufacturers.All && !cpuFilters.socketTypes.All) {
 
-            let data: any[] = [];
-            const filteredData = originalCpuData.filter((cpu: { socketType: string, index?: number }) => {
+            let filteredData = originalCpuData.filter((cpu: { socketType: string, index?: number }) => {
                 let included = false;
                 const { socketTypes } = cpuFilters;
 
@@ -197,10 +190,8 @@ export default function Parts() {
                 return cpu;
             });
 
-            data = [...data, filteredData];
-
             setCpuData(filteredData);
-            setTotalItems(filteredData.length);
+            setTotalPages(Math.ceil(filteredData.length / 6))
 
         } else if (!cpuFilters.manufacturers.All && cpuFilters.socketTypes.All) {
             let data: any[] = [];
@@ -222,9 +213,7 @@ export default function Parts() {
             data = [...data, filteredData];
 
             setCpuData(filteredData);
-            setTotalItems(filteredData.length);
-
-
+            setTotalPages(Math.ceil(filteredData.length / 6))
         }
 
         else if (!cpuFilters.manufacturers.All && !cpuFilters.socketTypes.All) {
@@ -259,58 +248,43 @@ export default function Parts() {
             });
 
             setCpuData(data);
-            setTotalItems(data.length);
+            setTotalPages(Math.ceil(data.length / 6))
             console.log(data)
         }
-        //setCurrentPage(1)
     }
 
-    // const handleCpuSocketType = () => {
-    //     if (cpuSocket.All === true) {
-    //         setCpuData(originalCpuData);
-    //         setTotalItems(originalCpuData.length);
-    //     } else {
-    //         let data: any[] = [];
+    const handleGpuFiltersCheckbox = () => {
+        if (gpuFilters.manufacturers.All){
+            setGpuData(originalGpuData)
+            setTotalPages(Math.ceil(originalCpuData.length / 6))
+        } else if(!gpuFilters.manufacturers.All){
+            let filteredData = originalGpuData.filter((gpu: { title: string, index?: number }) => {
+                let included = false;
+                const { manufacturers } = gpuFilters;
 
-    //         const filteredData = cpuData.filter((cpu: { socketType: string, index?: number }) => {
-    //             let included = false;
-    //             Object.keys(cpuSocket).forEach((key) => {
-    //                 if (cpu.socketType.includes(key) && cpuSocket[key as keyof typeof cpuSocket]) {
-    //                     included = true;
-    //                 }
-    //             });
-    //             return included;
-    //         }).map((cpu) => {
-    //             //cpu.index = index;
-    //             return cpu;
-    //         });
+                Object.keys(manufacturers).forEach((key) => {
+                    if (gpu.title.includes(key) && manufacturers[key as keyof typeof manufacturers]) {
+                        included = true;
+                    }
+                });
 
-    //         data = [...data, filteredData];
+                return included;
+            }).map((gpu) => {
+                return gpu;
+            });
 
-    //         setCpuData(filteredData);
-    //         setTotalItems(filteredData.length);
-    //     }
-    // }
+            setGpuData(filteredData);
+            setTotalPages(Math.ceil(filteredData.length / 6))
+        }
+    }
 
     useEffect(() => {
-        if (componentType === 'Cpu') {
-            handleCpuFiltersCheckbox()
-        } else if (componentType === 'Gpu') {
-            setGpuData(sortByPrice(gpuData));
-        } else if (componentType === "Motherboard") {
-            setMotherboardData(sortByPrice(motherboardData));
-        } else if (componentType === "Case") {
-            setCaseData(sortByPrice(caseData));
-        } else if (componentType === "Ram") {
-            setRamData(sortByPrice(ramData));
-        } else if (componentType === "Ps") {
-            setPsData(sortByPrice(psData));
-        } else if (componentType === "Heatsink") {
-            setHeatsinkData(sortByPrice(heatsinkData));
-        } else {
-            setHardDriveData(sortByPrice(hardDriveData));
-        }
+        handleCpuFiltersCheckbox()
     }, [cpuFilters])
+
+    useEffect(() => {
+        handleGpuFiltersCheckbox()
+    }, [gpuFilters])
 
     function sortByPrice(arr: any) {
         const newArr = [...arr];
@@ -330,7 +304,7 @@ export default function Parts() {
     const priceSort = () => {
         if (componentType == 'Cpu') {
             setCpuData(sortByPrice(cpuData));
-            setTotalItems(cpuData.length)
+            setTotalPages(Math.ceil(cpuData.length) / 6)
         } else if (componentType == 'Gpu') {
             setGpuData(sortByPrice(gpuData));
         } else if (componentType == "Motherboard") {
@@ -348,53 +322,29 @@ export default function Parts() {
         }
     }
 
-    const allFalse = cpuManufacturers.every((manufacturer) => !Object.values(manufacturer).some((isChecked) => isChecked));
-    if (allFalse) {
-        setCpuManufacturers([{ All: true, AMD: false, Intel: false }])
-    }
-
-    const isAllSocketTypesFalse = Object.values(cpuFilters.socketTypes).every(value => value === false);
-    if (isAllSocketTypesFalse) {
+    const isAllCpuSocketUnchecked = Object.values(cpuFilters.socketTypes).every(value => value === false);
+    if (isAllCpuSocketUnchecked) {
         setCpuFilters((prev) => ({
             ...prev,
             socketTypes: { ...prev.socketTypes, All: true }
         }))
     }
 
-    const isAllManufacturerTypesFalse = Object.values(cpuFilters.manufacturers).every(value => value === false);
-    if (isAllManufacturerTypesFalse) {
+    const isAllCpuManufacturerUnchecked = Object.values(cpuFilters.manufacturers).every(value => value === false);
+    if (isAllCpuManufacturerUnchecked) {
         setCpuFilters((prev) => ({
             ...prev,
             manufacturers: { ...prev.manufacturers, All: true }
         }))
     }
 
-    //Checkbox logic
-    const handleCheckboxChange = (value: string, checked: boolean) => {
-        if (value === "ManufacturerAll") {
-            setCpuManufacturers([{ All: true, AMD: false, Intel: false }])
-        }
-
-        if (value === "AMD") {
-            setCpuManufacturers((prev) => [
-                {
-                    ...prev[0],
-                    AMD: checked,
-                    All: false
-                }
-            ]);
-        }
-
-        if (value === "Intel") {
-            setCpuManufacturers((prev) => [
-                {
-                    ...prev[0],
-                    Intel: checked,
-                    All: false
-                }
-            ]);
-        }
-    };
+    const isAllGpuManufacturerUnchecked = Object.values(gpuFilters.manufacturers).every(value => value === false);
+    if(isAllGpuManufacturerUnchecked){
+        setGpuFilters((prev) => ({
+            ...prev,
+            manufacturers: { ...prev.manufacturers, All: true}
+        }))
+    }
 
     const handleCpuManufacturerCheckbox = (value: string, checked: boolean) => {
         if (value === 'ManufacturerAll') {
@@ -459,6 +409,54 @@ export default function Parts() {
         }
     };
 
+    const handleGpuManufacturerCheckbox = (value: string, checked: boolean) => {
+        if (value === 'GpuManufacturerAll') {
+            setGpuFilters(originalGpuFilters)
+            //setTotalPages(Math.ceil(originalGpuData.length / 6))
+        } 
+        else if (value === 'MSI') {
+            setGpuFilters((prev) => ({
+                ...prev,
+                manufacturers: { ...prev.manufacturers, All: false, MSI: checked}
+            }))
+        }
+        else if (value === 'EVGA') {
+            setGpuFilters((prev) => ({
+                ...prev,
+                manufacturers: { ...prev.manufacturers, All: false, EVGA: checked}
+            }))
+        }
+        else if (value === 'Gigabyte') {
+            setGpuFilters((prev) => ({
+                ...prev,
+                manufacturers: { ...prev.manufacturers, All: false, Gigabyte: checked}
+            }))
+        }
+        else if (value === 'PowerColor') {
+            setGpuFilters((prev) => ({
+                ...prev,
+                manufacturers: { ...prev.manufacturers, All: false, PowerColor: checked}
+            }))
+        }
+        else if (value === 'Asus') {
+            setGpuFilters((prev) => ({
+                ...prev,
+                manufacturers: { ...prev.manufacturers, All: false, Asus: checked}
+            }))
+        }
+        else if (value === 'XFX') {
+            setGpuFilters((prev) => ({
+                ...prev,
+                manufacturers: { ...prev.manufacturers, All: false, XFX: checked}
+            }))
+        }
+        else if (value === 'Zotac') {
+            setGpuFilters((prev) => ({
+                ...prev,
+                manufacturers: { ...prev.manufacturers, All: false, Zotac: checked}
+            }))
+        }
+    }
 
     return (
         <div>
@@ -664,7 +662,6 @@ export default function Parts() {
                 )}
                 <Col className='filterBackground large-filter p-3' md={3}>
                     <div className='marginLeft2 filterBoxColor'>
-
                         <Col className='marginLeft mt-5 mb-5'>
                             <p className='mt-5'>Components</p>
                             <Dropdown className='bb-dropdown'>
@@ -700,16 +697,18 @@ export default function Parts() {
                                 </Dropdown.Menu>
                             </Dropdown>
                         </Col>
-                        <Button onClick={() => priceSort()}>SORT BY PRICE</Button>
-                        <hr />
-                        <p className='mt-4'>Filter</p>
-                        <button onClick={() => handleComponentSelect(componentType)} className='clearFiltersBtn'>Clear Filters</button>
-                        <hr />
-                        <p>Budget</p>
-                        <input className='w-75' type='number' placeholder='Min' value={minBudget} onChange={(e) => setMinBudget(parseInt(e.target.value))}></input>
-                        <input className='w-75' type='number' placeholder='Max' value={maxBudget} onChange={(e) => setMaxBudget(parseInt(e.target.value))}></input>
-                        {/* <button onClick={() => filterByPriceRange(minBudget, maxBudget)} className='clearFiltersBtn'>Results</button> */}
-                        <hr />
+                    </div>
+                    <Button onClick={() => priceSort()}>SORT BY PRICE</Button>
+                    <hr />
+                    <p className='mt-4'>Filter</p>
+                    <button onClick={() => handleComponentSelect(componentType)} className='clearFiltersBtn'>Clear Filters</button>
+                    <hr />
+                    <p>Budget</p>
+                    <input className='w-75' type='number' placeholder='Min' value={minBudget} onChange={(e) => setMinBudget(parseInt(e.target.value))}></input>
+                    <input className='w-75' type='number' placeholder='Max' value={maxBudget} onChange={(e) => setMaxBudget(parseInt(e.target.value))}></input>
+                    {/* <button onClick={() => filterByPriceRange(minBudget, maxBudget)} className='clearFiltersBtn'>Results</button> */}
+                    <hr />
+                    <div className={componentType !== 'Cpu' ? 'd-none' : ''}>
                         <p>Manufacturer</p>
                         <div className='flex justify-content-center gap-2'>
                             <label className='cursor-pointer'>
@@ -846,6 +845,105 @@ export default function Parts() {
                                 LGA2011
                             </label>
                         </div>
+                    </div>
+                    <div className={componentType !== 'Gpu' ? 'd-none' : ''}>
+                        <p>Manufacturer</p>
+                        <div className='flex justify-content-center gap-2'>
+                            <label className='cursor-pointer'>
+                                <input
+                                    type='checkbox'
+                                    value='GpuManufacturerAll'
+                                    checked={gpuFilters.manufacturers.All}
+                                    onChange={(e) => handleGpuManufacturerCheckbox(e.target.value, e.target.checked)}
+                                    className='mr-3 cursor-pointer'
+                                />
+                                All
+                            </label>
+                        </div>
+                        <div className='flex justify-content-center gap-2'>
+                            <label className='cursor-pointer'>
+                                <input
+                                    type='checkbox'
+                                    value='MSI'
+                                    checked={gpuFilters.manufacturers.MSI}
+                                    onChange={(e) => handleGpuManufacturerCheckbox(e.target.value, e.target.checked)}
+                                    className='mr-3 cursor-pointer'
+                                />
+                                MSI
+                            </label>
+                        </div>
+                        <div className='flex justify-content-center gap-2'>
+                            <label className='cursor-pointer'>
+                                <input
+                                    type='checkbox'
+                                    value='EVGA'
+                                    checked={gpuFilters.manufacturers.EVGA}
+                                    onChange={(e) => handleGpuManufacturerCheckbox(e.target.value, e.target.checked)}
+                                    className='mr-3 cursor-pointer'
+                                />
+                                EVGA
+                            </label>
+                        </div>
+                        <div className='flex justify-content-center gap-2'>
+                            <label className='cursor-pointer'>
+                                <input
+                                    type='checkbox'
+                                    value='Gigabyte'
+                                    checked={gpuFilters.manufacturers.Gigabyte}
+                                    onChange={(e) => handleGpuManufacturerCheckbox(e.target.value, e.target.checked)}
+                                    className='mr-3 cursor-pointer'
+                                />
+                                Gigabyte
+                            </label>
+                        </div>
+                        <div className='flex justify-content-center gap-2'>
+                            <label className='cursor-pointer'>
+                                <input
+                                    type='checkbox'
+                                    value='PowerColor'
+                                    checked={gpuFilters.manufacturers.PowerColor}
+                                    onChange={(e) => handleGpuManufacturerCheckbox(e.target.value, e.target.checked)}
+                                    className='mr-3 cursor-pointer'
+                                />
+                                PowerColor
+                            </label>
+                        </div>
+                        <div className='flex justify-content-center gap-2'>
+                            <label className='cursor-pointer'>
+                                <input
+                                    type='checkbox'
+                                    value='Asus'
+                                    checked={gpuFilters.manufacturers.Asus}
+                                    onChange={(e) => handleGpuManufacturerCheckbox(e.target.value, e.target.checked)}
+                                    className='mr-3 cursor-pointer'
+                                />
+                                Asus
+                            </label>
+                        </div>
+                        <div className='flex justify-content-center gap-2'>
+                            <label className='cursor-pointer'>
+                                <input
+                                    type='checkbox'
+                                    value='XFX'
+                                    checked={gpuFilters.manufacturers.XFX}
+                                    onChange={(e) => handleGpuManufacturerCheckbox(e.target.value, e.target.checked)}
+                                    className='mr-3 cursor-pointer'
+                                />
+                                XFX
+                            </label>
+                        </div>
+                        <div className='flex justify-content-center gap-2'>
+                            <label className='cursor-pointer'>
+                                <input
+                                    type='checkbox'
+                                    value='Zotac'
+                                    checked={gpuFilters.manufacturers.Zotac}
+                                    onChange={(e) => handleGpuManufacturerCheckbox(e.target.value, e.target.checked)}
+                                    className='mr-3 cursor-pointer'
+                                />
+                                Zotac
+                            </label>
+                        </div>
                         {/* <InputGroup className="mb-3 flex align-items-center gap-2">
                             <InputGroup.Checkbox />AMD
                         </InputGroup>
@@ -862,15 +960,17 @@ export default function Parts() {
                     <div className="">
 
                         <SwitchComponent />
-
+                        
                         <div className="d-flex justify-content-center mt-4">
                             <Paginate
+                                key={currentPage}
                                 previousLabel={"<"}
                                 nextLabel={">"}
                                 pageCount={totalPages}
                                 onPageChange={handlePageChange}
                                 containerClassName={"pagination"}
                                 activeClassName={"active-page"}
+                                forcePage={currentPage}
                             />
                         </div>
                     </div>
