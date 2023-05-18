@@ -517,14 +517,26 @@ a {
 .WishlistBtn, .DeleteWishlistBtn{
     color: gray;
     position: relative;
-    left: 60%;
+    left: 65%;
 }
 
 .WishlistBtn :hover{ 
     color: rgb(0, 157, 255);
+    cursor: pointer;
 }
 
 .DeleteWishlistBtn :hover{
     color: red;
+    cursor: pointer;
+}
+
+.title{
+    white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.wishlistCards{
+    margin-bottom: 20px;
 }
 
