@@ -788,10 +788,10 @@ export default function Parts() {
                     <hr />
                     <p className='mt-4'>Filter</p>
                     <button onClick={() => handleComponentSelect(componentType)} className='clearFiltersBtn'>Clear Filters</button>
-                    <hr />
+                    {/* <hr />
                     <p>Budget</p>
                     <input className='w-75' type='number' placeholder='Min' value={minBudget} onChange={(e) => setMinBudget(parseInt(e.target.value))}></input>
-                    <input className='w-75' type='number' placeholder='Max' value={maxBudget} onChange={(e) => setMaxBudget(parseInt(e.target.value))}></input>
+                    <input className='w-75' type='number' placeholder='Max' value={maxBudget} onChange={(e) => setMaxBudget(parseInt(e.target.value))}></input> */}
                     {/* <button onClick={() => filterByPriceRange(minBudget, maxBudget)} className='clearFiltersBtn'>Results</button> */}
                     <hr />
                     <div className={componentType !== 'CPU' ? 'd-none' : ''}>
