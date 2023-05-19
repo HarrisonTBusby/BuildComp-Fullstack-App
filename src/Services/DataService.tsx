@@ -92,4 +92,16 @@ const GetPartData = async (part: string) => {
   return data;
 }
 
-export { GetRandomUserData, createAccount, login, GetLoggedInUserData, GetPartData, PeopleAPIResponse, PeopleData };
+const AddWishlistItems = async() => {
+  const response = await fetch('https://buildcompdatabase.azurewebsites.net/Webscraper/saveItemByUsername');
+  const data = await response.json();
+  return data;
+}
+
+async function GetAllWishlistItems(){
+  const response = await fetch('https://buildcompdatabase.azurewebsites.net/Webscraper/GetAllWishlistItems');
+  const data = await response.json();
+  return data;
+}
+
+export { GetRandomUserData, createAccount, login, GetLoggedInUserData, GetPartData, PeopleAPIResponse, PeopleData, AddWishlistItems, GetAllWishlistItems };
