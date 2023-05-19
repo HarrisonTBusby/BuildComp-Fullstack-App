@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { Dropdown, OverlayTrigger, Tooltip } from 'react-bootstrap'
 import { GetPartData } from '../../Services/DataService';
 import React from 'react';
-import CaseFilter from '../Filters/CaseFilter';
 
 interface CpuData {
     cores: number;
@@ -129,47 +128,47 @@ function PartsDropdown() {
     };
 
     async function handleComponentSelect(component: string) {
-        
+
         const data = await GetPartData(component);
-        if(component == "Cpu"){
+        if (component == "Cpu") {
             setCpuData(data);
             setTotalItems(data.length)
             setComponentType('Cpu')
-        }else if(component == "Gpu"){
+        } else if (component == "Gpu") {
             setGpuData(data);
             setTotalItems(data.length)
             setComponentType('Gpu')
-        }else if(component == "Motherboard"){
+        } else if (component == "Motherboard") {
             setMotherboardData(data);
             setTotalItems(data.length)
             setComponentType('Motherboard')
-        }else if(component == "Case"){
+        } else if (component == "Case") {
             setCaseData(data)
             setTotalItems(data.length)
             setComponentType('Case')
-        }else if(component == "Ram"){
+        } else if (component == "Ram") {
             setRamData(data)
             setTotalItems(data.length)
             setComponentType('Ram')
-        }else if(component == 'Ps'){
+        } else if (component == 'Ps') {
             setPsData(data)
             setTotalItems(data.length)
             setComponentType('Ps')
-        }else if(component == "Heatsink"){
+        } else if (component == "Heatsink") {
             setHeatsinkData(data)
             setTotalItems(data.length)
             setComponentType('Heatsink')
-        }else if(component == "HardDrive"){
+        } else if (component == "HardDrive") {
             setTotalItems(data.length)
             setHardDriveData(data)
             setComponentType('HardDrive')
         }
         console.log(data);
-        
+
     }
 
-  return (
-    <Dropdown className='bb-dropdown'>
+    return (
+        <Dropdown className='bb-dropdown'>
             <Dropdown.Toggle className='dropdownSize'>
                 PC Components
             </Dropdown.Toggle>
@@ -201,7 +200,7 @@ function PartsDropdown() {
                 </OverlayTrigger>
             </Dropdown.Menu>
         </Dropdown>
-  )
+    )
 }
 
 export default PartsDropdown
