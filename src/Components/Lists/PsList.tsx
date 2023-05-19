@@ -1,19 +1,30 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom';
 import { Card } from 'react-bootstrap';
-import { PowerSupplyData } from '../../Interfaces/PartDataInterfaces';
+import { PowerSupplyData, WishlistData } from '../../Interfaces/PartDataInterfaces';
 import ControlPointIcon from '@mui/icons-material/ControlPoint';
-import { saveToSessionStorageByName } from '../../Services/LocalStorage';
+import { AddWishlistItems } from '../../Services/DataService';
 
 export default function PsList(props: any) {
     const ITEMS_PER_PAGE = 6;
     const startIndex = props.currentPage * ITEMS_PER_PAGE;
     const endIndex = startIndex + ITEMS_PER_PAGE;
     const itemsToDisplay = props.psData.slice(startIndex, endIndex);
+    const usernameData = sessionStorage.getItem("Username");
 
-    const handleSave = (item:PowerSupplyData) => {
-        saveToSessionStorageByName(item);
-    }
+    const handleSave = async (item: PowerSupplyData) => {
+        const data: WishlistData = {
+          id: 0, // Set the desired value for the id property
+          username: usernameData || '',
+          title: item.title,
+          price: item.price,
+          image_url: item.image_url,
+          item_url: item.item_url,
+          type: item.type,
+        };
+    
+        await AddWishlistItems(data);
+      };
 
     return (
         <div className='cards'>

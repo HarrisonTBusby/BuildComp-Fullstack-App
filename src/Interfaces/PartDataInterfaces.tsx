@@ -106,7 +106,7 @@ interface RamData {
 
 interface WishlistData {
     id:number;
-    Username: string;
+    username: string;
     title: string;
     price: string;
     image_url: string;

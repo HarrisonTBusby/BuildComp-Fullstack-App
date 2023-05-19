@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Container, Navbar, Nav } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { removeFromSessionStorage } from '../../Services/LocalStorage';
 const logo = require('../../Assets/Images/BlackLogo.png');
 
 interface NavLink {
@@ -16,6 +17,7 @@ export default function NavbarComponent() {
 
   const handleSignOut = () => {
     localStorage.setItem('BuildCompToken', 'guest');
+    removeFromSessionStorage('Username');
     navigate('/')
   }
   

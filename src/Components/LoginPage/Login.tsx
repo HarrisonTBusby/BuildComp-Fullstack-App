@@ -8,18 +8,18 @@ const logo = require('../../Assets/Images/BlackLogo.png');
 const Login = () => {
 
     const navigate = useNavigate();
-    const [username, setUsername] = useState(null);
-    const [password, setPassword] = useState(null);
+    const [username, setUsername] = useState<string>('');
+    const [password, setPassword] = useState<string>('');
 
     const handleSubmit = async () => {
         let userData = {
             username,
             password
         }
-        console.log(userData);
         let token = await login(userData);
         if (token.token != null) {
             localStorage.setItem('BuildCompToken', token.token);
+            sessionStorage.setItem('Username', username)
             navigate('/');
         }
     }

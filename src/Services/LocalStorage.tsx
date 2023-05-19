@@ -16,7 +16,7 @@ function removeFromSessionStorage(name :any){
     let favorites = getSessionStorage();
     let nameIndex = favorites.indexOf(name);
     favorites.splice(nameIndex,1);
-    sessionStorage.setItem('Favorites', JSON.stringify(favorites));
+    sessionStorage.setItem('Username', JSON.stringify(favorites));
 }
 
 export { getSessionStorage, saveToSessionStorageByName, removeFromSessionStorage }

@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom';
 import { Card } from 'react-bootstrap';
-import { GpuData } from '../../Interfaces/PartDataInterfaces';
+import { GpuData, WishlistData } from '../../Interfaces/PartDataInterfaces';
 import ControlPointIcon from '@mui/icons-material/ControlPoint';
-import { saveToSessionStorageByName } from '../../Services/LocalStorage';
+import { AddWishlistItems } from '../../Services/DataService';
 
 export default function GpuList(props: any) {
     
@@ -11,10 +11,21 @@ export default function GpuList(props: any) {
     const startIndex = props.currentPage * ITEMS_PER_PAGE;
     const endIndex = startIndex + ITEMS_PER_PAGE;
     const itemsToDisplay = props.gpuData.slice(startIndex, endIndex);
+    const usernameData = sessionStorage.getItem("Username");
 
-    const handleSave = (item:GpuData) => {
-        saveToSessionStorageByName(item);
-    }
+    const handleSave = async (item: GpuData) => {
+        const data: WishlistData = {
+          id: 0, // Set the desired value for the id property
+          username: usernameData || '',
+          title: item.title,
+          price: item.price,
+          image_url: item.image_url,
+          item_url: item.item_url,
+          type: item.type,
+        };
+    
+        await AddWishlistItems(data);
+      };
 
     return (
         <div className='cards'>

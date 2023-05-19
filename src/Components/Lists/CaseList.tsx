@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 import { Card } from 'react-bootstrap';
 import { WishlistData, CaseData } from '../../Interfaces/PartDataInterfaces';
 import ControlPointIcon from '@mui/icons-material/ControlPoint';
-import { saveToSessionStorageByName } from '../../Services/LocalStorage';
 import { AddWishlistItems } from '../../Services/DataService';
+
 
 
 export default function CaseList(props: any) {
@@ -13,13 +13,14 @@ export default function CaseList(props: any) {
     const startIndex = props.currentPage * ITEMS_PER_PAGE;
     const endIndex = startIndex + ITEMS_PER_PAGE;
     const itemsToDisplay = props.caseData.slice(startIndex, endIndex);
+    const usernameData = sessionStorage.getItem("Username");
 
-    
+
 
     const handleSave = async (item: CaseData) => {
         const data: WishlistData = {
           id: 0, // Set the desired value for the id property
-          Username: 'harrison',
+          username: usernameData || '',
           title: item.title,
           price: item.price,
           image_url: item.image_url,
