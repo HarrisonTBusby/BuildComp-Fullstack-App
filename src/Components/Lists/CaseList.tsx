@@ -1,9 +1,11 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom';
 import { Card } from 'react-bootstrap';
-import { CaseData } from '../../Interfaces/PartDataInterfaces';
+import { WishlistData, CaseData } from '../../Interfaces/PartDataInterfaces';
 import ControlPointIcon from '@mui/icons-material/ControlPoint';
-import { saveToSessionStorageByName } from '../../Services/LocalStorage';
+import { AddWishlistItems } from '../../Services/DataService';
+
+
 
 export default function CaseList(props: any) {
 
@@ -11,10 +13,23 @@ export default function CaseList(props: any) {
     const startIndex = props.currentPage * ITEMS_PER_PAGE;
     const endIndex = startIndex + ITEMS_PER_PAGE;
     const itemsToDisplay = props.caseData.slice(startIndex, endIndex);
+    const usernameData = sessionStorage.getItem("Username");
 
-    const handleSave = (item:CaseData) => {
-        saveToSessionStorageByName(item);
-    }
+
+
+    const handleSave = async (item: CaseData) => {
+        const data: WishlistData = {
+          id: 0, // Set the desired value for the id property
+          username: usernameData || '',
+          title: item.title,
+          price: item.price,
+          image_url: item.image_url,
+          item_url: item.item_url,
+          type: item.type,
+        };
+    
+        await AddWishlistItems(data);
+      };
 
     return (
         <div className='cards'>
@@ -27,7 +42,7 @@ export default function CaseList(props: any) {
                         <Card.Body>
                             <Link to={item.item_url} target='_blank'><u>{item.title}</u></Link>
                             <div>
-                                <div>${item.price}<a className='WishlistBtn' onClick={() => handleSave(item)}><ControlPointIcon /></a></div>
+                                <div>${item.price}<a className='WishlistBtn' onClick={async() => await handleSave(item)}><ControlPointIcon /></a></div>
                                 <div>Size: {item.size}</div>
                                 <div>Color: {item.caseColor}</div>
                                 <div>{item.type}</div>

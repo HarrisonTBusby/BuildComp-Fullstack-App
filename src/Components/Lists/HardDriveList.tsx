@@ -1,19 +1,30 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom';
 import { Card } from 'react-bootstrap';
-import { HardDriveData } from '../../Interfaces/PartDataInterfaces';
+import { HardDriveData, WishlistData } from '../../Interfaces/PartDataInterfaces';
 import ControlPointIcon from '@mui/icons-material/ControlPoint';
-import { saveToSessionStorageByName } from '../../Services/LocalStorage';
+import { AddWishlistItems } from '../../Services/DataService';
 
 export default function HardDriveList(props: any) {
     const ITEMS_PER_PAGE = 6;
     const startIndex = props.currentPage * ITEMS_PER_PAGE;
     const endIndex = startIndex + ITEMS_PER_PAGE;
     const itemsToDisplay = props.hardDriveData.slice(startIndex, endIndex)
+    const usernameData = sessionStorage.getItem("Username");
 
-    const handleSave = (item:HardDriveData) => {
-        saveToSessionStorageByName(item);
-    }
+    const handleSave = async (item: HardDriveData) => {
+        const data: WishlistData = {
+          id: 0, // Set the desired value for the id property
+          username: usernameData || '',
+          title: item.title,
+          price: item.price,
+          image_url: item.image_url,
+          item_url: item.item_url,
+          type: item.type,
+        };
+    
+        await AddWishlistItems(data);
+      };
 
     return (
         <div className='cards'>

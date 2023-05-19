@@ -104,4 +104,14 @@ interface RamData {
     firstWordLatency: number;
 }
 
-export { CpuData, GpuData, CaseData, HardDriveData, MotherboardData, HeatsinkData, PowerSupplyData, RamData}
+interface WishlistData {
+    id:number;
+    username: string;
+    title: string;
+    price: string;
+    image_url: string;
+    item_url: string;
+    type: string;
+}
+
+export { WishlistData, CpuData, GpuData, CaseData, HardDriveData, MotherboardData, HeatsinkData, PowerSupplyData, RamData}
