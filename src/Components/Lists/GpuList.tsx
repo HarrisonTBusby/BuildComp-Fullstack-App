@@ -6,6 +6,7 @@ import ControlPointIcon from '@mui/icons-material/ControlPoint';
 import { saveToSessionStorageByName } from '../../Services/LocalStorage';
 
 export default function GpuList(props: any) {
+    
     const ITEMS_PER_PAGE = 6;
     const startIndex = props.currentPage * ITEMS_PER_PAGE;
     const endIndex = startIndex + ITEMS_PER_PAGE;

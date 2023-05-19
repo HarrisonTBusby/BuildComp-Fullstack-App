@@ -31,17 +31,20 @@ export default function Parts() {
     const [selectedComponent, setSelectedComponent] = useState<string>('');
     const [minBudget, setMinBudget] = useState<number>(0);
     const [maxBudget, setMaxBudget] = useState<number>(0);
-    const [componentData, setComponentData] = useState<any[]>([]);
+    //const [componentData, setComponentData] = useState<any[]>([]);
     const [cpuData, setCpuData] = useState<CpuData[]>([]);
     const [originalCpuData, setOriginalCpuData] = useState<CpuData[]>([]);
     const [gpuData, setGpuData] = useState<GpuData[]>([]);
     const [originalGpuData, setOriginalGpuData] = useState<GpuData[]>([]);
     const [caseData, setCaseData] = useState<CaseData[]>([]);
     const [motherboardData, setMotherboardData] = useState<MotherboardData[]>([]);
+    const [originalMotherboardData, setOriginalMotherboardData] = useState<MotherboardData[]>([]);
     const [ramData, setRamData] = useState<RamData[]>([]);
     const [psData, setPsData] = useState<PowerSupplyData[]>([]);
     const [heatsinkData, setHeatsinkData] = useState<HeatsinkData[]>([]);
     const [hardDriveData, setHardDriveData] = useState<HardDriveData[]>([]);
+
+    const [componentType, setComponentType] = useState<string>('PC Components');
 
     const [cpuFilters, setCpuFilters] = useState({
         manufacturers: { All: true, AMD: false, Intel: false },
@@ -61,27 +64,32 @@ export default function Parts() {
         manufacturers: { All: true, MSI: false, EVGA: false, Gigabyte: false, PowerColor: false, Asus: false, XFX: false, Zotac: false }
     }
 
-    const [componentType, setComponentType] = useState<string>('default');
+    const [motherboardFilters, setMotherboardFilters] = useState()
+    const originalMotherboardFilters = {
+        
+    }
+    
     // For Dropdown values
     async function handleComponentSelect(component: string) {
-        if (component == selectedComponent) return
+        //if (component == selectedComponent) return
         const data = await GetPartData(component);
-        if (component === "Cpu") {
+        if (component === 'CPU') {
             setCpuData(data);
             //setOriginalCpu(data) is not needed, already called on first useEffect
             setTotalPages(Math.ceil(data.length / 6))
-            setComponentType('Cpu')
+            setComponentType('CPU')
             //set checkboxes with value 'All' to true 
             setCpuFilters(originalCpuFilters)
-        } else if (component === "Gpu") {
+        } else if (component === 'GPU') {
             setGpuData(data);
             setOriginalGpuData(data)
             setTotalPages(Math.ceil(data.length / 6))
-            setComponentType('Gpu')
-            //set checkboxes with value 'ALl' to true
+            setComponentType('GPU')
+            //set checkboxes with value 'All' to true
             setGpuFilters(originalGpuFilters)
         } else if (component === "Motherboard") {
             setMotherboardData(data);
+            setOriginalMotherboardData(data);
             setTotalPages(Math.ceil(data.length / 6))
             setComponentType('Motherboard')
         } else if (component === "Case") {
@@ -105,23 +113,23 @@ export default function Parts() {
             setHardDriveData(data)
             setComponentType('HardDrive')
         }
-        console.log(data)
+        setCurrentPage(0)
+        //console.log(data)
     }
 
     useEffect(() => {
         async function getData() {
-            const data = await GetPartData('Cpu');
+            const data = await GetPartData('CPU');
             setOriginalCpuData(data);
             setCpuData(data);
             setTotalPages(Math.ceil(data.length / 6))
-            setComponentType('Cpu')
+            setComponentType('CPU')
         }
         getData()
-
     }, [])
 
     useEffect(() => {
-        if (currentPage != totalPages) {
+        if (currentPage !== totalPages) {
             setCurrentPage(0);
         }
     }, [totalPages]);
@@ -133,9 +141,9 @@ export default function Parts() {
 
     const SwitchComponent = () => {
         switch (componentType) {
-            case 'Cpu':
+            case 'CPU':
                 return <CpuList cpuData={cpuData} currentPage={currentPage} setCurrentPage={setCurrentPage} />;
-            case 'Gpu':
+            case 'GPU':
                 return <GpuList gpuData={gpuData} currentPage={currentPage} setCurrentPage={setCurrentPage} />;
             case 'Motherboard':
                 return <MotherboardList motherboardData={motherboardData} currentPage={currentPage} setCurrentPage={setCurrentPage} />;
@@ -256,7 +264,7 @@ export default function Parts() {
     const handleGpuFiltersCheckbox = () => {
         if (gpuFilters.manufacturers.All){
             setGpuData(originalGpuData)
-            setTotalPages(Math.ceil(originalCpuData.length / 6))
+            //setTotalPages(Math.ceil(originalCpuData.length / 6))
         } else if(!gpuFilters.manufacturers.All){
             let filteredData = originalGpuData.filter((gpu: { title: string, index?: number }) => {
                 let included = false;
@@ -302,21 +310,21 @@ export default function Parts() {
     }
 
     const priceSort = () => {
-        if (componentType == 'Cpu') {
+        if (componentType === 'CPU') {
             setCpuData(sortByPrice(cpuData));
             setTotalPages(Math.ceil(cpuData.length) / 6)
-        } else if (componentType == 'Gpu') {
+        } else if (componentType === 'GPU') {
             setGpuData(sortByPrice(gpuData));
             setTotalPages(Math.ceil(gpuData.length / 6))
-        } else if (componentType == "Motherboard") {
+        } else if (componentType === "Motherboard") {
             setMotherboardData(sortByPrice(motherboardData));
-        } else if (componentType == "Case") {
+        } else if (componentType === "Case") {
             setCaseData(sortByPrice(caseData));
-        } else if (componentType == "Ram") {
+        } else if (componentType === "Ram") {
             setRamData(sortByPrice(ramData));
-        } else if (componentType == "Ps") {
+        } else if (componentType === "Ps") {
             setPsData(sortByPrice(psData));
-        } else if (componentType == "Heatsink") {
+        } else if (componentType === "Heatsink") {
             setHeatsinkData(sortByPrice(heatsinkData));
         } else {
             setHardDriveData(sortByPrice(hardDriveData));
@@ -454,94 +462,72 @@ export default function Parts() {
         if (value === 'SocketAll') {
             setCpuFilters((prev) => ({
                 ...prev,
-                socketTypes: { All: true, AM4: false, LGA1150: false, LGA1151: false, LGA1155: false, LGA1200: false, LGA1700: false, LGA2011: false },
+                socketTypes: { All: true, AM4: false, LGA1150: false, LGA1151: false, LGA1155: false, LGA1200: false, LGA1700: false, LGA2011: false }
             }))
-        } else if (value === 'AM4') {
+        } else if( value !== 'SocketAll'){
             setCpuFilters((prev) => ({
                 ...prev,
-                socketTypes: { ...prev.socketTypes, All: false, AM4: checked }
-            }))
-        } else if (value === 'LGA1150') {
-            setCpuFilters((prev) => ({
-                ...prev,
-                socketTypes: { ...prev.socketTypes, All: false, LGA1150: checked }
-            }))
-        } else if (value === 'LGA1151') {
-            setCpuFilters((prev) => ({
-                ...prev,
-                socketTypes: { ...prev.socketTypes, All: false, LGA1151: checked }
-            }))
-        } else if (value === 'LGA1155') {
-            setCpuFilters((prev) => ({
-                ...prev,
-                socketTypes: { ...prev.socketTypes, All: false, LGA1155: checked }
-            }))
-        } else if (value === 'LGA1200') {
-            setCpuFilters((prev) => ({
-                ...prev,
-                socketTypes: { ...prev.socketTypes, All: false, LGA1200: checked }
-            }))
-        } else if (value === 'LGA1700') {
-            setCpuFilters((prev) => ({
-                ...prev,
-                socketTypes: { ...prev.socketTypes, All: false, LGA1700: checked }
-            }))
-        } else if (value === 'LGA2011') {
-            setCpuFilters((prev) => ({
-                ...prev,
-                socketTypes: { ...prev.socketTypes, All: false, LGA2011: checked }
-            }))
-        }
+                socketTypes: {
+                  ...prev.socketTypes,
+                  All: false,
+                  [value]: checked
+                }
+              }));
+        } 
+        // else if (value === 'AM4') {
+        //     setCpuFilters((prev) => ({
+        //         ...prev,
+        //         socketTypes: { ...prev.socketTypes, All: false, AM4: checked }
+        //     }))
+        // } else if (value === 'LGA1150') {
+        //     setCpuFilters((prev) => ({
+        //         ...prev,
+        //         socketTypes: { ...prev.socketTypes, All: false, LGA1150: checked }
+        //     }))
+        // } else if (value === 'LGA1151') {
+        //     setCpuFilters((prev) => ({
+        //         ...prev,
+        //         socketTypes: { ...prev.socketTypes, All: false, LGA1151: checked }
+        //     }))
+        // } else if (value === 'LGA1155') {
+        //     setCpuFilters((prev) => ({
+        //         ...prev,
+        //         socketTypes: { ...prev.socketTypes, All: false, LGA1155: checked }
+        //     }))
+        // } else if (value === 'LGA1200') {
+        //     setCpuFilters((prev) => ({
+        //         ...prev,
+        //         socketTypes: { ...prev.socketTypes, All: false, LGA1200: checked }
+        //     }))
+        // } else if (value === 'LGA1700') {
+        //     setCpuFilters((prev) => ({
+        //         ...prev,
+        //         socketTypes: { ...prev.socketTypes, All: false, LGA1700: checked }
+        //     }))
+        // } else if (value === 'LGA2011') {
+        //     setCpuFilters((prev) => ({
+        //         ...prev,
+        //         socketTypes: { ...prev.socketTypes, All: false, LGA2011: checked }
+        //     }))
+        // }
     };
 
     const handleGpuManufacturerCheckbox = (value: string, checked: boolean) => {
         if (value === 'GpuManufacturerAll') {
-            setGpuFilters(originalGpuFilters)
-            //setTotalPages(Math.ceil(originalGpuData.length / 6))
-        } 
-        else if (value === 'MSI') {
-            setGpuFilters((prev) => ({
-                ...prev,
-                manufacturers: { ...prev.manufacturers, All: false, MSI: checked}
-            }))
+          setGpuFilters(originalGpuFilters);
+          setTotalPages(Math.ceil(originalGpuData.length / 6));
+        } else if (value !== 'GpuManufacturerAll') {
+          setGpuFilters((prev) => ({
+            ...prev,
+            manufacturers: {
+              ...prev.manufacturers,
+              All: false,
+              [value]: checked
+            }
+          }));
         }
-        else if (value === 'EVGA') {
-            setGpuFilters((prev) => ({
-                ...prev,
-                manufacturers: { ...prev.manufacturers, All: false, EVGA: checked}
-            }))
-        }
-        else if (value === 'Gigabyte') {
-            setGpuFilters((prev) => ({
-                ...prev,
-                manufacturers: { ...prev.manufacturers, All: false, Gigabyte: checked}
-            }))
-        }
-        else if (value === 'PowerColor') {
-            setGpuFilters((prev) => ({
-                ...prev,
-                manufacturers: { ...prev.manufacturers, All: false, PowerColor: checked}
-            }))
-        }
-        else if (value === 'Asus') {
-            setGpuFilters((prev) => ({
-                ...prev,
-                manufacturers: { ...prev.manufacturers, All: false, Asus: checked}
-            }))
-        }
-        else if (value === 'XFX') {
-            setGpuFilters((prev) => ({
-                ...prev,
-                manufacturers: { ...prev.manufacturers, All: false, XFX: checked}
-            }))
-        }
-        else if (value === 'Zotac') {
-            setGpuFilters((prev) => ({
-                ...prev,
-                manufacturers: { ...prev.manufacturers, All: false, Zotac: checked}
-            }))
-        }
-    }
+      };
+      
 
     return (
         <div>
@@ -560,14 +546,14 @@ export default function Parts() {
                                         <p className='mt-5'>Components</p>
                                         <Dropdown className='bb-dropdown'>
                                             <Dropdown.Toggle className='dropdownSize'>
-                                                PC Components
+                                                {componentType}
                                             </Dropdown.Toggle>
                                             <Dropdown.Menu >
                                                 <OverlayTrigger placement="right" overlay={renderTooltip('Provides the instructions and processing power the computer needs to do its work. The more powerful and updated your processor, the faster your computer can complete its tasks.')}>
-                                                    <Dropdown.Item onClick={() => handleComponentSelect('Cpu')} className='ddButton'>CPU</Dropdown.Item>
+                                                    <Dropdown.Item onClick={() => handleComponentSelect('CPU')} className='ddButton'>CPU</Dropdown.Item>
                                                 </OverlayTrigger>
                                                 <OverlayTrigger placement="right" overlay={renderTooltip('Helps handle graphics-related work like graphics, effects, and videos')}>
-                                                    <Dropdown.Item onClick={() => handleComponentSelect('Gpu')} className='ddButton'>GPU</Dropdown.Item>
+                                                    <Dropdown.Item onClick={() => handleComponentSelect('GPU')} className='ddButton'>GPU</Dropdown.Item>
                                                 </OverlayTrigger>
                                                 <OverlayTrigger placement="right" overlay={renderTooltip('The circuit board that connects all of your hardware to your processor, distributes electricity from your power supply, and defines the types of storage devices, memory modules, and graphics cards (among other expansion cards) that can connect to your PC.')}>
                                                     <Dropdown.Item onClick={() => handleComponentSelect('Motherboard')} className='ddButton'>Motherboard</Dropdown.Item>
@@ -591,7 +577,7 @@ export default function Parts() {
                                         </Dropdown>
                                     </Col>
                                     <Button onClick={() => priceSort()}>SORT BY PRICE</Button>
-                                    <Button className={componentType !== 'Gpu' ? 'd-none' : ''} onClick={() => gpuMemorySort()}>SORT BY MEMORY</Button>
+                                    <Button className={componentType !== 'GPU' ? 'd-none' : ''} onClick={() => gpuMemorySort()}>SORT BY MEMORY</Button>
 
                                     <hr />
                                     <p className='mt-4'>Filter</p>
@@ -753,15 +739,14 @@ export default function Parts() {
                             <p className='mt-5'>Components</p>
                             <Dropdown className='bb-dropdown'>
                                 <Dropdown.Toggle className='dropdownSize'>
-                                    PC Components
+                                    {componentType}
                                 </Dropdown.Toggle>
-
                                 <Dropdown.Menu>
                                     <OverlayTrigger placement="right" overlay={renderTooltip('Provides the instructions and processing power the computer needs to do its work. The more powerful and updated your processor, the faster your computer can complete its tasks.')}>
-                                        <Dropdown.Item onClick={() => handleComponentSelect('Cpu')} className='ddButton'>CPU</Dropdown.Item>
+                                        <Dropdown.Item onClick={() => handleComponentSelect('CPU')} className='ddButton'>CPU</Dropdown.Item>
                                     </OverlayTrigger>
                                     <OverlayTrigger placement="right" overlay={renderTooltip('Helps handle graphics-related work like graphics, effects, and videos')}>
-                                        <Dropdown.Item onClick={() => handleComponentSelect('Gpu')} className='ddButton'>GPU</Dropdown.Item>
+                                        <Dropdown.Item onClick={() => handleComponentSelect('GPU')} className='ddButton'>GPU</Dropdown.Item>
                                     </OverlayTrigger>
                                     <OverlayTrigger placement="right" overlay={renderTooltip('The circuit board that connects all of your hardware to your processor, distributes electricity from your power supply, and defines the types of storage devices, memory modules, and graphics cards (among other expansion cards) that can connect to your PC.')}>
                                         <Dropdown.Item onClick={() => handleComponentSelect('Motherboard')} className='ddButton'>Motherboard</Dropdown.Item>
@@ -787,10 +772,10 @@ export default function Parts() {
                     </div>
                     <Button className='mb-2' onClick={() => priceSort()}>SORT BY PRICE</Button>
                     
-                    <Button className={componentType !== 'Cpu' ? 'd-none' : 'mb-2'} onClick={() => cpuClockSort()}>SORT BY CLOCK</Button>
-                    <Button className={componentType !== 'Cpu' ? 'd-none' : 'mb-2'} onClick={() => cpuCoreSort()}>SORT BY CORES</Button>
-                    <Button className={componentType !== 'Gpu' ? 'd-none' : 'mb-2'} onClick={() => gpuMemorySort()}>SORT BY MEMORY</Button>
-                    <Button className={componentType !== 'Gpu' ? 'd-none' : 'mb-2'} onClick={() => gpuClockSort()}>SORT BY CLOCK</Button>
+                    <Button className={componentType !== 'CPU' ? 'd-none' : 'mb-2'} onClick={() => cpuCoreSort()}>SORT BY CORES</Button>
+                    <Button className={componentType !== 'CPU' ? 'd-none' : 'mb-2'} onClick={() => cpuClockSort()}>SORT BY CLOCK</Button>
+                    <Button className={componentType !== 'GPU' ? 'd-none' : 'mb-2'} onClick={() => gpuMemorySort()}>SORT BY MEMORY</Button>
+                    <Button className={componentType !== 'GPU' ? 'd-none' : 'mb-2'} onClick={() => gpuClockSort()}>SORT BY CLOCK</Button>
                     <Button className={componentType !== 'Motherboard' ? 'd-none' : 'mb-2'} onClick={() => motherboardRamSort()}>SORT BY MAX RAM</Button>
                     <Button className={componentType !== 'Motherboard' ? 'd-none' : 'mb-2'} onClick={() => motherboardMemorySlotsSort()}>SORT BY MEMORY SLOTS</Button>
 
@@ -803,7 +788,7 @@ export default function Parts() {
                     <input className='w-75' type='number' placeholder='Max' value={maxBudget} onChange={(e) => setMaxBudget(parseInt(e.target.value))}></input>
                     {/* <button onClick={() => filterByPriceRange(minBudget, maxBudget)} className='clearFiltersBtn'>Results</button> */}
                     <hr />
-                    <div className={componentType !== 'Cpu' ? 'd-none' : ''}>
+                    <div className={componentType !== 'CPU' ? 'd-none' : ''}>
                         <p>Manufacturer</p>
                         <div className='flex justify-content-center gap-2'>
                             <label className='cursor-pointer'>
@@ -941,7 +926,7 @@ export default function Parts() {
                             </label>
                         </div>
                     </div>
-                    <div className={componentType !== 'Gpu' ? 'd-none' : ''}>
+                    <div className={componentType !== 'GPU' ? 'd-none' : ''}>
                         <p>Manufacturer</p>
                         <div className='flex justify-content-center gap-2'>
                             <label className='cursor-pointer'>
