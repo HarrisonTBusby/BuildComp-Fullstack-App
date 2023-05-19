@@ -8,17 +8,20 @@ import { getSessionStorage } from '../../Services/LocalStorage';
 import CpuList from '../Lists/CpuList';
 import { CpuData, GpuData, CaseData, HardDriveData, MotherboardData, HeatsinkData, PowerSupplyData, RamData } from '../../Interfaces/PartDataInterfaces';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
-
+import { GetAllWishlistItems } from '../../Services/DataService';
 
 
 const Wishlist = () => {
-  const ITEMS_PER_PAGE = 6;
   const navigate = useNavigate();
   const [show, setShow] = useState(true);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
+  const getWishlistItems = async () => {
+    console.log(await GetAllWishlistItems())
+  }
 
+  getWishlistItems();
 
   const GuestView = () => {
     let token = localStorage.getItem('BuildCompToken');

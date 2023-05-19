@@ -92,10 +92,20 @@ const GetPartData = async (part: string) => {
   return data;
 }
 
-const AddWishlistItems = async() => {
-  const response = await fetch('https://buildcompdatabase.azurewebsites.net/Webscraper/saveItemByUsername');
+const AddWishlistItems = async (item: any) => {
+  const response = await fetch('https://buildcompdatabase.azurewebsites.net/Webscraper/saveItemByUsername/', {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(item)
+  });
+  if(!response.ok){
+      const message = `An Error has Occured ${response.status}`;
+      throw new Error(message)
+  }
   const data = await response.json();
-  return data;
+  console.log(data);
 }
 
 async function GetAllWishlistItems(){
