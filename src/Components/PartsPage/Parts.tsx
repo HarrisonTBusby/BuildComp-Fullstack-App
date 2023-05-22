@@ -200,14 +200,7 @@ export default function Parts() {
         manufacturers: { All: true, ARCTIC: false, 'be quiet!': false, 'Cooler Master': false, Corsair: false, CRYORIG: false, Deepcool: false, EK: false, Noctua: false, NZXT: false, Scythe: false },
         cooling: { All: true, 'Air Cooled': false, 'Water Cooled': false }
     }
-    //HARD DRIVE NUMBER 16 IS WRONG IN DATABASE
-    //PCIE TYPE NEEDS TO BE 'M.2 PCIe 3.0 X4'
-
-    //HARD DRIVE NUMBER 8 IS WRONG IN DATABASE
-    //STORAGE CAPACITY HAS TO BE '512 GB'
-
-    //HARD DRIVE NUMBER 34 IS WRONG IN DATABASE
-    //TITLE HAS TO BE 'SK hynix' not 'SK Hynix
+    
     const [hardDriveFilters, setHardDriveFilters] = useState<HardDriveFilters>({
         manufacturers: { All: true, Crucial: false, Sabrent: false, Samsung: false, SanDisk: false, 'SK hynix': false, 'Western Digital': false },
         storages: { All: true, '250 GB': false, '256 GB': false, '480 GB': false, '500 GB': false, '512 GB': false, '1 TB': false, '2 TB': false },
