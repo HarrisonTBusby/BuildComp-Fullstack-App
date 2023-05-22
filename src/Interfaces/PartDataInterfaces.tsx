@@ -42,7 +42,7 @@ interface HardDriveData {
     item_url: string;
     type: string;
     storageCapacity: string;
-    PCIeType: string;
+    pcIeType: string;
 }
 
 interface MotherboardData {

@@ -39,7 +39,7 @@ export default function HardDriveList(props: any) {
                             <div>
                                 <div>${item.price}<a className='WishlistBtn' onClick={() => handleSave(item)}><ControlPointIcon /></a></div>
                                 <div>Storage: {item.storageCapacity}</div>
-                                <div>PCIe: {item.PCIeType}</div>
+                                <div>PCIe: {item.pcIeType}</div>
                                 <div>{item.type}</div>
                             </div>
 

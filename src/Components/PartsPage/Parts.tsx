@@ -44,6 +44,60 @@ interface MotherboardFilters {
     }
 }
 
+interface CaseFilters {
+    manufacturers: {
+        [key: string]: boolean
+    }
+    sizes: {
+        [key: string]: boolean
+    }
+    colors: {
+        [key: string]: boolean
+    }
+}
+
+interface RamFiters {
+    manufacturers: {
+        [key: string]: boolean
+    }
+    ramTypes: {
+        [key: string]: boolean
+    }
+    moduleAmounts: {
+        [key: string]: boolean
+    }
+}
+
+interface PowerSupplyFilters {
+    manufacturers: {
+        [key: string]: boolean
+    }
+    wattages: {
+        [key: string]: boolean
+    }
+}
+
+interface HeatsinkFilters {
+    manufacturers: {
+        [key: string]: boolean
+    }
+    cooling: {
+        [key: string]: boolean
+    }
+}
+
+interface HardDriveFilters {
+    manufacturers: {
+        [key: string]: boolean
+    }
+    storages: {
+        [key: string]: boolean
+    }
+    pcies: {
+        [key: string]: boolean
+    }
+}
+
 export default function Parts() {
     const navigate = useNavigate();
     const size = useWindowSize();
@@ -59,12 +113,17 @@ export default function Parts() {
     const [gpuData, setGpuData] = useState<GpuData[]>([]);
     const [originalGpuData, setOriginalGpuData] = useState<GpuData[]>([]);
     const [caseData, setCaseData] = useState<CaseData[]>([]);
+    const [originalCaseData, setOriginalCaseData] = useState<CaseData[]>([]);
     const [motherboardData, setMotherboardData] = useState<MotherboardData[]>([]);
     const [originalMotherboardData, setOriginalMotherboardData] = useState<MotherboardData[]>([]);
     const [ramData, setRamData] = useState<RamData[]>([]);
+    const [originalRamData, setOriginalRamData] = useState<RamData[]>([]);
     const [psData, setPsData] = useState<PowerSupplyData[]>([]);
+    const [originalPsData, setOriginalPsData] = useState<PowerSupplyData[]>([]);
     const [heatsinkData, setHeatsinkData] = useState<HeatsinkData[]>([]);
+    const [originalHeatsinkData, setOriginalHeatsinkData] = useState<HeatsinkData[]>([]);
     const [hardDriveData, setHardDriveData] = useState<HardDriveData[]>([]);
+    const [originalHardDriveData, setOriginalHardDriveData] = useState<HardDriveData[]>([]);
 
     const [componentType, setComponentType] = useState<string>('PC Components');
 
@@ -98,6 +157,80 @@ export default function Parts() {
         socketTypes: { All: true, AM4: false, LGA1150: false, LGA1151: false, LGA1200: false, LGA1700: false }
     }
 
+    const [caseFilters, setCaseFilters] = useState<CaseFilters>({
+        manufacturers: { All: true, 'be quiet!': false, 'Cooler Master': false, Corsair: false, 'Fractal Design': false, HYTE: false, 'Lian Li': false, NZXT: false, Phanteks: false, Zalman: false },
+        sizes: { All: true, 'Mini ITX Desktop': false, 'ATX Mid Tower': false, 'ATX Full Tower': false, 'ATX Tower': false, 'ATX Desktop': false },
+        colors: { All: true, White: false, Black: false, 'White/Black': false, 'White/Gray': false, 'Gray/Black': false }
+    })
+
+    const originalCaseFilters = {
+        manufacturers: { All: true, 'be quiet!': false, 'Cooler Master': false, Corsair: false, 'Fractal Design': false, HYTE: false, 'Lian Li': false, NZXT: false, Phanteks: false, Zalman: false },
+        sizes: { All: true, 'Mini ITX Desktop': false, 'ATX Mid Tower': false, 'ATX Full Tower': false, 'ATX Tower': false, 'ATX Desktop': false },
+        colors: { All: true, White: false, Black: false, 'White/Black': false, 'White/Gray': false, 'Gray/Black': false }
+    }
+
+    const [ramFilters, setRamFilters] = useState<RamFiters>({
+        manufacturers: { All: false, Crucial: false, 'G.Skill': false, TEAMGROUP: false },
+        ramTypes: { All: true, DDR3: false, DDR4: false, DDR5: false },
+        moduleAmounts: { All: true, '2 x 4GB': false, '2 x 8GB': false, '2 x 16GB': false, '2 x 32GB': false }
+    })
+
+    const originalRamFilters = {
+        manufacturers: { All: true, Crucial: false, 'G.Skill': false, TEAMGROUP: false },
+        ramTypes: { All: true, DDR3: false, DDR4: false, DDR5: false },
+        moduleAmounts: { All: true, '2 x 4GB': false, '2 x 8GB': false, '2 x 16GB': false, '2 x 32GB': false }
+    }
+
+    const [psFilters, setPsFilters] = useState<PowerSupplyFilters>({
+        manufacturers: { All: true, Asus: false, Corsair: false, EVGA: false, MSI: false, SeaSonic: false, Silverstone: false, 'Super Flower': false, Thermaltake: false },
+        wattages: { All: true, 550: false, 600: false, 650: false, 750: false, 760: false, 850: false, 1000: false, 1200: false, 1300: false, 1500: false, 1600: false, 1650: false, 2050: false }
+    })
+
+    const originalPsFilters = {
+        manufacturers: { All: true, Asus: false, Corsair: false, EVGA: false, MSI: false, SeaSonic: false, Silverstone: false, 'Super Flower': false, Thermaltake: false },
+        wattages: { All: true, '550': false, '600': false, '650': false, '750': false, '760': false, '850': false, '1000': false, '1200': false, '1300': false, '1500': false, '1600': false, '1650': false, '2050': false }
+    }
+
+    const [heatsinkFilters, setHeatsinkFilters] = useState<HeatsinkFilters>({
+        manufacturers: { All: true, ARCTIC: false, 'be quiet!': false, 'Cooler Master': false, Corsair: false, CRYORIG: false, Deepcool: false, EK: false, Noctua: false, NZXT: false, Scythe: false },
+        cooling: { All: true, AirCooled: false, WaterCooled: false }
+    })
+
+    const originalHeatsinkFilters = {
+        manufacturers: { All: true, ARCTIC: false, 'be quiet!': false, 'Cooler Master': false, Corsair: false, CRYORIG: false, Deepcool: false, EK: false, Noctua: false, NZXT: false, Scythe: false },
+        cooling: { All: true, 'Air Cooled': false, 'Water Cooled': false }
+    }
+    //HARD DRIVE NUMBER 16 IS WRONG IN DATABASE
+    //PCIE TYPE NEEDS TO BE 'M.2 PCIe 3.0 X4'
+
+    //HARD DRIVE NUMBER 8 IS WRONG IN DATABASE
+    //STORAGE CAPACITY HAS TO BE '512 GB'
+
+    //HARD DRIVE NUMBER 34 IS WRONG IN DATABASE
+    //TITLE HAS TO BE 'SK hynix' not 'SK Hynix
+    const [hardDriveFilters, setHardDriveFilters] = useState<HardDriveFilters>({
+        manufacturers: { All: true, Crucial: false, Sabrent: false, Samsung: false, SanDisk: false, 'SK hynix': false, 'Western Digital': false },
+        storages: { All: true, '250 GB': false, '256 GB': false, '480 GB': false, '500 GB': false, '512 GB': false, '1 TB': false, '2 TB': false },
+        pcies: { All: true, 'SATA 6.0 Gb/s': false, 'M.2 SATA': false, 'M.2 PCIe 3.0 X4': false, 'M.2 PCIe 4.0 X4': false }
+    })
+
+    const originalHardDriveFilters = {
+        manufacturers: { All: true, Crucial: false, Sabrent: false, Samsung: false, SanDisk: false, 'SK hynix': false, 'Western Digital': false },
+        storages: { All: true, '250 GB': false, '256 GB': false, '480 GB': false, '500 GB': false, '512 GB': false, '1 TB': false, '2 TB': false },
+        pcies: { All: true, 'SATA 6.0 Gb/s': false, 'M.2 SATA': false, 'M.2 PCIe 3.0 X4': false, 'M.2 PCIe 4.0 X4': false }
+    }
+
+    // const uniqueChipsets: any[] = [];
+    // for (const obj of hardDriveData) {
+    //     const chipset = obj.storageCapacity;
+    //     if (!uniqueChipsets.includes(chipset)) {
+    //         uniqueChipsets.push(chipset);
+    //     }
+    // }
+
+    // uniqueChipsets.sort();
+    // console.log(uniqueChipsets);
+
     // For Dropdown values
     async function handleComponentSelect(component: string) {
         if (component == selectedComponent) return
@@ -124,26 +257,37 @@ export default function Parts() {
             setMotherboardFilters(originalMotherboardFilters)
         } else if (component === "Case") {
             setCaseData(data)
+            setOriginalCaseData(data)
             setTotalPages(Math.ceil(data.length / 6))
             setComponentType('Case')
+            setCaseFilters(originalCaseFilters)
         } else if (component === "Ram") {
             setRamData(data)
+            setOriginalRamData(data)
             setTotalPages(Math.ceil(data.length / 6))
             setComponentType('Ram')
+            setRamFilters(originalRamFilters)
         } else if (component === 'Ps') {
             setPsData(data)
+            setOriginalPsData(data)
             setTotalPages(Math.ceil(data.length / 6))
             setComponentType('Ps')
+            setPsFilters(originalPsFilters)
         } else if (component === "Heatsink") {
             setHeatsinkData(data)
+            setOriginalHeatsinkData(data)
             setTotalPages(Math.ceil(data.length / 6))
             setComponentType('Heatsink')
+            setHeatsinkFilters(originalHeatsinkFilters)
         } else if (component === "HardDrive") {
-            setTotalPages(Math.ceil(data.length / 6))
             setHardDriveData(data)
+            setOriginalHardDriveData(data)
+            setTotalPages(Math.ceil(data.length / 6))
             setComponentType('HardDrive')
+            setHardDriveFilters(originalHardDriveFilters)
         }
         setCurrentPage(0)
+        console.log(data)
     }
 
     useEffect(() => {
@@ -282,6 +426,156 @@ export default function Parts() {
         setTotalPages(Math.ceil(filteredData.length / 6));
     }
 
+    const handleCaseFiltersCheckbox = () => {
+        let filteredData = originalCaseData;
+        if (!caseFilters.manufacturers.All) {
+            filteredData = filteredData.filter((caseObj) => {
+                const { manufacturers } = caseFilters;
+                return Object.keys(manufacturers).some(
+                    (key) => caseObj.title.includes(key) && manufacturers[key]
+                );
+            })
+        }
+        if (!caseFilters.sizes.All) {
+            filteredData = filteredData.filter((caseObj) => {
+                const { sizes } = caseFilters;
+                return Object.keys(sizes).some(
+                    (key) => caseObj.size.includes(key) && sizes[key]
+                );
+            })
+        }
+        if (!caseFilters.colors.All) {
+            filteredData = filteredData.filter((caseObj) => {
+                const { colors } = caseFilters;
+                return Object.keys(colors).some(
+                    (key) => caseObj.caseColor.includes(key) && colors[key]
+                );
+            })
+        }
+
+        setCaseData(filteredData)
+        setTotalPages(Math.ceil(filteredData.length / 6))
+    }
+
+    const handleRamFiltersCheckbox = () => {
+        let filteredData = originalRamData;
+
+        if (!ramFilters.manufacturers.All) {
+            filteredData = filteredData.filter((ram) => {
+                const { manufacturers } = ramFilters;
+                return Object.keys(manufacturers).some(
+                    (key) => ram.title.includes(key) && manufacturers[key]
+                );
+            })
+        }
+        if (!ramFilters.ramTypes.All) {
+            filteredData = filteredData.filter((ram) => {
+                const { ramTypes } = ramFilters;
+                return Object.keys(ramTypes).some(
+                    (key) => ram.ramType.includes(key) && ramTypes[key]
+                );
+            })
+        }
+        if (!ramFilters.moduleAmounts.All) {
+            filteredData = filteredData.filter((ram) => {
+                const { moduleAmounts } = ramFilters;
+                return Object.keys(moduleAmounts).some(
+                    (key) => ram.moduleAmount.includes(key) && moduleAmounts[key]
+                );
+            })
+        }
+
+        setRamData(filteredData)
+        setTotalPages(Math.ceil(filteredData.length / 6))
+    }
+
+    const handlePsFiltersCheckbox = () => {
+        let filteredData = originalPsData;
+
+        if (!psFilters.manufacturers.All) {
+            filteredData = filteredData.filter((ps) => {
+                const { manufacturers } = psFilters;
+                return Object.keys(manufacturers).some(
+                    (key) => ps.title.includes(key) && manufacturers[key]
+                );
+            })
+        }
+        if (!psFilters.wattages.All) {
+            filteredData = filteredData.filter((ps) => {
+                const { wattages } = psFilters;
+                return Object.keys(wattages).some(
+                    (key) => String(ps.wattage).includes(key) && wattages[key]
+                );
+            })
+        }
+
+        setPsData(filteredData)
+        setTotalPages(Math.ceil(filteredData.length / 6))
+    }
+
+    const handleHeatsinkFiltersCheckbox = () => {
+        let filteredData = originalHeatsinkData;
+
+        if (!heatsinkFilters.manufacturers.All) {
+            filteredData = filteredData.filter((heatsink) => {
+                const { manufacturers } = heatsinkFilters;
+                return Object.keys(manufacturers).some(
+                    (key) => heatsink.title.includes(key) && manufacturers[key]
+                );
+            })
+        }
+
+        if (!heatsinkFilters.cooling.All) {
+            if (!heatsinkFilters.cooling['Air Cooled']) {
+                filteredData = filteredData.filter((heatsink) => {
+                    return heatsink.isWaterCooled === true
+                })
+            }
+            if (!heatsinkFilters.cooling['Water Cooled']) {
+                filteredData = filteredData.filter((heatsink) => {
+                    return heatsink.isWaterCooled === false
+                })
+            }
+
+        }
+        setHeatsinkData(filteredData)
+        setTotalPages(Math.ceil(filteredData.length / 6))
+    }
+
+    const handleHardDriveFiltersCheckbox = () => {
+        let filteredData = originalHardDriveData;
+
+        if (!hardDriveFilters.manufacturers.All) {
+            filteredData = filteredData.filter((hardDrive) => {
+                const { manufacturers } = hardDriveFilters;
+                return Object.keys(manufacturers).some(
+                    (key) => hardDrive.title.includes(key) && manufacturers[key]
+                );
+            })
+        }
+
+        if (!hardDriveFilters.storages.All) {
+            filteredData = filteredData.filter((hardDrive) => {
+                const { storages } = hardDriveFilters;
+                return Object.keys(storages).some(
+                    (key) => String(hardDrive.storageCapacity).includes(key) && storages[key]
+                );
+            })
+        }
+
+        if (!hardDriveFilters.pcies.All) {
+            filteredData = filteredData.filter((hardDrive) => {
+                const { pcies } = hardDriveFilters;
+                return Object.keys(pcies).some(
+                    (key) => String(hardDrive.pcIeType).includes(key) && pcies[key]
+                );
+            })
+        }
+
+        setHardDriveData(filteredData)
+        setTotalPages(Math.ceil(filteredData.length / 6))
+    }
+
     useEffect(() => {
         handleCpuFiltersCheckbox()
     }, [cpuFilters])
@@ -293,6 +587,26 @@ export default function Parts() {
     useEffect(() => {
         handleMotherboardFiltersCheckbox()
     }, [motherboardFilters])
+
+    useEffect(() => {
+        handleCaseFiltersCheckbox()
+    }, [caseFilters])
+
+    useEffect(() => {
+        handleRamFiltersCheckbox()
+    }, [ramFilters])
+
+    useEffect(() => {
+        handlePsFiltersCheckbox()
+    }, [psFilters])
+
+    useEffect(() => {
+        handleHeatsinkFiltersCheckbox()
+    }, [heatsinkFilters])
+
+    useEffect(() => {
+        handleHardDriveFiltersCheckbox()
+    }, [hardDriveFilters])
 
     function sortByPrice(arr: any) {
         const newArr = [...arr];
@@ -378,7 +692,7 @@ export default function Parts() {
                 return -1
             }
             if (parseInt(a.perfCoreClock) > parseInt(b.perfCoreClock)) {
-                return 0
+                return 1
             }
             return 0
         })
@@ -392,7 +706,7 @@ export default function Parts() {
                 return -1
             }
             if (parseInt(a.ramMax) > parseInt(b.ramMax)) {
-                return 0
+                return 1
             }
             return 0
         })
@@ -406,11 +720,67 @@ export default function Parts() {
                 return -1
             }
             if (parseInt(a.memorySlots) > parseInt(b.memorySlots)) {
-                return 0
+                return 1
             }
             return 0
         })
         setMotherboardData(newArr)
+    }
+
+    const ramLatencySort = () => {
+        const newArr = [...ramData]
+        newArr.sort((a, b) => {
+            if (a.firstWordLatency < b.firstWordLatency) {
+                return -1
+            }
+            if (a.firstWordLatency > b.firstWordLatency) {
+                return 1
+            }
+            return 0
+        })
+        setRamData(newArr)
+    }
+
+    const ramSpeedSort = () => {
+        const newArr = [...ramData]
+        newArr.sort((a, b) => {
+            if (parseInt(a.ramSpeed) < parseInt(b.ramSpeed)) {
+                return -1
+            }
+            if (parseInt(a.ramSpeed) > parseInt(b.ramSpeed)) {
+                return 1
+            }
+            return 0
+        })
+        setRamData(newArr)
+    }
+
+    const psWattageSort = () => {
+        const newArr = [...psData]
+        newArr.sort((a, b) => {
+            if (a.wattage < b.wattage) {
+                return -1
+            }
+            if (a.wattage > b.wattage) {
+                return 1
+            }
+            return 0
+        })
+        setPsData(newArr)
+    }
+
+    const heatsinkFanSort = () => {
+        const newArr = [...heatsinkData]
+        newArr.sort((a, b) => {
+            if (a.fanNoise < b.fanNoise) {
+                return -1
+            }
+            if (a.fanNoise > b.fanNoise) {
+                return 1
+            }
+            return 0
+        })
+        setHeatsinkData(newArr)
     }
 
     const isAllCpuSocketUnchecked = Object.values(cpuFilters.socketTypes).every(value => value === false);
@@ -458,6 +828,110 @@ export default function Parts() {
         setMotherboardFilters((prev) => ({
             ...prev,
             socketTypes: { ...prev.socketTypes, All: true }
+        }))
+    }
+
+    const isAllCaseManufacturerUnchecked = Object.values(caseFilters.manufacturers).every(value => value === false);
+    if (isAllCaseManufacturerUnchecked) {
+        setCaseFilters((prev) => ({
+            ...prev,
+            manufacturers: { ...prev.manufacturers, All: true }
+        }))
+    }
+
+    const isAllCaseColorsUnchecked = Object.values(caseFilters.colors).every(value => value === false);
+    if (isAllCaseColorsUnchecked) {
+        setCaseFilters((prev) => ({
+            ...prev,
+            colors: { ...prev.colors, All: true }
+        }))
+    }
+
+    const isAllCaseSizesUnchecked = Object.values(caseFilters.sizes).every(value => value === false);
+    if (isAllCaseSizesUnchecked) {
+        setCaseFilters((prev) => ({
+            ...prev,
+            sizes: { ...prev.sizes, All: true }
+        }))
+    }
+
+    const isAllRamManufacturersUnchecked = Object.values(ramFilters.manufacturers).every(value => value === false);
+    if (isAllRamManufacturersUnchecked) {
+        setRamFilters((prev) => ({
+            ...prev,
+            manufacturers: { ...prev.manufacturers, All: true }
+        }))
+    }
+
+    const isAllRamTypesUnchecked = Object.values(ramFilters.ramTypes).every(value => value === false);
+    if (isAllRamTypesUnchecked) {
+        setRamFilters((prev) => ({
+            ...prev,
+            ramTypes: { ...prev.ramTypes, All: true }
+        }))
+    }
+
+    const isAllRamAmountsUnchecked = Object.values(ramFilters.moduleAmounts).every(value => value === false);
+    if (isAllRamAmountsUnchecked) {
+        setRamFilters((prev) => ({
+            ...prev,
+            moduleAmounts: { ...prev.moduleAmounts, All: true }
+        }))
+    }
+
+    const isAllPsManufacturersUnchecked = Object.values(psFilters.manufacturers).every(value => value === false);
+    if (isAllPsManufacturersUnchecked) {
+        setPsFilters((prev) => ({
+            ...prev,
+            manufacturers: { ...prev.manufacturers, All: true }
+        }))
+    }
+
+    const isAllPsWattagesUnchecked = Object.values(psFilters.wattages).every(value => value === false);
+    if (isAllPsWattagesUnchecked) {
+        setPsFilters((prev) => ({
+            ...prev,
+            wattages: { ...prev.wattages, All: true }
+        }))
+    }
+
+    const isAllHeatSinkManufacturersUnchecked = Object.values(heatsinkFilters.manufacturers).every(value => value === false);
+    if (isAllHeatSinkManufacturersUnchecked) {
+        setHeatsinkFilters((prev) => ({
+            ...prev,
+            manufacturers: { ...prev.manufacturers, All: true }
+        }))
+    }
+
+    const isAllHeatsinkCoolingUnchecked = Object.values(heatsinkFilters.cooling).every(value => value === false);
+    if (isAllHeatsinkCoolingUnchecked) {
+        setHeatsinkFilters((prev) => ({
+            ...prev,
+            cooling: { ...prev.cooling, All: true }
+        }))
+    }
+
+    const isAllHardDriveManufacturersUnchecked = Object.values(hardDriveFilters.manufacturers).every(value => value === false);
+    if (isAllHardDriveManufacturersUnchecked) {
+        setHardDriveFilters((prev) => ({
+            ...prev,
+            manufacturers: { ...prev.manufacturers, All: true }
+        }))
+    }
+
+    const isAllHardDriveStoragesUnchecked = Object.values(hardDriveFilters.storages).every(value => value === false);
+    if (isAllHardDriveStoragesUnchecked) {
+        setHardDriveFilters((prev) => ({
+            ...prev,
+            storages: { ...prev.storages, All: true }
+        }))
+    }
+
+    const isAllHardDrivePciesUnchecked = Object.values(hardDriveFilters.pcies).every(value => value === false);
+    if (isAllHardDrivePciesUnchecked) {
+        setHardDriveFilters((prev) => ({
+            ...prev,
+            pcies: { ...prev.pcies, All: true }
         }))
     }
 
@@ -518,7 +992,6 @@ export default function Parts() {
                 ...prev,
                 manufacturers: { All: true, ASRock: false, Asus: false, Gigabyte: false, MSI: false }
             }))
-            setTotalPages(Math.ceil(originalMotherboardData.length / 6));
         } else if (value !== 'All') {
             setMotherboardFilters((prev) => ({
                 ...prev,
@@ -536,7 +1009,6 @@ export default function Parts() {
                 ...prev,
                 ramTypes: { All: true, DDR3: false, DDR4: false, DDR5: false }
             }))
-            setTotalPages(Math.ceil(originalMotherboardData.length / 6));
         } else if (value !== 'All') {
             setMotherboardFilters((prev) => ({
                 ...prev,
@@ -555,7 +1027,6 @@ export default function Parts() {
                 ...prev,
                 socketTypes: { All: true, AM4: false, LGA1150: false, LGA1151: false, LGA1200: false, LGA1700: false }
             }))
-            setTotalPages(Math.ceil(originalMotherboardData.length / 6));
         } else if (value !== 'All') {
             setMotherboardFilters((prev) => ({
                 ...prev,
@@ -568,6 +1039,257 @@ export default function Parts() {
         }
     }
 
+    const handleCaseManufacturerCheckbox = (value: string, checked: boolean) => {
+        if (value === 'All') {
+            setCaseFilters((prev) => ({
+                ...prev,
+                manufacturers: { All: true, 'be quiet!': false, 'Cooler Master': false, Corsair: false, 'Fractal Design': false, HYTE: false, 'Lian Li': false, NZXT: false, Phanteks: false, Zalman: false }
+            }))
+        } else if (value !== 'All') {
+            setCaseFilters((prev) => ({
+                ...prev,
+                manufacturers: {
+                    ...prev.manufacturers,
+                    All: false,
+                    [value]: checked
+                }
+            }));
+        }
+    }
+
+    const handleCaseColorsCheckbox = (value: string, checked: boolean) => {
+        if (value === 'All') {
+            setCaseFilters((prev) => ({
+                ...prev,
+                colors: { All: true, White: false, Black: false, 'White/Black': false, 'White/Gray': false, 'Gray/Black': false }
+            }))
+        } else if (value !== 'All') {
+            setCaseFilters((prev) => ({
+                ...prev,
+                colors: {
+                    ...prev.colors,
+                    All: false,
+                    [value]: checked
+                }
+            }));
+        }
+    }
+
+    const handleCaseSizesCheckbox = (value: string, checked: boolean) => {
+        if (value === 'All') {
+            setCaseFilters((prev) => ({
+                ...prev,
+                sizes: { All: true, 'Mini ITX Desktop': false, 'ATX Mid Tower': false, 'ATX Full Tower': false, 'ATX Tower': false, 'ATX Desktop': false }
+            }))
+            //setTotalPages(Math.ceil(originalCaseData.length / 6));
+        } else if (value !== 'All') {
+            setCaseFilters((prev) => ({
+                ...prev,
+                sizes: {
+                    ...prev.sizes,
+                    All: false,
+                    [value]: checked
+                }
+            }));
+        }
+    }
+
+    const handleRamManufacturersCheckbox = (value: string, checked: boolean) => {
+        if (value === 'All') {
+            setRamFilters((prev) => ({
+                ...prev,
+                manufacturers: { All: true, Crucial: false, 'G.Skill': false, TEAMGROUP: false }
+            }))
+            setTotalPages(Math.ceil(originalRamData.length / 6));
+        } else if (value !== 'All') {
+            setRamFilters((prev) => ({
+                ...prev,
+                manufacturers: {
+                    ...prev.manufacturers,
+                    All: false,
+                    [value]: checked
+                }
+            }));
+        }
+    }
+
+    const handleRamSizesCheckbox = (value: string, checked: boolean) => {
+        if (value === 'All') {
+            setRamFilters((prev) => ({
+                ...prev,
+                moduleAmounts: { All: true, '2 x 4GB': false, '2 x 8GB': false, '2 x 16GB': false, '2 x 32GB': false }
+            }))
+            setTotalPages(Math.ceil(originalRamData.length / 6));
+        } else if (value !== 'All') {
+            setRamFilters((prev) => ({
+                ...prev,
+                moduleAmounts: {
+                    ...prev.moduleAmounts,
+                    All: false,
+                    [value]: checked
+                }
+            }));
+        }
+    }
+
+    const handleRamTypesCheckbox = (value: string, checked: boolean) => {
+        if (value === 'All') {
+            setRamFilters((prev) => ({
+                ...prev,
+                ramTypes: { All: true, DDR3: false, DDR4: false, DDR5: false }
+            }))
+            setTotalPages(Math.ceil(originalRamData.length / 6));
+        } else if (value !== 'All') {
+            setRamFilters((prev) => ({
+                ...prev,
+                ramTypes: {
+                    ...prev.ramTypes,
+                    All: false,
+                    [value]: checked
+                }
+            }));
+        }
+    }
+
+    const handlePsManufacturersCheckbox = (value: string, checked: boolean) => {
+        if (value === 'All') {
+            setPsFilters((prev) => ({
+                ...prev,
+                manufacturers: { All: true, Asus: false, Corsair: false, EVGA: false, MSI: false, SeaSonic: false, Silverstone: false, 'Super Flower': false, Thermaltake: false }
+            }))
+            setTotalPages(Math.ceil(originalPsData.length / 6));
+        } else if (value !== 'All') {
+            setPsFilters((prev) => ({
+                ...prev,
+                manufacturers: {
+                    ...prev.manufacturers,
+                    All: false,
+                    [value]: checked
+                }
+            }));
+        }
+    }
+
+    const handlePsWattagesCheckbox = (value: string, checked: boolean) => {
+        if (value === 'All') {
+            setPsFilters((prev) => ({
+                ...prev,
+                wattages: { All: true, 550: false, 600: false, 650: false, 750: false, 760: false, 850: false, 1000: false, 1200: false, 1300: false, 1500: false, 1600: false, 1650: false, 2050: false }
+            }))
+            setTotalPages(Math.ceil(originalPsData.length / 6));
+        } else if (value !== 'All') {
+            setPsFilters((prev) => ({
+                ...prev,
+                wattages: {
+                    ...prev.wattages,
+                    All: false,
+                    [value]: checked
+                }
+            }));
+        }
+    }
+
+    const handleHeatsinkManufacturersCheckbox = (value: string, checked: boolean) => {
+        if (value === 'All') {
+            setHeatsinkFilters((prev) => ({
+                ...prev,
+                manufacturers: { All: true, ARCTIC: false, 'be quiet!': false, 'Cooler Master': false, Corsair: false, CRYORIG: false, Deepcool: false, EK: false, Noctua: false, NZXT: false, Scythe: false }
+            }))
+            setTotalPages(Math.ceil(originalHeatsinkData.length / 6));
+        } else if (value !== 'All') {
+            setHeatsinkFilters((prev) => ({
+                ...prev,
+                manufacturers: {
+                    ...prev.manufacturers,
+                    All: false,
+                    [value]: checked
+                }
+            }));
+        }
+    }
+
+    const handleHeatsinkCoolingCheckbox = (value: string, checked: boolean) => {
+        if (value === 'All') {
+            setHeatsinkFilters((prev) => ({
+                ...prev,
+                cooling: { All: true, AirCooled: false, WaterCooled: false }
+            }))
+            setTotalPages(Math.ceil(originalHeatsinkData.length / 6));
+        } else if (value !== 'All') {
+            setHeatsinkFilters((prev) => ({
+                ...prev,
+                cooling: {
+                    ...prev.cooling,
+                    All: false,
+                    [value]: checked
+                }
+            }));
+        }
+    }
+
+    const handleHardDriveManufacturersCheckbox = (value: string, checked: boolean) => {
+        if (value === 'All') {
+            setHardDriveFilters((prev) => ({
+                ...prev,
+                manufacturers: { All: true, Crucial: false, Sabrent: false, Samsung: false, SanDisk: false, 'SK hynix': false, 'Western Digital': false } 
+            }))
+            setTotalPages(Math.ceil(originalHardDriveData.length / 6));
+        } else if (value !== 'All') {
+            setHardDriveFilters((prev) => ({
+                ...prev,
+                manufacturers: {
+                    ...prev.manufacturers,
+                    All: false,
+                    [value]: checked
+                }
+            }));
+        }
+    }
+
+    //manufacturers: { All: true, Crucial: false, Sabrent: false, Samsung: false, SanDisk: false, 'SK hynix': false, 'Western Digital': false },
+    //storages: { All: true, '250 GB': false, '256 GB': false, '480 GB': false, '500 GB': false, '512 GB': false, '1 TB': false, '2 TB': false },
+    //pcies: { All: true, 'SATA 6.0 Gb/s': false, 'M.2 SATA': false, 'M.2 PCIe 3.0 X4': false, 'M.2 PCIe 4.0 X4': false }
+    
+
+    const handleHardDriveStoragesCheckbox = (value: string, checked: boolean) => {
+        if (value === 'All') {
+            setHardDriveFilters((prev) => ({
+                ...prev,
+                storages: { All: true, '250 GB': false, '256 GB': false, '480 GB': false, '500 GB': false, '512 GB': false, '1 TB': false, '2 TB': false }
+            }))
+            setTotalPages(Math.ceil(originalHardDriveData.length / 6));
+        } else if (value !== 'All') {
+            setHardDriveFilters((prev) => ({
+                ...prev,
+                storages: {
+                    ...prev.storages,
+                    All: false,
+                    [value]: checked
+                }
+            }));
+        }
+    }
+
+    const handleHardDrivePciesCheckbox = (value: string, checked: boolean) => {
+        if (value === 'All') {
+            setHardDriveFilters((prev) => ({
+                ...prev,
+                pcies: { All: true, 'SATA 6.0 Gb/s': false, 'M.2 SATA': false, 'M.2 PCIe 3.0 X4': false, 'M.2 PCIe 4.0 X4': false }
+            }))
+            setTotalPages(Math.ceil(originalHardDriveData.length / 6));
+        } else if (value !== 'All') {
+            setHardDriveFilters((prev) => ({
+                ...prev,
+                pcies: {
+                    ...prev.pcies,
+                    All: false,
+                    [value]: checked
+                }
+            }));
+        }
+    }
+
+    
     return (
         <div>
             <NavbarComponent />
@@ -621,6 +1343,8 @@ export default function Parts() {
                                     <Button className={componentType !== 'GPU' ? 'd-none' : 'mb-2 w-100'} onClick={() => gpuClockSort()}>SORT BY CLOCK</Button>
                                     <Button className={componentType !== 'Motherboard' ? 'd-none' : 'mb-2 w-100'} onClick={() => motherboardRamSort()}>SORT BY MAX RAM</Button>
                                     <Button className={componentType !== 'Motherboard' ? 'd-none' : 'mb-2 w-100'} onClick={() => motherboardMemorySlotsSort()}>SORT BY MEMORY SLOTS</Button>
+                                    <Button className={componentType !== 'Ram' ? 'd-none' : 'mb-2 w-100'} onClick={() => ramSpeedSort()}>SORT BY SPEED</Button>
+                                    <Button className={componentType !== 'Ram' ? 'd-none' : 'mb-2 w-100'} onClick={() => ramLatencySort()}>SORT BY LATENCY</Button>
 
                                     <hr />
                                     <p className='mt-4'>Filter</p>
@@ -732,6 +1456,51 @@ export default function Parts() {
                                             </div>
                                         ))}
                                     </div>
+                                    <p>Case</p>
+                                    <div className={componentType !== 'Case' ? 'd-none' : ''}>
+                                        {Object.keys(caseFilters.manufacturers).map((key) => (
+                                            <div key={key} className='flex justify-content-center gap-2'>
+                                                <label className='cursor-pointer'>
+                                                    <input
+                                                        type='checkbox'
+                                                        value={key}
+                                                        checked={caseFilters.manufacturers[key]}
+                                                        onChange={(e) => handleCaseManufacturerCheckbox(e.target.value, e.target.checked)}
+                                                        className='mr-3 cursor-pointer'
+                                                    />
+                                                    {key}
+                                                </label>
+                                            </div>
+                                        ))}
+                                        {Object.keys(caseFilters.colors).map((key) => (
+                                            <div key={key} className='flex justify-content-center gap-2'>
+                                                <label className='cursor-pointer'>
+                                                    <input
+                                                        type='checkbox'
+                                                        value={key}
+                                                        checked={caseFilters.colors[key]}
+                                                        onChange={(e) => handleCaseColorsCheckbox(e.target.value, e.target.checked)}
+                                                        className='mr-3 cursor-pointer'
+                                                    />
+                                                    {key}
+                                                </label>
+                                            </div>
+                                        ))}
+                                        {Object.keys(caseFilters.sizes).map((key) => (
+                                            <div key={key} className='flex justify-content-center gap-2'>
+                                                <label className='cursor-pointer'>
+                                                    <input
+                                                        type='checkbox'
+                                                        value={key}
+                                                        checked={caseFilters.sizes[key]}
+                                                        onChange={(e) => handleCaseSizesCheckbox(e.target.value, e.target.checked)}
+                                                        className='mr-3 cursor-pointer'
+                                                    />
+                                                    {key}
+                                                </label>
+                                            </div>
+                                        ))}
+                                    </div>
                                 </div>
                             </Col>
                         </Dropdown.Menu>
@@ -784,6 +1553,10 @@ export default function Parts() {
                     <Button className={componentType !== 'GPU' ? 'd-none' : 'mb-2'} onClick={() => gpuClockSort()}>SORT BY CLOCK</Button>
                     <Button className={componentType !== 'Motherboard' ? 'd-none' : 'mb-2'} onClick={() => motherboardRamSort()}>SORT BY MAX RAM</Button>
                     <Button className={componentType !== 'Motherboard' ? 'd-none' : 'mb-2'} onClick={() => motherboardMemorySlotsSort()}>SORT BY MEMORY SLOTS</Button>
+                    <Button className={componentType !== 'Ram' ? 'd-none' : 'mb-2'} onClick={() => ramSpeedSort()}>SORT BY SPEED</Button>
+                    <Button className={componentType !== 'Ram' ? 'd-none' : 'mb-2'} onClick={() => ramLatencySort()}>SORT BY LATENCY</Button>
+                    <Button className={componentType !== 'Ps' ? 'd-none' : 'mb-2'} onClick={() => psWattageSort()}>SORT BY WATTAGE</Button>
+                    <Button className={componentType !== 'Heatsink' ? 'd-none' : 'mb-2'} onClick={() => heatsinkFanSort()}>SORT BY FAN NOISE</Button>
 
                     <hr />
                     <p className='mt-4'>Filter</p>
@@ -879,6 +1652,7 @@ export default function Parts() {
                                 </label>
                             </div>
                         ))}
+                        <hr />
                         <p>Socket</p>
                         {Object.keys(motherboardFilters.socketTypes).map((key) => (
                             <div key={key} className='flex justify-content-center gap-2'>
@@ -888,6 +1662,219 @@ export default function Parts() {
                                         value={key}
                                         checked={motherboardFilters.socketTypes[key]}
                                         onChange={(e) => handleMotherboardSocketCheckbox(e.target.value, e.target.checked)}
+                                        className='mr-3 cursor-pointer'
+                                    />
+                                    {key}
+                                </label>
+                            </div>
+                        ))}
+                    </div>
+                    <div className={componentType !== 'Case' ? 'd-none' : ''}>
+                        <p>Case</p>
+                        {Object.keys(caseFilters.manufacturers).map((key) => (
+                            <div key={key} className='flex justify-content-center gap-2'>
+                                <label className='cursor-pointer'>
+                                    <input
+                                        type='checkbox'
+                                        value={key}
+                                        checked={caseFilters.manufacturers[key]}
+                                        onChange={(e) => handleCaseManufacturerCheckbox(e.target.value, e.target.checked)}
+                                        className='mr-3 cursor-pointer'
+                                    />
+                                    {key}
+                                </label>
+                            </div>
+                        ))}
+                        <hr />
+                        <p>Colors</p>
+                        {Object.keys(caseFilters.colors).map((key) => (
+                            <div key={key} className='flex justify-content-center gap-2'>
+                                <label className='cursor-pointer'>
+                                    <input
+                                        type='checkbox'
+                                        value={key}
+                                        checked={caseFilters.colors[key]}
+                                        onChange={(e) => handleCaseColorsCheckbox(e.target.value, e.target.checked)}
+                                        className='mr-3 cursor-pointer'
+                                    />
+                                    {key}
+                                </label>
+                            </div>
+                        ))}
+                        <hr />
+                        <p>Sizes</p>
+                        {Object.keys(caseFilters.sizes).map((key) => (
+                            <div key={key} className='flex justify-content-center gap-2'>
+                                <label className='cursor-pointer'>
+                                    <input
+                                        type='checkbox'
+                                        value={key}
+                                        checked={caseFilters.sizes[key]}
+                                        onChange={(e) => handleCaseSizesCheckbox(e.target.value, e.target.checked)}
+                                        className='mr-3 cursor-pointer'
+                                    />
+                                    {key}
+                                </label>
+                            </div>
+                        ))}
+                    </div>
+                    <div className={componentType !== 'Ram' ? 'd-none' : ''}>
+                        <p>Manufacturer</p>
+                        {Object.keys(ramFilters.manufacturers).map((key) => (
+                            <div key={key} className='flex justify-content-center gap-2'>
+                                <label className='cursor-pointer'>
+                                    <input
+                                        type='checkbox'
+                                        value={key}
+                                        checked={ramFilters.manufacturers[key]}
+                                        onChange={(e) => handleRamManufacturersCheckbox(e.target.value, e.target.checked)}
+                                        className='mr-3 cursor-pointer'
+                                    />
+                                    {key}
+                                </label>
+                            </div>
+                        ))}
+                        <hr />
+                        <p>Color</p>
+                        {Object.keys(ramFilters.ramTypes).map((key) => (
+                            <div key={key} className='flex justify-content-center gap-2'>
+                                <label className='cursor-pointer'>
+                                    <input
+                                        type='checkbox'
+                                        value={key}
+                                        checked={ramFilters.ramTypes[key]}
+                                        onChange={(e) => handleRamTypesCheckbox(e.target.value, e.target.checked)}
+                                        className='mr-3 cursor-pointer'
+                                    />
+                                    {key}
+                                </label>
+                            </div>
+                        ))}
+                        <hr />
+                        <p>Size</p>
+                        {Object.keys(ramFilters.moduleAmounts).map((key) => (
+                            <div key={key} className='flex justify-content-center gap-2'>
+                                <label className='cursor-pointer'>
+                                    <input
+                                        type='checkbox'
+                                        value={key}
+                                        checked={ramFilters.moduleAmounts[key]}
+                                        onChange={(e) => handleRamSizesCheckbox(e.target.value, e.target.checked)}
+                                        className='mr-3 cursor-pointer'
+                                    />
+                                    {key}
+                                </label>
+                            </div>
+                        ))}
+                    </div>
+                    <div className={componentType !== 'Ps' ? 'd-none' : ''}>
+                        <p>Manufacturer</p>
+                        {Object.keys(psFilters.manufacturers).map((key) => (
+                            <div key={key} className='flex justify-content-center gap-2'>
+                                <label className='cursor-pointer'>
+                                    <input
+                                        type='checkbox'
+                                        value={key}
+                                        checked={psFilters.manufacturers[key]}
+                                        onChange={(e) => handlePsManufacturersCheckbox(e.target.value, e.target.checked)}
+                                        className='mr-3 cursor-pointer'
+                                    />
+                                    {key}
+                                </label>
+                            </div>
+                        ))}
+                        <hr />
+                        <p>Wattage</p>
+                        {Object.keys(psFilters.wattages).map((key) => (
+                            <div key={key} className='flex justify-content-center gap-2'>
+                                <label className='cursor-pointer'>
+                                    <input
+                                        type='checkbox'
+                                        value={key}
+                                        checked={psFilters.wattages[key]}
+                                        onChange={(e) => handlePsWattagesCheckbox(e.target.value, e.target.checked)}
+                                        className='mr-3 cursor-pointer'
+                                    />
+                                    {key}
+                                </label>
+                            </div>
+                        ))}
+                    </div>
+                    <div className={componentType !== 'Heatsink' ? 'd-none' : ''}>
+                        <p>Manufacturer</p>
+                        {Object.keys(heatsinkFilters.manufacturers).map((key) => (
+                            <div key={key} className='flex justify-content-center gap-2'>
+                                <label className='cursor-pointer'>
+                                    <input
+                                        type='checkbox'
+                                        value={key}
+                                        checked={heatsinkFilters.manufacturers[key]}
+                                        onChange={(e) => handleHeatsinkManufacturersCheckbox(e.target.value, e.target.checked)}
+                                        className='mr-3 cursor-pointer'
+                                    />
+                                    {key}
+                                </label>
+                            </div>
+                        ))}
+                        <hr />
+                        <p>Cooling</p>
+                        {Object.keys(heatsinkFilters.cooling).map((key) => (
+                            <div key={key} className='flex justify-content-center gap-2'>
+                                <label className='cursor-pointer'>
+                                    <input
+                                        type='checkbox'
+                                        value={key}
+                                        checked={heatsinkFilters.cooling[key]}
+                                        onChange={(e) => handleHeatsinkCoolingCheckbox(e.target.value, e.target.checked)}
+                                        className='mr-3 cursor-pointer'
+                                    />
+                                    {key}
+                                </label>
+                            </div>
+                        ))}
+                    </div>
+                    <div className={componentType !== 'HardDrive' ? 'd-none' : ''}>
+                        <p>Manufacturer</p>
+                        {Object.keys(hardDriveFilters.manufacturers).map((key) => (
+                            <div key={key} className='flex justify-content-center gap-2'>
+                                <label className='cursor-pointer'>
+                                    <input
+                                        type='checkbox'
+                                        value={key}
+                                        checked={hardDriveFilters.manufacturers[key]}
+                                        onChange={(e) => handleHardDriveManufacturersCheckbox(e.target.value, e.target.checked)}
+                                        className='mr-3 cursor-pointer'
+                                    />
+                                    {key}
+                                </label>
+                            </div>
+                        ))}
+                        <hr />
+                        <p>Storage Capacity</p>
+                        {Object.keys(hardDriveFilters.storages).map((key) => (
+                            <div key={key} className='flex justify-content-center gap-2'>
+                                <label className='cursor-pointer'>
+                                    <input
+                                        type='checkbox'
+                                        value={key}
+                                        checked={hardDriveFilters.storages[key]}
+                                        onChange={(e) => handleHardDriveStoragesCheckbox(e.target.value, e.target.checked)}
+                                        className='mr-3 cursor-pointer'
+                                    />
+                                    {key}
+                                </label>
+                            </div>
+                        ))}
+                        <hr />
+                        <p>Storage Type</p>
+                        {Object.keys(hardDriveFilters.pcies).map((key) => (
+                            <div key={key} className='flex justify-content-center gap-2'>
+                                <label className='cursor-pointer'>
+                                    <input
+                                        type='checkbox'
+                                        value={key}
+                                        checked={hardDriveFilters.pcies[key]}
+                                        onChange={(e) => handleHardDrivePciesCheckbox(e.target.value, e.target.checked)}
                                         className='mr-3 cursor-pointer'
                                     />
                                     {key}
