@@ -16,6 +16,7 @@ import HeatsinkList from '../Lists/HeatsinkList';
 import PsList from '../Lists/PsList';
 import RamList from '../Lists/RamList';
 import { CpuData, GpuData, CaseData, HardDriveData, MotherboardData, HeatsinkData, PowerSupplyData, RamData } from '../../Interfaces/PartDataInterfaces';
+import Slider from '@mui/material/Slider';
 
 interface ManufacturerFilters {
     manufacturers: {
@@ -99,6 +100,9 @@ interface HardDriveFilters {
 }
 
 export default function Parts() {
+
+    const [fixedPrice, setFixedPrice] = useState(0)
+
     const navigate = useNavigate();
     const size = useWindowSize();
 
@@ -126,6 +130,9 @@ export default function Parts() {
     const [originalHardDriveData, setOriginalHardDriveData] = useState<HardDriveData[]>([]);
 
     const [componentType, setComponentType] = useState<string>('PC Components');
+
+    const [maxPrice, setMaxPrice] = React.useState<number[]>([0, 100]);
+    const minDistance = 50;
 
     const [cpuFilters, setCpuFilters] = useState<CpuFilters>({
         manufacturers: { All: true, AMD: false, Intel: false },
@@ -200,7 +207,7 @@ export default function Parts() {
         manufacturers: { All: true, ARCTIC: false, 'be quiet!': false, 'Cooler Master': false, Corsair: false, CRYORIG: false, Deepcool: false, EK: false, Noctua: false, NZXT: false, Scythe: false },
         cooling: { All: true, 'Air Cooled': false, 'Water Cooled': false }
     }
-    
+
     const [hardDriveFilters, setHardDriveFilters] = useState<HardDriveFilters>({
         manufacturers: { All: true, Crucial: false, Sabrent: false, Samsung: false, SanDisk: false, 'SK hynix': false, 'Western Digital': false },
         storages: { All: true, '250 GB': false, '256 GB': false, '480 GB': false, '500 GB': false, '512 GB': false, '1 TB': false, '2 TB': false },
@@ -212,6 +219,14 @@ export default function Parts() {
         storages: { All: true, '250 GB': false, '256 GB': false, '480 GB': false, '500 GB': false, '512 GB': false, '1 TB': false, '2 TB': false },
         pcies: { All: true, 'SATA 6.0 Gb/s': false, 'M.2 SATA': false, 'M.2 PCIe 3.0 X4': false, 'M.2 PCIe 4.0 X4': false }
     }
+
+    const calculateMaxPrice = (arr: any) => {
+        const prices = arr.map((obj: any) => parseFloat(obj.price));
+        const highestPrice = Math.ceil(Math.max(...prices.filter((price: number) => !isNaN(price))));
+        setMaxPrice([maxPrice[0], highestPrice]);
+        setFixedPrice(highestPrice)
+      }
+      
 
     // const uniqueChipsets: any[] = [];
     // for (const obj of hardDriveData) {
@@ -228,6 +243,7 @@ export default function Parts() {
     async function handleComponentSelect(component: string) {
         if (component == selectedComponent) return
         const data = await GetPartData(component);
+        calculateMaxPrice(data)
         if (component === 'CPU') {
             setCpuData(data);
             //setOriginalCpu(data) is not needed, already called on first useEffect
@@ -235,6 +251,7 @@ export default function Parts() {
             setComponentType('CPU')
             //set checkboxes with value 'All' to true 
             setCpuFilters(originalCpuFilters)
+            console.log(maxPrice)
         } else if (component === 'GPU') {
             setGpuData(data);
             setOriginalGpuData(data)
@@ -280,7 +297,6 @@ export default function Parts() {
             setHardDriveFilters(originalHardDriveFilters)
         }
         setCurrentPage(0)
-        console.log(data)
     }
 
     useEffect(() => {
@@ -290,7 +306,7 @@ export default function Parts() {
             setCpuData(data);
             setTotalPages(Math.ceil(data.length / 6))
             setComponentType('CPU')
-
+            calculateMaxPrice(data)
         }
         getData()
 
@@ -364,6 +380,11 @@ export default function Parts() {
                 );
             });
         }
+
+        filteredData = filterByPriceRange(filteredData, maxPrice)
+
+        //setCpuData(filteredData)
+        //setTotalPages(Math.ceil(cpuData.length / 6))
 
         setCpuData(filteredData);
         setTotalPages(Math.ceil(filteredData.length / 6));
@@ -569,9 +590,37 @@ export default function Parts() {
         setTotalPages(Math.ceil(filteredData.length / 6))
     }
 
+    // useEffect(() => {
+    //     if (componentType === 'CPU') {
+    //         setCpuData(filterByPriceRange(originalCpuData, maxPrice))
+    //         setTotalPages(Math.ceil(cpuData.length / 6))
+    //     } else if (componentType === 'GPU') {
+    //         setGpuData(filterByPriceRange(gpuData, maxPrice))
+    //         setTotalPages(Math.ceil(originalGpuData.length / 6))
+    //     } else if (componentType === "Motherboard") {
+    //         setMotherboardData(filterByPriceRange(motherboardData, maxPrice))
+    //         setTotalPages(Math.ceil(originalMotherboardData.length / 6))
+    //     } else if (componentType === "Case") {
+    //         setCaseData(filterByPriceRange(caseData, maxPrice))
+    //         setTotalPages(Math.ceil(originalCaseData.length / 6))
+    //     } else if (componentType === "Ram") {
+    //         setRamData(filterByPriceRange(ramData, maxPrice))
+    //         setTotalPages(Math.ceil(originalRamData.length / 6))
+    //     } else if (componentType === "Ps") {
+    //         setPsData(filterByPriceRange(psData, maxPrice))
+    //         setTotalPages(Math.ceil(originalPsData.length / 6))
+    //     } else if (componentType === "Heatsink") {
+    //         setHeatsinkData(filterByPriceRange(heatsinkData, maxPrice))
+    //         setTotalPages(Math.ceil(originalHeatsinkData.length / 6))
+    //     } else {
+    //         setHardDriveData(filterByPriceRange(hardDriveData, maxPrice))
+    //         setTotalPages(Math.ceil(originalHardDriveData.length / 6))
+    //     }
+    // }, [maxPrice])
+
     useEffect(() => {
         handleCpuFiltersCheckbox()
-    }, [cpuFilters])
+    }, [cpuFilters, maxPrice])
 
     useEffect(() => {
         handleGpuFiltersCheckbox()
@@ -1224,7 +1273,7 @@ export default function Parts() {
         if (value === 'All') {
             setHardDriveFilters((prev) => ({
                 ...prev,
-                manufacturers: { All: true, Crucial: false, Sabrent: false, Samsung: false, SanDisk: false, 'SK hynix': false, 'Western Digital': false } 
+                manufacturers: { All: true, Crucial: false, Sabrent: false, Samsung: false, SanDisk: false, 'SK hynix': false, 'Western Digital': false }
             }))
             setTotalPages(Math.ceil(originalHardDriveData.length / 6));
         } else if (value !== 'All') {
@@ -1242,7 +1291,7 @@ export default function Parts() {
     //manufacturers: { All: true, Crucial: false, Sabrent: false, Samsung: false, SanDisk: false, 'SK hynix': false, 'Western Digital': false },
     //storages: { All: true, '250 GB': false, '256 GB': false, '480 GB': false, '500 GB': false, '512 GB': false, '1 TB': false, '2 TB': false },
     //pcies: { All: true, 'SATA 6.0 Gb/s': false, 'M.2 SATA': false, 'M.2 PCIe 3.0 X4': false, 'M.2 PCIe 4.0 X4': false }
-    
+
 
     const handleHardDriveStoragesCheckbox = (value: string, checked: boolean) => {
         if (value === 'All') {
@@ -1282,7 +1331,41 @@ export default function Parts() {
         }
     }
 
+    const filterByPriceRange = (data: any, priceRange: any) => {
+        const [minPrice, maxPrice] = priceRange.map(parseFloat);
+        return data.filter((obj: any) => {
+          const price = parseFloat(obj.price);
+          return price >= minPrice && price <= maxPrice;
+        });
+      };
+
+    function valuetext(maxPrice: number) {
+        return `${maxPrice}`;
+    }
+
+    const handleSliderChange = (
+        event: Event,
+        newValue: number | number[],
+        activeThumb: number,
+      ) => {
+        if (!Array.isArray(newValue)) {
+          return;
+        }
     
+        if (newValue[1] - newValue[0] < minDistance) {
+          if (activeThumb === 0) {
+            const clamped = Math.min(newValue[0], maxPrice[1] - minDistance);
+            setMaxPrice([clamped, clamped + minDistance]);
+          } else {
+            const clamped = Math.max(newValue[1], maxPrice[0] + minDistance);
+            setMaxPrice([clamped - minDistance, clamped]);
+          }
+        } else {
+          setMaxPrice(newValue as number[]);
+        }
+      };
+      
+
     return (
         <div>
             <NavbarComponent />
@@ -1342,6 +1425,14 @@ export default function Parts() {
                                     <hr />
                                     <p className='mt-4'>Filter</p>
                                     <button onClick={() => handleComponentSelect(componentType)} className='clearFiltersBtn'>Clear Filters</button>
+                                    <hr />
+                                    <Slider
+                                        getAriaLabel={() => 'Temperature range'}
+                                        value={maxPrice}
+                                        onChange={handleSliderChange}
+                                        valueLabelDisplay="auto"
+                                        getAriaValueText={valuetext}
+                                    />
                                     {/* <hr />
                                     <p>Budget</p>
                                     <input className='w-75' type='number' placeholder='Min' value={minBudget} onChange={(e) => setMinBudget(parseInt(e.target.value))}></input>
@@ -1554,6 +1645,21 @@ export default function Parts() {
                     <hr />
                     <p className='mt-4'>Filter</p>
                     <button onClick={() => handleComponentSelect(componentType)} className='clearFiltersBtn'>Clear Filters</button>
+                    <hr />
+                    <p className='mb-lg-5'>Price</p>
+                    <div className='px-4'>
+                        <Slider
+                            //key={sliderKey}
+                            getAriaLabel={() => 'Price range'}
+                            value={maxPrice}
+                            onChange={handleSliderChange}
+                            valueLabelDisplay="on"
+                            getAriaValueText={valuetext}
+                            min={0}
+                            max={fixedPrice}
+                            disableSwap
+                        />
+                    </div>
                     {/* <hr />
                     <p>Budget</p>
                     <input className='w-75' type='number' placeholder='Min' value={minBudget} onChange={(e) => setMinBudget(parseInt(e.target.value))}></input>
