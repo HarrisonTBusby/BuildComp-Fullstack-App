@@ -1,5 +1,5 @@
 import React, { useState, MouseEvent } from 'react';
-import { Container, Row, Col, Dropdown, Button, OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { Container, Row, Col, Dropdown, Button, OverlayTrigger, Tooltip, Card } from 'react-bootstrap';
 import NavbarComponent from '../Navbar/Navbar';
 import Footer from '../Footer/Footer';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -29,39 +29,34 @@ export default function Homepage() {
             </Row>
             <Container className='home-body'>
                 <h3>Lets Get Started!</h3>
-                <h3>What parts are you looking for?</h3>
-                <Dropdown className='home-dropdown'>
-                    <Dropdown.Toggle className=''>
-                        {title}
-                    </Dropdown.Toggle>
-                    <Dropdown.Menu className='ddButton'>
-                        <OverlayTrigger placement="right" overlay={renderTooltip('Provides the instructions and processing power the computer needs to do its work. The more powerful and updated your processor, the faster your computer can complete its tasks.')}>
-                            <Dropdown.Item onClick={() => setTitle('CPU')} value='Cpu'>CPU</Dropdown.Item>
-                        </OverlayTrigger>
-                        <OverlayTrigger placement="right" overlay={renderTooltip('Helps handle graphics-related work like graphics, effects, and videos')}>
-                            <Dropdown.Item onClick={() => setTitle('GPU')} value='Gpu'>GPU</Dropdown.Item>
-                        </OverlayTrigger>
-                        <OverlayTrigger placement="right" overlay={renderTooltip('The circuit board that connects all of your hardware to your processor, distributes electricity from your power supply, and defines the types of storage devices, memory modules, and graphics cards (among other expansion cards) that can connect to your PC.')}>
-                            <Dropdown.Item onClick={() => setTitle('Motherboard')} value='Motherboard'>Motherboard</Dropdown.Item>
-                        </OverlayTrigger>
-                        <OverlayTrigger placement="right" overlay={renderTooltip('Container for all PC Components')}>
-                            <Dropdown.Item onClick={() => setTitle('Case')} value='Case'>Case</Dropdown.Item>
-                        </OverlayTrigger>
-                        <OverlayTrigger placement="right" overlay={renderTooltip('RAMs purpose is to store the short term data that a PC requires to properly operate.')}>
-                            <Dropdown.Item onClick={() => setTitle('RAM')} value='Ram'>RAM</Dropdown.Item>
-                        </OverlayTrigger>
-                        <OverlayTrigger placement="right" overlay={renderTooltip('Pulls power from your wall outlet and distribute it throughout your PC.')}>
-                            <Dropdown.Item onClick={() => setTitle('Power Supply')} value='Power Supply'>Power Supply</Dropdown.Item>
-                        </OverlayTrigger>
-                        <OverlayTrigger placement="right" overlay={renderTooltip('Properly removes heat from device components to improve device performance and extend its life. And usually, a heat sink incorporates a fan or other mechanism to reduce the temperature of a hardware component, such as a processor.')}>
-                            <Dropdown.Item onClick={() => setTitle('Heat Sink')} value='Heat Sink'>Heat Sink</Dropdown.Item>
-                        </OverlayTrigger>
-                        <OverlayTrigger placement="right" overlay={renderTooltip('A hard drive is the hardware component that stores all of your digital content. Your documents, pictures, music, videos, programs, application preferences, and operating system represent digital content stored on a hard drive.')}>
-                            <Dropdown.Item onClick={() => setTitle('Hard Drive')} value='Hard Drives'>Hard Drives</Dropdown.Item>
-                        </OverlayTrigger>
-                    </Dropdown.Menu>
-                </Dropdown>
-                <Button onClick={(title) => navigate('/Parts')} className='bg-white text-black'>Submit</Button>
+                <Row className="MainListCards">
+                    <Col>
+                    <a onClick={() => navigate('/Parts')}><div className="MainPageCards 1">
+                            <div className="card_image"><img className='imgMainCard'/></div>
+                            <div className="card_title">
+                                <p>Parts</p>
+                            </div>
+                        </div></a>
+                    </Col>
+
+                    <Col>
+                        <a onClick={() => navigate('/Wishlist')}><div className="MainPageCards 2">
+                            <div className="card_image"><img className='imgMainCard'/></div>
+                            <div className="card_title">
+                                <p>Wishlist</p>
+                            </div>
+                        </div></a>
+                    </Col>
+
+                    <Col>
+                        <a onClick={() => navigate('/PreviousSelections')}><div className="MainPageCards 3">
+                            <div className="card_image"><img className='imgMainCard'/></div>
+                            <div className="card_title">
+                                <p>Previous Selections</p>
+                            </div>
+                        </div></a>
+                    </Col>
+                </Row>
             </Container>
             <Footer />
         </>
