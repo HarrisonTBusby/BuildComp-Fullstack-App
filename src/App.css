@@ -552,8 +552,8 @@ a {
   
   .MainPageCards {
     margin: 30px auto;
-    width: 300px;
-    height: 300px;
+    width: 250px;
+    height: 250px;
     border-radius: 40px;
     box-shadow: 5px 5px 30px 7px rgba(0,0,0,0.25), -5px -5px 30px 7px rgba(0,0,0,0.22);
     cursor: pointer;
@@ -576,6 +576,8 @@ a {
   
   .MainPageCards .card_title {
     text-align: center;
+    position: relative;
+    bottom: 25%;
     border-radius: 0px 0px 40px 40px;
     font-family: sans-serif;
     font-weight: bold;
@@ -586,29 +588,20 @@ a {
   }
   
   .MainPageCards:hover {
-    transform: scale(0.9, 0.9);
+    transform: scale(1.2, 1.2);
     box-shadow: 5px 5px 30px 15px rgba(0,0,0,0.25), 
       -5px -5px 30px 15px rgba(0,0,0,0.22);
   }
   
-  .title-white {
-    color: white;
-  }
-  
-  .title-black {
-    color: black;
-  }
-  
-  @media all and (max-width: 500px) {
-    .MainListCards {
-      /* On small screens, we are no longer using row direction but column */
-      flex-direction: column;
+  @media all and (max-width: 390px) {
+    .MainPageCards{
+        width: 125px;
+        height: 125px;
     }
-  }
-
-  .imgMainCard{
-    background-image: url('./Assets/Images/BlackLogo.png');
-    background-repeat: no-repeat;
+    .MainPageCards .card_title {
+        bottom: 0%;
+        font-size: 18px;
+    }
   }
 
 

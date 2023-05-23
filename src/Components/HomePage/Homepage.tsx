@@ -32,27 +32,74 @@ export default function Homepage() {
                 <Row className="MainListCards">
                     <Col>
                     <a onClick={() => navigate('/Parts')}><div className="MainPageCards 1">
-                            <div className="card_image"><img className='imgMainCard'/></div>
+                            <div className="card_image"></div>
                             <div className="card_title">
-                                <p>Parts</p>
+                                <p>CPU</p>
                             </div>
                         </div></a>
                     </Col>
 
                     <Col>
                         <a onClick={() => navigate('/Wishlist')}><div className="MainPageCards 2">
-                            <div className="card_image"><img className='imgMainCard'/></div>
+                            <div className="card_image"></div>
                             <div className="card_title">
-                                <p>Wishlist</p>
+                                <p>GPU</p>
                             </div>
                         </div></a>
                     </Col>
 
                     <Col>
                         <a onClick={() => navigate('/PreviousSelections')}><div className="MainPageCards 3">
-                            <div className="card_image"><img className='imgMainCard'/></div>
+                            <div className="card_image"></div>
                             <div className="card_title">
-                                <p>Previous Selections</p>
+                                <p>Motherboard</p>
+                            </div>
+                        </div></a>
+                    </Col>
+
+                    <Col>
+                    <a onClick={() => navigate('/Parts')}><div className="MainPageCards 4">
+                            <div className="card_image"></div>
+                            <div className="card_title">
+                                <p>Case</p>
+                            </div>
+                        </div></a>
+                    </Col>
+                </Row>
+
+                <Row className="MainListCards">
+                    <Col>
+                    <a onClick={() => navigate('/Parts')}><div className="MainPageCards 1">
+                            <div className="card_image"></div>
+                            <div className="card_title">
+                                <p>RAM</p>
+                            </div>
+                        </div></a>
+                    </Col>
+
+                    <Col>
+                        <a onClick={() => navigate('/Wishlist')}><div className="MainPageCards 2">
+                            <div className="card_image"></div>
+                            <div className="card_title">
+                                <p>Power Supply</p>
+                            </div>
+                        </div></a>
+                    </Col>
+
+                    <Col>
+                        <a onClick={() => navigate('/PreviousSelections')}><div className="MainPageCards 3">
+                            <div className="card_image"></div>
+                            <div className="card_title">
+                                <p>Heatsink</p>
+                            </div>
+                        </div></a>
+                    </Col>
+
+                    <Col>
+                    <a onClick={() => navigate('/Parts')}><div className="MainPageCards 4">
+                            <div className="card_image"></div>
+                            <div className="card_title">
+                                <p>Hard Drives</p>
                             </div>
                         </div></a>
                     </Col>
