@@ -559,9 +559,9 @@ export default function Parts() {
 
         if (!hardDriveFilters.manufacturers.All) {
             filteredData = filteredData.filter((hardDrive) => {
-                const { manufacturers } = hardDriveFilters;
-                return Object.keys(manufacturers).some(
-                    (key) => hardDrive.title.includes(key) && manufacturers[key]
+                //const { manufacturers } = hardDriveFilters;
+                return Object.keys(hardDriveFilters.manufacturers).some(
+                    (key) => hardDrive.title.includes(key) && hardDriveFilters.manufacturers[key]
                 );
             })
         }
