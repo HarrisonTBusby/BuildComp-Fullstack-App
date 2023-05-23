@@ -9,7 +9,7 @@ export default function Footer() {
                 <Col className='head-one'>
                     <p className='footer-heading'>Finding better PC parts for you!</p>
                     <Nav>
-                        <Row>
+                        <Row className='text-white'>
                             <Nav.Link as={Link} to='/Login'>Login</Nav.Link>
                             <Nav.Link as={Link} to='/'>Home</Nav.Link>
                             <Nav.Link as={Link} to='/Parts'>Parts</Nav.Link>
