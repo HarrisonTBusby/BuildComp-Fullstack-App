@@ -223,7 +223,7 @@ export default function Parts() {
     const calculateMaxPrice = (arr: any) => {
         const prices = arr.map((obj: any) => parseFloat(obj.price));
         const highestPrice = Math.ceil(Math.max(...prices.filter((price: number) => !isNaN(price))));
-        setMaxPrice([maxPrice[0], highestPrice]);
+        setMaxPrice([0, highestPrice]);
         setFixedPrice(highestPrice)
       }
       
@@ -251,7 +251,7 @@ export default function Parts() {
             setComponentType('CPU')
             //set checkboxes with value 'All' to true 
             setCpuFilters(originalCpuFilters)
-            console.log(maxPrice)
+            
         } else if (component === 'GPU') {
             setGpuData(data);
             setOriginalGpuData(data)
@@ -383,9 +383,6 @@ export default function Parts() {
 
         filteredData = filterByPriceRange(filteredData, maxPrice)
 
-        //setCpuData(filteredData)
-        //setTotalPages(Math.ceil(cpuData.length / 6))
-
         setCpuData(filteredData);
         setTotalPages(Math.ceil(filteredData.length / 6));
     };
@@ -401,7 +398,7 @@ export default function Parts() {
                 );
             });
         }
-
+        filteredData = filterByPriceRange(filteredData, maxPrice)
         setGpuData(filteredData);
         setTotalPages(Math.ceil(filteredData.length / 6));
     }
@@ -435,7 +432,7 @@ export default function Parts() {
                 );
             });
         }
-
+        filteredData = filterByPriceRange(filteredData, maxPrice)
         setMotherboardData(filteredData);
         setTotalPages(Math.ceil(filteredData.length / 6));
     }
@@ -466,7 +463,7 @@ export default function Parts() {
                 );
             })
         }
-
+        filteredData = filterByPriceRange(filteredData, maxPrice)
         setCaseData(filteredData)
         setTotalPages(Math.ceil(filteredData.length / 6))
     }
@@ -498,7 +495,7 @@ export default function Parts() {
                 );
             })
         }
-
+        filteredData = filterByPriceRange(filteredData, maxPrice)
         setRamData(filteredData)
         setTotalPages(Math.ceil(filteredData.length / 6))
     }
@@ -522,7 +519,7 @@ export default function Parts() {
                 );
             })
         }
-
+        filteredData = filterByPriceRange(filteredData, maxPrice)
         setPsData(filteredData)
         setTotalPages(Math.ceil(filteredData.length / 6))
     }
@@ -552,6 +549,7 @@ export default function Parts() {
             }
 
         }
+        filteredData = filterByPriceRange(filteredData, maxPrice)
         setHeatsinkData(filteredData)
         setTotalPages(Math.ceil(filteredData.length / 6))
     }
@@ -585,70 +583,62 @@ export default function Parts() {
                 );
             })
         }
-
+        filteredData = filterByPriceRange(filteredData, maxPrice)
         setHardDriveData(filteredData)
         setTotalPages(Math.ceil(filteredData.length / 6))
     }
 
+    useEffect(() => {
+        if (componentType === 'CPU') {
+            handleCpuFiltersCheckbox()
+        } else if (componentType === 'GPU') {
+            handleGpuFiltersCheckbox()
+        } else if (componentType === "Motherboard") {
+            handleMotherboardFiltersCheckbox()
+        } else if (componentType === "Case") {
+            handleCaseFiltersCheckbox()
+        } else if (componentType === "Ram") {
+            handleRamFiltersCheckbox()
+        } else if (componentType === "Ps") {
+            handlePsFiltersCheckbox()
+        } else if (componentType === "Heatsink") {
+            handleHeatsinkFiltersCheckbox()
+        } else {
+            handleHardDriveFiltersCheckbox()
+        }
+    }, [cpuFilters, gpuFilters, motherboardFilters, caseFilters, ramFilters, psFilters, heatsinkFilters, hardDriveFilters, maxPrice])
+
     // useEffect(() => {
-    //     if (componentType === 'CPU') {
-    //         setCpuData(filterByPriceRange(originalCpuData, maxPrice))
-    //         setTotalPages(Math.ceil(cpuData.length / 6))
-    //     } else if (componentType === 'GPU') {
-    //         setGpuData(filterByPriceRange(gpuData, maxPrice))
-    //         setTotalPages(Math.ceil(originalGpuData.length / 6))
-    //     } else if (componentType === "Motherboard") {
-    //         setMotherboardData(filterByPriceRange(motherboardData, maxPrice))
-    //         setTotalPages(Math.ceil(originalMotherboardData.length / 6))
-    //     } else if (componentType === "Case") {
-    //         setCaseData(filterByPriceRange(caseData, maxPrice))
-    //         setTotalPages(Math.ceil(originalCaseData.length / 6))
-    //     } else if (componentType === "Ram") {
-    //         setRamData(filterByPriceRange(ramData, maxPrice))
-    //         setTotalPages(Math.ceil(originalRamData.length / 6))
-    //     } else if (componentType === "Ps") {
-    //         setPsData(filterByPriceRange(psData, maxPrice))
-    //         setTotalPages(Math.ceil(originalPsData.length / 6))
-    //     } else if (componentType === "Heatsink") {
-    //         setHeatsinkData(filterByPriceRange(heatsinkData, maxPrice))
-    //         setTotalPages(Math.ceil(originalHeatsinkData.length / 6))
-    //     } else {
-    //         setHardDriveData(filterByPriceRange(hardDriveData, maxPrice))
-    //         setTotalPages(Math.ceil(originalHardDriveData.length / 6))
-    //     }
-    // }, [maxPrice])
+    //     handleCpuFiltersCheckbox()
+    // }, [cpuFilters, maxPrice])
 
-    useEffect(() => {
-        handleCpuFiltersCheckbox()
-    }, [cpuFilters, maxPrice])
+    // useEffect(() => {
+    //     handleGpuFiltersCheckbox()
+    // }, [gpuFilters])
 
-    useEffect(() => {
-        handleGpuFiltersCheckbox()
-    }, [gpuFilters])
+    // useEffect(() => {
+    //     handleMotherboardFiltersCheckbox()
+    // }, [motherboardFilters])
 
-    useEffect(() => {
-        handleMotherboardFiltersCheckbox()
-    }, [motherboardFilters])
+    // useEffect(() => {
+    //     handleCaseFiltersCheckbox()
+    // }, [caseFilters])
 
-    useEffect(() => {
-        handleCaseFiltersCheckbox()
-    }, [caseFilters])
+    // useEffect(() => {
+    //     handleRamFiltersCheckbox()
+    // }, [ramFilters])
 
-    useEffect(() => {
-        handleRamFiltersCheckbox()
-    }, [ramFilters])
+    // useEffect(() => {
+    //     handlePsFiltersCheckbox()
+    // }, [psFilters])
 
-    useEffect(() => {
-        handlePsFiltersCheckbox()
-    }, [psFilters])
+    // useEffect(() => {
+    //     handleHeatsinkFiltersCheckbox()
+    // }, [heatsinkFilters])
 
-    useEffect(() => {
-        handleHeatsinkFiltersCheckbox()
-    }, [heatsinkFilters])
-
-    useEffect(() => {
-        handleHardDriveFiltersCheckbox()
-    }, [hardDriveFilters])
+    // useEffect(() => {
+    //     handleHardDriveFiltersCheckbox()
+    // }, [hardDriveFilters])
 
     function sortByPrice(arr: any) {
         const newArr = [...arr];
