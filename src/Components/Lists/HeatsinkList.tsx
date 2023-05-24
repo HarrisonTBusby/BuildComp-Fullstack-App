@@ -11,6 +11,7 @@ export default function HeatsinkList(props: any) {
     const endIndex = startIndex + ITEMS_PER_PAGE;
     const itemsToDisplay = props.heatsinkData.slice(startIndex, endIndex);
     const usernameData = sessionStorage.getItem("Username");
+    let data = localStorage.getItem('BuildCompToken');
 
     const handleSave = async (item: HeatsinkData) => {
         const data: WishlistData = {
@@ -26,6 +27,15 @@ export default function HeatsinkList(props: any) {
         await AddWishlistItems(data);
       };
 
+      const guestAdd = (item: HeatsinkData) => {
+        if(data === 'guest'){
+            return null;
+        }else{
+            return <a className='WishlistBtn' onClick={async() => await handleSave(item)}><ControlPointIcon /></a>
+        }
+
+      }
+
     return (
         <div className='cards'>
             {itemsToDisplay.map((item: HeatsinkData) => (
@@ -37,7 +47,7 @@ export default function HeatsinkList(props: any) {
                         <Card.Body>
                             <Link to={item.item_url} target='_blank'><u>{item.title}</u></Link>
                             <div>
-                                <div>${item.price}<a className='WishlistBtn' onClick={() => handleSave(item)}><ControlPointIcon /></a></div>
+                                <div>${item.price}{guestAdd(item)}</div>
                                 <div>Color: {item.color}</div>
                                 <div>RPM: {item.fanRPM}</div>
                                 <div>Noise Level: {item.fanNoise}</div>

@@ -12,6 +12,7 @@ export default function CpuList(props: any) {
     const endIndex = startIndex + ITEMS_PER_PAGE;
     const itemsToDisplay = props.cpuData.slice(startIndex, endIndex);
     const usernameData = sessionStorage.getItem("Username");
+    let data = localStorage.getItem('BuildCompToken');
 
     const handleSave = async (item: CpuData) => {
         const data: WishlistData = {
@@ -27,6 +28,15 @@ export default function CpuList(props: any) {
         await AddWishlistItems(data);
       };
 
+      const guestAdd = (item: CpuData) => {
+        if(data === 'guest'){
+            return null;
+        }else{
+            return <a className='WishlistBtn' onClick={async() => await handleSave(item)}><ControlPointIcon /></a>
+        }
+
+      }
+
     return (
         <div className='cards'>
             {itemsToDisplay.map((item: CpuData) => (
@@ -38,7 +48,7 @@ export default function CpuList(props: any) {
                         <Card.Body>
                             <Link to={item.item_url} target='_blank'><u>{item.title}</u></Link>
                             <div>
-                                <div>${item.price}<a className='WishlistBtn' onClick={() => handleSave(item)}><ControlPointIcon /></a></div>
+                                <div>${item.price}{guestAdd(item)}</div>
                                 <div>Cores: {item.cores}</div>
                                 <div>Performance Clock: {item.perfCoreClock}</div>
                                 <div>{item.type}</div>

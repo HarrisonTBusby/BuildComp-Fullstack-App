@@ -11,6 +11,7 @@ export default function PsList(props: any) {
     const endIndex = startIndex + ITEMS_PER_PAGE;
     const itemsToDisplay = props.psData.slice(startIndex, endIndex);
     const usernameData = sessionStorage.getItem("Username");
+    let data = localStorage.getItem('BuildCompToken');
 
     const handleSave = async (item: PowerSupplyData) => {
         const data: WishlistData = {
@@ -26,6 +27,15 @@ export default function PsList(props: any) {
         await AddWishlistItems(data);
       };
 
+      const guestAdd = (item: PowerSupplyData) => {
+        if(data === 'guest'){
+            return null;
+        }else{
+            return <a className='WishlistBtn' onClick={async() => await handleSave(item)}><ControlPointIcon /></a>
+        }
+
+      }
+
     return (
         <div className='cards'>
             {itemsToDisplay.map((item: PowerSupplyData) => (
@@ -37,7 +47,7 @@ export default function PsList(props: any) {
                         <Card.Body>
                             <Link to={item.item_url} target='_blank'><u>{item.title}</u></Link>
                             <div>
-                                <div>${item.price}<a className='WishlistBtn' onClick={() => handleSave(item)}><ControlPointIcon /></a></div>
+                                <div>${item.price}{guestAdd(item)}</div>
                                 <div>Wattage: {item.wattage}</div>
                                 <div>Color: {item.color}</div>
                                 <div>EPS8: {item.EPS8ConnectorNum}</div>

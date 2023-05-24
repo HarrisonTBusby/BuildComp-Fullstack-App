@@ -8,7 +8,8 @@ import { getSessionStorage } from '../../Services/LocalStorage';
 import CpuList from '../Lists/CpuList';
 import { CpuData, GpuData, CaseData, HardDriveData, MotherboardData, HeatsinkData, PowerSupplyData, RamData, WishlistData } from '../../Interfaces/PartDataInterfaces';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
-import { GetAllWishlistItems } from '../../Services/DataService';
+import { GetAllWishlistItems, RemoveWishlistItems } from '../../Services/DataService';
+
 
 
 const Wishlist = () => {
@@ -56,6 +57,11 @@ const Wishlist = () => {
     fetchData();
   }, []);
 
+  const handleDelete = () => {
+    const username = sessionStorage.getItem("Username");
+    RemoveWishlistItems(username);
+  }
+
 
   const SwitchSession = () => {
     if (wishlistItems.map((x: any) => x.type == "CPU")) {
@@ -72,7 +78,7 @@ const Wishlist = () => {
                     <Card.Body>
                       <Link to={x.item_url} target='_blank'><u className='title'>{x.title}</u></Link>
                       <div>
-                        <div>${x.price}<a className='DeleteWishlistBtn'><HighlightOffIcon /></a></div>
+                        <div>${x.price}<a className='DeleteWishlistBtn' onClick={handleDelete}><HighlightOffIcon /></a></div>
                         <div>{x.type}</div>
                       </div>
                     </Card.Body>

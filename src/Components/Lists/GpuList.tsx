@@ -12,6 +12,7 @@ export default function GpuList(props: any) {
     const endIndex = startIndex + ITEMS_PER_PAGE;
     const itemsToDisplay = props.gpuData.slice(startIndex, endIndex);
     const usernameData = sessionStorage.getItem("Username");
+    let data = localStorage.getItem('BuildCompToken');
 
     const handleSave = async (item: GpuData) => {
         const data: WishlistData = {
@@ -27,6 +28,15 @@ export default function GpuList(props: any) {
         await AddWishlistItems(data);
       };
 
+      const guestAdd = (item: GpuData) => {
+        if(data === 'guest'){
+            return null;
+        }else{
+            return <a className='WishlistBtn' onClick={async() => await handleSave(item)}><ControlPointIcon /></a>
+        }
+
+      }
+
     return (
         <div className='cards'>
             {itemsToDisplay.map((item: GpuData) =>
@@ -38,7 +48,7 @@ export default function GpuList(props: any) {
                         <Card.Body>
                             <Link to={item.item_url} target='_blank'><u>{item.title}</u></Link>
                             <div>
-                                <div>${item.price}<a className='WishlistBtn' onClick={() => handleSave(item)}><ControlPointIcon /></a></div>
+                                <div>${item.price}{guestAdd(item)}</div>
                                 <div>Memory: {item.memory}</div>
                                 <div>Performance Clock: {item.perfCoreClock}</div>
                                 <div>Chipset: {item.chipset}</div>

@@ -85,10 +85,25 @@ const AddWishlistItems = async (item: any) => {
   return data;
 }
 
+const RemoveWishlistItems = async (username: any) => {
+    const response = await fetch(`https://buildcompdatabase.azurewebsites.net/Webscraper/DeleteWishlistItems/${username}`,{
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
+    if (!response.ok) {
+        throw new Error(`Failed to delete wishlist items for user ${username}: ${response.status}`);
+      }
+
+    const data = await response.json();
+    return data;
+}
+
 async function GetAllWishlistItems(){
   const response = await fetch('https://buildcompdatabase.azurewebsites.net/Webscraper/GetAllWishlistItems');
   const data = await response.json();
   return data;
 }
 
-export { GetRandomUserData, createAccount, login, GetLoggedInUserData, GetPartData, AddWishlistItems, GetAllWishlistItems };
+export { GetRandomUserData, createAccount, login, GetLoggedInUserData, GetPartData, AddWishlistItems, GetAllWishlistItems, RemoveWishlistItems };
