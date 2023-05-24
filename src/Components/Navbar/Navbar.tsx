@@ -3,6 +3,7 @@ import { Container, Navbar, Nav } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { removeFromSessionStorage } from '../../Services/LocalStorage';
+import { useEffect } from 'react';
 const logo = require('../../Assets/Images/BlackLogo.png');
 
 interface NavLink {
@@ -13,25 +14,31 @@ interface NavLink {
 export default function NavbarComponent() {
   const navigate = useNavigate();
   const location = useLocation();
- 
+  let BcToken = localStorage.getItem('BuildCompToken');
 
   const handleSignOut = () => {
     localStorage.setItem('BuildCompToken', 'guest');
     removeFromSessionStorage('Username');
-    navigate('/')
+    navigate('/');
   }
-  
+
+  useEffect(() => {
+    if (!BcToken || BcToken === 'guest') {
+      localStorage.setItem('BuildCompToken', 'guest');
+    }
+  }, []);
+
 
   const LoggerComponent = () => {
     let token = localStorage.getItem("BuildCompToken");
-    if(token != "guest"){
+    if (token != "guest") {
       return (
         <Nav.Link onClick={() => handleSignOut()} className="fontColor mx-3">
           Sign out
         </Nav.Link>
-        
+
       )
-    }else {
+    } else {
       return (
         <Nav.Link as={Link} to="/Login" className="fontColor mx-3">
           Login
@@ -55,7 +62,7 @@ export default function NavbarComponent() {
         <Navbar.Brand as={Link} to="/" className="fontColor">
           <img className="logoSize" src={logo} />BuildComp
         </Navbar.Brand>
-        <LoggerComponent/>
+        <LoggerComponent />
       </Container>
     </Navbar>
   );
