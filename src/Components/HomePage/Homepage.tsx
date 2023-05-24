@@ -28,7 +28,7 @@ export default function Homepage() {
                 </Col>
             </Row>
             <Container className='home-body'>
-                <h3 style={{backgroundColor:'#4463D5', color:'white', padding:'20px', borderRadius:'4px'}}>Lets Get Started!</h3>
+                <h3 style={{backgroundColor:'#4463D5', fontWeight:'bolder',color:'white', padding:'20px', width:'50%', display:'flex', justifyContent:'center'}}>Lets Get Started!</h3>
                 <Row className="MainListCards">
                     <Col>
                     <a onClick={() => navigate('/Parts')}><div className="MainPageCards 1">
