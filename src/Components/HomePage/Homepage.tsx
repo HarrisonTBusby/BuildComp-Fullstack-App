@@ -7,7 +7,7 @@ import { getSessionStorage } from '../../Services/LocalStorage';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 
-export default function Homepage() {
+export default function Homepage(props: any) {
     const navigate = useNavigate();
     const renderTooltip = (text: string) => (
         <Tooltip id={`tooltip-${text}`}>
@@ -17,6 +17,12 @@ export default function Homepage() {
 
     const [cpuValue, setCpuValue] = useState<string>('');
     const [title, setTitle] = useState<string>('PC Components')
+
+    const handleCardClick = (partType: string) => {
+        props.setComponentType(partType)
+        navigate('/Parts')
+    }
+
     return (
         <>
             <NavbarComponent />
@@ -28,10 +34,10 @@ export default function Homepage() {
                 </Col>
             </Row>
             <Container className='home-body'>
-                <h3 style={{backgroundColor:'#4463D5', fontWeight:'bolder',color:'white', padding:'20px', width:'50%', display:'flex', justifyContent:'center'}}>Lets Get Started!</h3>
+                <h3 style={{ backgroundColor: '#4463D5', fontWeight: 'bolder', color: 'white', padding: '20px', width: '50%', display: 'flex', justifyContent: 'center' }}>Lets Get Started!</h3>
                 <Row className="MainListCards">
                     <Col>
-                    <a onClick={() => navigate('/Parts')}><div className="MainPageCards 1">
+                        <a onClick={() => handleCardClick('CPU')}><div className="MainPageCards 1">
                             <div className="card_image"></div>
                             <div className="card_title">
                                 <p>CPU</p>
@@ -40,7 +46,7 @@ export default function Homepage() {
                     </Col>
 
                     <Col>
-                        <a onClick={() => navigate('/Wishlist')}><div className="MainPageCards 2">
+                        <a onClick={() => handleCardClick('GPU')}><div className="MainPageCards 2">
                             <div className="card_image"></div>
                             <div className="card_title">
                                 <p>GPU</p>
@@ -49,7 +55,7 @@ export default function Homepage() {
                     </Col>
 
                     <Col>
-                        <a onClick={() => navigate('/PreviousSelections')}><div className="MainPageCards 3">
+                        <a onClick={() => handleCardClick('Motherboard')}><div className="MainPageCards 3">
                             <div className="card_image"></div>
                             <div className="card_title">
                                 <p>Motherboard</p>
@@ -58,7 +64,7 @@ export default function Homepage() {
                     </Col>
 
                     <Col>
-                    <a onClick={() => navigate('/Parts')}><div className="MainPageCards 4">
+                        <a onClick={() => handleCardClick('Case')}><div className="MainPageCards 4">
                             <div className="card_image"></div>
                             <div className="card_title">
                                 <p>Case</p>
@@ -69,7 +75,7 @@ export default function Homepage() {
 
                 <Row className="MainListCards">
                     <Col>
-                    <a onClick={() => navigate('/Parts')}><div className="MainPageCards 1">
+                        <a onClick={() => handleCardClick('Ram')}><div className="MainPageCards 1">
                             <div className="card_image"></div>
                             <div className="card_title">
                                 <p>RAM</p>
@@ -78,7 +84,7 @@ export default function Homepage() {
                     </Col>
 
                     <Col>
-                        <a onClick={() => navigate('/Wishlist')}><div className="MainPageCards 2">
+                        <a onClick={() => handleCardClick('Ps')}><div className="MainPageCards 2">
                             <div className="card_image"></div>
                             <div className="card_title">
                                 <p>Power Supply</p>
@@ -87,7 +93,7 @@ export default function Homepage() {
                     </Col>
 
                     <Col>
-                        <a onClick={() => navigate('/PreviousSelections')}><div className="MainPageCards 3">
+                        <a onClick={() => handleCardClick('Heatsink')}><div className="MainPageCards 3">
                             <div className="card_image"></div>
                             <div className="card_title">
                                 <p>Heatsink</p>
@@ -96,7 +102,7 @@ export default function Homepage() {
                     </Col>
 
                     <Col>
-                    <a onClick={() => navigate('/Parts')}><div className="MainPageCards 4">
+                        <a onClick={() => handleCardClick('HardDrive')}><div className="MainPageCards 4">
                             <div className="card_image"></div>
                             <div className="card_title">
                                 <p>Hard Drives</p>

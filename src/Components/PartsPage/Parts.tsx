@@ -99,7 +99,7 @@ interface HardDriveFilters {
     }
 }
 
-export default function Parts() {
+export default function Parts(props: any) {
 
     const [fixedPrice, setFixedPrice] = useState(0)
 
@@ -109,7 +109,7 @@ export default function Parts() {
     const [currentPage, setCurrentPage] = useState<number>(0);
     const [totalPages, setTotalPages] = useState(6);
 
-    const [selectedComponent, setSelectedComponent] = useState<string>('');
+    //const [selectedComponent, setSelectedComponent] = useState<string>('');
     const [minBudget, setMinBudget] = useState<number>(0);
     const [maxBudget, setMaxBudget] = useState<number>(0);
     const [cpuData, setCpuData] = useState<CpuData[]>([]);
@@ -129,7 +129,7 @@ export default function Parts() {
     const [hardDriveData, setHardDriveData] = useState<HardDriveData[]>([]);
     const [originalHardDriveData, setOriginalHardDriveData] = useState<HardDriveData[]>([]);
 
-    const [componentType, setComponentType] = useState<string>('PC Components');
+    //const [componentType, props.setComponentType] = useState<string>('PC Components');
 
     const [maxPrice, setMaxPrice] = React.useState<number[]>([0, 100]);
     const minDistance = 50;
@@ -225,8 +225,8 @@ export default function Parts() {
         const highestPrice = Math.ceil(Math.max(...prices.filter((price: number) => !isNaN(price))));
         setMaxPrice([0, highestPrice]);
         setFixedPrice(highestPrice)
-      }
-      
+    }
+
 
     // const uniqueChipsets: any[] = [];
     // for (const obj of hardDriveData) {
@@ -241,74 +241,69 @@ export default function Parts() {
 
     // For Dropdown values
     async function handleComponentSelect(component: string) {
-        if (component == selectedComponent) return
+        //if (component === selectedComponent) return
         const data = await GetPartData(component);
         calculateMaxPrice(data)
         if (component === 'CPU') {
             setCpuData(data);
-            //setOriginalCpu(data) is not needed, already called on first useEffect
+            setOriginalCpuData(data)
             setTotalPages(Math.ceil(data.length / 6))
-            setComponentType('CPU')
+            props.setComponentType('CPU')
             //set checkboxes with value 'All' to true 
             setCpuFilters(originalCpuFilters)
-            
         } else if (component === 'GPU') {
             setGpuData(data);
             setOriginalGpuData(data)
             setTotalPages(Math.ceil(data.length / 6))
-            setComponentType('GPU')
+            props.setComponentType('GPU')
             //set checkboxes with value 'All' to true
             setGpuFilters(originalGpuFilters)
         } else if (component === "Motherboard") {
             setMotherboardData(data);
             setOriginalMotherboardData(data);
             setTotalPages(Math.ceil(data.length / 6))
-            setComponentType('Motherboard')
+            props.setComponentType('Motherboard')
             setMotherboardFilters(originalMotherboardFilters)
         } else if (component === "Case") {
             setCaseData(data)
             setOriginalCaseData(data)
             setTotalPages(Math.ceil(data.length / 6))
-            setComponentType('Case')
+            props.setComponentType('Case')
             setCaseFilters(originalCaseFilters)
         } else if (component === "Ram") {
             setRamData(data)
             setOriginalRamData(data)
             setTotalPages(Math.ceil(data.length / 6))
-            setComponentType('Ram')
+            props.setComponentType('Ram')
             setRamFilters(originalRamFilters)
         } else if (component === 'Ps') {
             setPsData(data)
             setOriginalPsData(data)
             setTotalPages(Math.ceil(data.length / 6))
-            setComponentType('Ps')
+            props.setComponentType('Ps')
             setPsFilters(originalPsFilters)
         } else if (component === "Heatsink") {
             setHeatsinkData(data)
             setOriginalHeatsinkData(data)
             setTotalPages(Math.ceil(data.length / 6))
-            setComponentType('Heatsink')
+            props.setComponentType('Heatsink')
             setHeatsinkFilters(originalHeatsinkFilters)
         } else if (component === "HardDrive") {
             setHardDriveData(data)
             setOriginalHardDriveData(data)
             setTotalPages(Math.ceil(data.length / 6))
-            setComponentType('HardDrive')
+            props.setComponentType('HardDrive')
             setHardDriveFilters(originalHardDriveFilters)
         }
         setCurrentPage(0)
     }
 
     useEffect(() => {
-        async function getData() {
-            const data = await GetPartData('CPU');
-            setOriginalCpuData(data);
-            setCpuData(data);
-            setTotalPages(Math.ceil(data.length / 6))
-            setComponentType('CPU')
-            calculateMaxPrice(data)
+        if (props.componentType === 'PC Component') {
+            handleComponentSelect('CPU');
+        } else {
+            handleComponentSelect(props.componentType);
         }
-        getData()
 
     }, [])
 
@@ -324,7 +319,7 @@ export default function Parts() {
     };
 
     const SwitchComponent = () => {
-        switch (componentType) {
+        switch (props.componentType) {
             case 'CPU':
                 return <CpuList cpuData={cpuData} currentPage={currentPage} />;
             case 'GPU':
@@ -589,19 +584,19 @@ export default function Parts() {
     }
 
     useEffect(() => {
-        if (componentType === 'CPU') {
+        if (props.componentType === 'CPU') {
             handleCpuFiltersCheckbox()
-        } else if (componentType === 'GPU') {
+        } else if (props.componentType === 'GPU') {
             handleGpuFiltersCheckbox()
-        } else if (componentType === "Motherboard") {
+        } else if (props.componentType === "Motherboard") {
             handleMotherboardFiltersCheckbox()
-        } else if (componentType === "Case") {
+        } else if (props.componentType === "Case") {
             handleCaseFiltersCheckbox()
-        } else if (componentType === "Ram") {
+        } else if (props.componentType === "Ram") {
             handleRamFiltersCheckbox()
-        } else if (componentType === "Ps") {
+        } else if (props.componentType === "Ps") {
             handlePsFiltersCheckbox()
-        } else if (componentType === "Heatsink") {
+        } else if (props.componentType === "Heatsink") {
             handleHeatsinkFiltersCheckbox()
         } else {
             handleHardDriveFiltersCheckbox()
@@ -656,19 +651,19 @@ export default function Parts() {
     }
 
     const priceSort = () => {
-        if (componentType === 'CPU') {
+        if (props.componentType === 'CPU') {
             setCpuData(sortByPrice(cpuData));
-        } else if (componentType === 'GPU') {
+        } else if (props.componentType === 'GPU') {
             setGpuData(sortByPrice(gpuData));
-        } else if (componentType === "Motherboard") {
+        } else if (props.componentType === "Motherboard") {
             setMotherboardData(sortByPrice(motherboardData));
-        } else if (componentType === "Case") {
+        } else if (props.componentType === "Case") {
             setCaseData(sortByPrice(caseData));
-        } else if (componentType === "Ram") {
+        } else if (props.componentType === "Ram") {
             setRamData(sortByPrice(ramData));
-        } else if (componentType === "Ps") {
+        } else if (props.componentType === "Ps") {
             setPsData(sortByPrice(psData));
-        } else if (componentType === "Heatsink") {
+        } else if (props.componentType === "Heatsink") {
             setHeatsinkData(sortByPrice(heatsinkData));
         } else {
             setHardDriveData(sortByPrice(hardDriveData));
@@ -1324,10 +1319,10 @@ export default function Parts() {
     const filterByPriceRange = (data: any, priceRange: any) => {
         const [minPrice, maxPrice] = priceRange.map(parseFloat);
         return data.filter((obj: any) => {
-          const price = parseFloat(obj.price);
-          return price >= minPrice && price <= maxPrice;
+            const price = parseFloat(obj.price);
+            return price >= minPrice && price <= maxPrice;
         });
-      };
+    };
 
     function valuetext(maxPrice: number) {
         return `${maxPrice}`;
@@ -1337,24 +1332,24 @@ export default function Parts() {
         event: Event,
         newValue: number | number[],
         activeThumb: number,
-      ) => {
+    ) => {
         if (!Array.isArray(newValue)) {
-          return;
+            return;
         }
-    
+
         if (newValue[1] - newValue[0] < minDistance) {
-          if (activeThumb === 0) {
-            const clamped = Math.min(newValue[0], maxPrice[1] - minDistance);
-            setMaxPrice([clamped, clamped + minDistance]);
-          } else {
-            const clamped = Math.max(newValue[1], maxPrice[0] + minDistance);
-            setMaxPrice([clamped - minDistance, clamped]);
-          }
+            if (activeThumb === 0) {
+                const clamped = Math.min(newValue[0], maxPrice[1] - minDistance);
+                setMaxPrice([clamped, clamped + minDistance]);
+            } else {
+                const clamped = Math.max(newValue[1], maxPrice[0] + minDistance);
+                setMaxPrice([clamped - minDistance, clamped]);
+            }
         } else {
-          setMaxPrice(newValue as number[]);
+            setMaxPrice(newValue as number[]);
         }
-      };
-      
+    };
+
 
     return (
         <div>
@@ -1372,7 +1367,7 @@ export default function Parts() {
                                         <p className='mt-5'>Components</p>
                                         <Dropdown className='bb-dropdown'>
                                             <Dropdown.Toggle className='dropdownSize'>
-                                                {componentType}
+                                                {props.componentType}
                                             </Dropdown.Toggle>
                                             <Dropdown.Menu >
                                                 <OverlayTrigger placement="right" overlay={renderTooltip('Provides the instructions and processing power the computer needs to do its work. The more powerful and updated your processor, the faster your computer can complete its tasks.')}>
@@ -1403,18 +1398,18 @@ export default function Parts() {
                                         </Dropdown>
                                     </Col>
                                     <Button className='mb-2 w-100' onClick={() => priceSort()}>SORT BY PRICE</Button>
-                                    <Button className={componentType !== 'CPU' ? 'd-none' : 'mb-2 w-100'} onClick={() => cpuCoreSort()}>SORT BY CORES</Button>
-                                    <Button className={componentType !== 'CPU' ? 'd-none' : 'mb-2 w-100'} onClick={() => cpuClockSort()}>SORT BY CLOCK</Button>
-                                    <Button className={componentType !== 'GPU' ? 'd-none' : 'mb-2 w-100'} onClick={() => gpuMemorySort()}>SORT BY MEMORY</Button>
-                                    <Button className={componentType !== 'GPU' ? 'd-none' : 'mb-2 w-100'} onClick={() => gpuClockSort()}>SORT BY CLOCK</Button>
-                                    <Button className={componentType !== 'Motherboard' ? 'd-none' : 'mb-2 w-100'} onClick={() => motherboardRamSort()}>SORT BY MAX RAM</Button>
-                                    <Button className={componentType !== 'Motherboard' ? 'd-none' : 'mb-2 w-100'} onClick={() => motherboardMemorySlotsSort()}>SORT BY MEMORY SLOTS</Button>
-                                    <Button className={componentType !== 'Ram' ? 'd-none' : 'mb-2 w-100'} onClick={() => ramSpeedSort()}>SORT BY SPEED</Button>
-                                    <Button className={componentType !== 'Ram' ? 'd-none' : 'mb-2 w-100'} onClick={() => ramLatencySort()}>SORT BY LATENCY</Button>
+                                    <Button className={props.componentType !== 'CPU' ? 'd-none' : 'mb-2 w-100'} onClick={() => cpuCoreSort()}>SORT BY CORES</Button>
+                                    <Button className={props.componentType !== 'CPU' ? 'd-none' : 'mb-2 w-100'} onClick={() => cpuClockSort()}>SORT BY CLOCK</Button>
+                                    <Button className={props.componentType !== 'GPU' ? 'd-none' : 'mb-2 w-100'} onClick={() => gpuMemorySort()}>SORT BY MEMORY</Button>
+                                    <Button className={props.componentType !== 'GPU' ? 'd-none' : 'mb-2 w-100'} onClick={() => gpuClockSort()}>SORT BY CLOCK</Button>
+                                    <Button className={props.componentType !== 'Motherboard' ? 'd-none' : 'mb-2 w-100'} onClick={() => motherboardRamSort()}>SORT BY MAX RAM</Button>
+                                    <Button className={props.componentType !== 'Motherboard' ? 'd-none' : 'mb-2 w-100'} onClick={() => motherboardMemorySlotsSort()}>SORT BY MEMORY SLOTS</Button>
+                                    <Button className={props.componentType !== 'Ram' ? 'd-none' : 'mb-2 w-100'} onClick={() => ramSpeedSort()}>SORT BY SPEED</Button>
+                                    <Button className={props.componentType !== 'Ram' ? 'd-none' : 'mb-2 w-100'} onClick={() => ramLatencySort()}>SORT BY LATENCY</Button>
 
                                     <hr />
                                     <p className='mt-4'>Filter</p>
-                                    <button onClick={() => handleComponentSelect(componentType)} className='clearFiltersBtn'>Clear Filters</button>
+                                    <button onClick={() => handleComponentSelect(props.componentType)} className='clearFiltersBtn'>Clear Filters</button>
                                     <hr />
                                     <Slider
                                         getAriaLabel={() => 'Temperature range'}
@@ -1429,7 +1424,7 @@ export default function Parts() {
                                     <input className='w-75' type='number' placeholder='Max' value={maxBudget} onChange={(e) => setMaxBudget(parseInt(e.target.value))}></input> */}
                                     {/* <button onClick={() => filterByPriceRange(minBudget, maxBudget)} className='clearFiltersBtn'>Results</button> */}
                                     <hr />
-                                    <div className={componentType !== 'CPU' ? 'd-none' : ''}>
+                                    <div className={props.componentType !== 'CPU' ? 'd-none' : ''}>
                                         <p>Manufacturer</p>
                                         {/* Renders CPU manufacturer checkboxes */}
                                         {Object.keys(cpuFilters.manufacturers).map((key) => (
@@ -1464,7 +1459,7 @@ export default function Parts() {
                                             </div>
                                         ))}
                                     </div>
-                                    <div className={componentType !== 'GPU' ? 'd-none' : ''}>
+                                    <div className={props.componentType !== 'GPU' ? 'd-none' : ''}>
                                         <p>Manufacturer</p>
                                         {/* renders GPU manufacturer checkboxes */}
                                         {Object.keys(gpuFilters.manufacturers).map((key) => (
@@ -1482,7 +1477,7 @@ export default function Parts() {
                                             </div>
                                         ))}
                                     </div>
-                                    <div className={componentType !== 'Motherboard' ? 'd-none' : ''}>
+                                    <div className={props.componentType !== 'Motherboard' ? 'd-none' : ''}>
                                         <p>Manufacturer</p>
                                         {Object.keys(motherboardFilters.manufacturers).map((key) => (
                                             <div key={key} className='flex justify-content-center gap-2'>
@@ -1531,7 +1526,7 @@ export default function Parts() {
                                         ))}
                                     </div>
                                     <p>Case</p>
-                                    <div className={componentType !== 'Case' ? 'd-none' : ''}>
+                                    <div className={props.componentType !== 'Case' ? 'd-none' : ''}>
                                         {Object.keys(caseFilters.manufacturers).map((key) => (
                                             <div key={key} className='flex justify-content-center gap-2'>
                                                 <label className='cursor-pointer'>
@@ -1589,7 +1584,7 @@ export default function Parts() {
                             <p className='mt-5'>Components</p>
                             <Dropdown className='bb-dropdown'>
                                 <Dropdown.Toggle className='dropdownSize'>
-                                    {componentType}
+                                    {props.componentType}
                                 </Dropdown.Toggle>
                                 <Dropdown.Menu>
                                     <OverlayTrigger placement="right" overlay={renderTooltip('Provides the instructions and processing power the computer needs to do its work. The more powerful and updated your processor, the faster your computer can complete its tasks.')}>
@@ -1621,20 +1616,20 @@ export default function Parts() {
                         </Col>
                     </div>
                     <Button className='mb-2' onClick={() => priceSort()}>SORT BY PRICE</Button>
-                    <Button className={componentType !== 'CPU' ? 'd-none' : 'mb-2'} onClick={() => cpuCoreSort()}>SORT BY CORES</Button>
-                    <Button className={componentType !== 'CPU' ? 'd-none' : 'mb-2'} onClick={() => cpuClockSort()}>SORT BY CLOCK</Button>
-                    <Button className={componentType !== 'GPU' ? 'd-none' : 'mb-2'} onClick={() => gpuMemorySort()}>SORT BY MEMORY</Button>
-                    <Button className={componentType !== 'GPU' ? 'd-none' : 'mb-2'} onClick={() => gpuClockSort()}>SORT BY CLOCK</Button>
-                    <Button className={componentType !== 'Motherboard' ? 'd-none' : 'mb-2'} onClick={() => motherboardRamSort()}>SORT BY MAX RAM</Button>
-                    <Button className={componentType !== 'Motherboard' ? 'd-none' : 'mb-2'} onClick={() => motherboardMemorySlotsSort()}>SORT BY MEMORY SLOTS</Button>
-                    <Button className={componentType !== 'Ram' ? 'd-none' : 'mb-2'} onClick={() => ramSpeedSort()}>SORT BY SPEED</Button>
-                    <Button className={componentType !== 'Ram' ? 'd-none' : 'mb-2'} onClick={() => ramLatencySort()}>SORT BY LATENCY</Button>
-                    <Button className={componentType !== 'Ps' ? 'd-none' : 'mb-2'} onClick={() => psWattageSort()}>SORT BY WATTAGE</Button>
-                    <Button className={componentType !== 'Heatsink' ? 'd-none' : 'mb-2'} onClick={() => heatsinkFanSort()}>SORT BY FAN NOISE</Button>
+                    <Button className={props.componentType !== 'CPU' ? 'd-none' : 'mb-2'} onClick={() => cpuCoreSort()}>SORT BY CORES</Button>
+                    <Button className={props.componentType !== 'CPU' ? 'd-none' : 'mb-2'} onClick={() => cpuClockSort()}>SORT BY CLOCK</Button>
+                    <Button className={props.componentType !== 'GPU' ? 'd-none' : 'mb-2'} onClick={() => gpuMemorySort()}>SORT BY MEMORY</Button>
+                    <Button className={props.componentType !== 'GPU' ? 'd-none' : 'mb-2'} onClick={() => gpuClockSort()}>SORT BY CLOCK</Button>
+                    <Button className={props.componentType !== 'Motherboard' ? 'd-none' : 'mb-2'} onClick={() => motherboardRamSort()}>SORT BY MAX RAM</Button>
+                    <Button className={props.componentType !== 'Motherboard' ? 'd-none' : 'mb-2'} onClick={() => motherboardMemorySlotsSort()}>SORT BY MEMORY SLOTS</Button>
+                    <Button className={props.componentType !== 'Ram' ? 'd-none' : 'mb-2'} onClick={() => ramSpeedSort()}>SORT BY SPEED</Button>
+                    <Button className={props.componentType !== 'Ram' ? 'd-none' : 'mb-2'} onClick={() => ramLatencySort()}>SORT BY LATENCY</Button>
+                    <Button className={props.componentType !== 'Ps' ? 'd-none' : 'mb-2'} onClick={() => psWattageSort()}>SORT BY WATTAGE</Button>
+                    <Button className={props.componentType !== 'Heatsink' ? 'd-none' : 'mb-2'} onClick={() => heatsinkFanSort()}>SORT BY FAN NOISE</Button>
 
                     <hr />
                     <p className='mt-4'>Filter</p>
-                    <button onClick={() => handleComponentSelect(componentType)} className='clearFiltersBtn'>Clear Filters</button>
+                    <button onClick={() => handleComponentSelect(props.componentType)} className='clearFiltersBtn'>Clear Filters</button>
                     <hr />
                     <p className='mb-lg-5'>Price</p>
                     <div className='px-4'>
@@ -1656,7 +1651,7 @@ export default function Parts() {
                     <input className='w-75' type='number' placeholder='Max' value={maxBudget} onChange={(e) => setMaxBudget(parseInt(e.target.value))}></input> */}
                     {/* <button onClick={() => filterByPriceRange(minBudget, maxBudget)} className='clearFiltersBtn'>Results</button> */}
                     <hr />
-                    <div className={componentType !== 'CPU' ? 'd-none' : ''}>
+                    <div className={props.componentType !== 'CPU' ? 'd-none' : ''}>
                         <p>Manufacturer</p>
                         {/* Renders CPU manufacturer checkboxes */}
                         {Object.keys(cpuFilters.manufacturers).map((key) => (
@@ -1691,7 +1686,7 @@ export default function Parts() {
                             </div>
                         ))}
                     </div>
-                    <div className={componentType !== 'GPU' ? 'd-none' : ''}>
+                    <div className={props.componentType !== 'GPU' ? 'd-none' : ''}>
                         <p>Manufacturer</p>
                         {/* renders GPU manufacturer checkboxes */}
                         {Object.keys(gpuFilters.manufacturers).map((key) => (
@@ -1709,7 +1704,7 @@ export default function Parts() {
                             </div>
                         ))}
                     </div>
-                    <div className={componentType !== 'Motherboard' ? 'd-none' : ''}>
+                    <div className={props.componentType !== 'Motherboard' ? 'd-none' : ''}>
                         <p>Manufacturer</p>
                         {Object.keys(motherboardFilters.manufacturers).map((key) => (
                             <div key={key} className='flex justify-content-center gap-2'>
@@ -1758,7 +1753,7 @@ export default function Parts() {
                             </div>
                         ))}
                     </div>
-                    <div className={componentType !== 'Case' ? 'd-none' : ''}>
+                    <div className={props.componentType !== 'Case' ? 'd-none' : ''}>
                         <p>Case</p>
                         {Object.keys(caseFilters.manufacturers).map((key) => (
                             <div key={key} className='flex justify-content-center gap-2'>
@@ -1807,7 +1802,7 @@ export default function Parts() {
                             </div>
                         ))}
                     </div>
-                    <div className={componentType !== 'Ram' ? 'd-none' : ''}>
+                    <div className={props.componentType !== 'Ram' ? 'd-none' : ''}>
                         <p>Manufacturer</p>
                         {Object.keys(ramFilters.manufacturers).map((key) => (
                             <div key={key} className='flex justify-content-center gap-2'>
@@ -1856,7 +1851,7 @@ export default function Parts() {
                             </div>
                         ))}
                     </div>
-                    <div className={componentType !== 'Ps' ? 'd-none' : ''}>
+                    <div className={props.componentType !== 'Ps' ? 'd-none' : ''}>
                         <p>Manufacturer</p>
                         {Object.keys(psFilters.manufacturers).map((key) => (
                             <div key={key} className='flex justify-content-center gap-2'>
@@ -1889,7 +1884,7 @@ export default function Parts() {
                             </div>
                         ))}
                     </div>
-                    <div className={componentType !== 'Heatsink' ? 'd-none' : ''}>
+                    <div className={props.componentType !== 'Heatsink' ? 'd-none' : ''}>
                         <p>Manufacturer</p>
                         {Object.keys(heatsinkFilters.manufacturers).map((key) => (
                             <div key={key} className='flex justify-content-center gap-2'>
@@ -1922,7 +1917,7 @@ export default function Parts() {
                             </div>
                         ))}
                     </div>
-                    <div className={componentType !== 'HardDrive' ? 'd-none' : ''}>
+                    <div className={props.componentType !== 'HardDrive' ? 'd-none' : ''}>
                         <p>Manufacturer</p>
                         {Object.keys(hardDriveFilters.manufacturers).map((key) => (
                             <div key={key} className='flex justify-content-center gap-2'>
