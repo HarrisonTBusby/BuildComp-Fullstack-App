@@ -85,8 +85,8 @@ const AddWishlistItems = async (item: any) => {
   return data;
 }
 
-const RemoveWishlistItems = async (username: any) => {
-    const response = await fetch(`https://buildcompdatabase.azurewebsites.net/Webscraper/DeleteWishlistItems/${username}`,{
+const RemoveWishlistItems = async (username: any, title:any) => {
+    const response = await fetch(`https://buildcompdatabase.azurewebsites.net/Webscraper/DeleteWishlistItems/${username}/${title}`,{
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json'

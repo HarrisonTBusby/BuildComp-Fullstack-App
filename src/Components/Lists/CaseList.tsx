@@ -4,6 +4,7 @@ import { Card } from 'react-bootstrap';
 import { WishlistData, CaseData } from '../../Interfaces/PartDataInterfaces';
 import ControlPointIcon from '@mui/icons-material/ControlPoint';
 import { AddWishlistItems } from '../../Services/DataService';
+import { saveToSessionStorageByName } from '../../Services/LocalStorage';
 
 
 
@@ -28,7 +29,7 @@ export default function CaseList(props: any) {
           item_url: item.item_url,
           type: item.type,
         };
-    
+        saveToSessionStorageByName(item.title);
         await AddWishlistItems(data);
       };
 

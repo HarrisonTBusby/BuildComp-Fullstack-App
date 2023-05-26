@@ -4,6 +4,7 @@ import { Card } from 'react-bootstrap';
 import { HeatsinkData, WishlistData } from '../../Interfaces/PartDataInterfaces';
 import ControlPointIcon from '@mui/icons-material/ControlPoint';
 import { AddWishlistItems } from '../../Services/DataService';
+import { saveToSessionStorageByName } from '../../Services/LocalStorage';
 
 export default function HeatsinkList(props: any) {
     const ITEMS_PER_PAGE = 6;
@@ -23,7 +24,7 @@ export default function HeatsinkList(props: any) {
           item_url: item.item_url,
           type: item.type,
         };
-    
+        saveToSessionStorageByName(item.title);
         await AddWishlistItems(data);
       };
 

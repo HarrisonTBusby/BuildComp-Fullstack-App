@@ -4,6 +4,7 @@ import { Card } from 'react-bootstrap';
 import { GpuData, WishlistData } from '../../Interfaces/PartDataInterfaces';
 import ControlPointIcon from '@mui/icons-material/ControlPoint';
 import { AddWishlistItems } from '../../Services/DataService';
+import { saveToSessionStorageByName } from '../../Services/LocalStorage';
 
 export default function GpuList(props: any) {
     
@@ -24,7 +25,7 @@ export default function GpuList(props: any) {
           item_url: item.item_url,
           type: item.type,
         };
-    
+        saveToSessionStorageByName(item.title);
         await AddWishlistItems(data);
       };
 

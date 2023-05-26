@@ -4,7 +4,7 @@ import Navbar from '../Navbar/Navbar';
 import Footer from '../Footer/Footer';
 import { Col, Card, Modal, Button, Row } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import { getSessionStorage } from '../../Services/LocalStorage';
+import { removeFromSessionStorage } from '../../Services/LocalStorage';
 import CpuList from '../Lists/CpuList';
 import { CpuData, GpuData, CaseData, HardDriveData, MotherboardData, HeatsinkData, PowerSupplyData, RamData, WishlistData } from '../../Interfaces/PartDataInterfaces';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
@@ -51,15 +51,19 @@ const Wishlist = () => {
       const data = await GetAllWishlistItems();
       const username = sessionStorage.getItem("Username");
       const filteredData = data.filter((item: WishlistData) => item.username === username);
+      
       setWishlistItems(filteredData);
     };
 
     fetchData();
   }, []);
 
-  const handleDelete = () => {
+  const handleDelete = async () => {
+    const data = GetAllWishlistItems();
     const username = sessionStorage.getItem("Username");
-    RemoveWishlistItems(username);
+   const title = sessionStorage.getItem('Favorites');
+    RemoveWishlistItems(username, title);
+    //removeFromSessionStorage(title);
   }
 
 
