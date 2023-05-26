@@ -109,7 +109,6 @@ export default function Parts(props: any) {
     const [currentPage, setCurrentPage] = useState<number>(0);
     const [totalPages, setTotalPages] = useState(6);
 
-    //const [selectedComponent, setSelectedComponent] = useState<string>('');
     const [minBudget, setMinBudget] = useState<number>(0);
     const [maxBudget, setMaxBudget] = useState<number>(0);
     const [cpuData, setCpuData] = useState<CpuData[]>([]);
@@ -128,8 +127,6 @@ export default function Parts(props: any) {
     const [originalHeatsinkData, setOriginalHeatsinkData] = useState<HeatsinkData[]>([]);
     const [hardDriveData, setHardDriveData] = useState<HardDriveData[]>([]);
     const [originalHardDriveData, setOriginalHardDriveData] = useState<HardDriveData[]>([]);
-
-    //const [componentType, props.setComponentType] = useState<string>('PC Components');
 
     const [maxPrice, setMaxPrice] = React.useState<number[]>([0, 100]);
     const minDistance = 50;
@@ -227,21 +224,8 @@ export default function Parts(props: any) {
         setFixedPrice(highestPrice)
     }
 
-
-    // const uniqueChipsets: any[] = [];
-    // for (const obj of hardDriveData) {
-    //     const chipset = obj.storageCapacity;
-    //     if (!uniqueChipsets.includes(chipset)) {
-    //         uniqueChipsets.push(chipset);
-    //     }
-    // }
-
-    // uniqueChipsets.sort();
-    // console.log(uniqueChipsets);
-
     // For Dropdown values
     async function handleComponentSelect(component: string) {
-        //if (component === selectedComponent) return
         const data = await GetPartData(component);
         calculateMaxPrice(data)
         if (component === 'CPU') {
@@ -249,14 +233,12 @@ export default function Parts(props: any) {
             setOriginalCpuData(data)
             setTotalPages(Math.ceil(data.length / 6))
             props.setComponentType('CPU')
-            //set checkboxes with value 'All' to true 
             setCpuFilters(originalCpuFilters)
         } else if (component === 'GPU') {
             setGpuData(data);
             setOriginalGpuData(data)
             setTotalPages(Math.ceil(data.length / 6))
             props.setComponentType('GPU')
-            //set checkboxes with value 'All' to true
             setGpuFilters(originalGpuFilters)
         } else if (component === "Motherboard") {
             setMotherboardData(data);
@@ -345,15 +327,6 @@ export default function Parts(props: any) {
     const renderTooltip = (content: string) => {
         return <Tooltip id='button-tooltip'>{content}</Tooltip>;
     };
-
-    // For Budget values
-    // const handleMinBudget = (value: number) => {
-    //     setMinBudget(value);
-    // };
-
-    // const handleMaxBudget = (value: number) => {
-    //     setMaxBudget(value);
-    // };
 
     const handleCpuFiltersCheckbox = () => {
         let filteredData = originalCpuData;
@@ -554,7 +527,6 @@ export default function Parts(props: any) {
 
         if (!hardDriveFilters.manufacturers.All) {
             filteredData = filteredData.filter((hardDrive) => {
-                //const { manufacturers } = hardDriveFilters;
                 return Object.keys(hardDriveFilters.manufacturers).some(
                     (key) => hardDrive.title.includes(key) && hardDriveFilters.manufacturers[key]
                 );
@@ -602,38 +574,6 @@ export default function Parts(props: any) {
             handleHardDriveFiltersCheckbox()
         }
     }, [cpuFilters, gpuFilters, motherboardFilters, caseFilters, ramFilters, psFilters, heatsinkFilters, hardDriveFilters, maxPrice])
-
-    // useEffect(() => {
-    //     handleCpuFiltersCheckbox()
-    // }, [cpuFilters, maxPrice])
-
-    // useEffect(() => {
-    //     handleGpuFiltersCheckbox()
-    // }, [gpuFilters])
-
-    // useEffect(() => {
-    //     handleMotherboardFiltersCheckbox()
-    // }, [motherboardFilters])
-
-    // useEffect(() => {
-    //     handleCaseFiltersCheckbox()
-    // }, [caseFilters])
-
-    // useEffect(() => {
-    //     handleRamFiltersCheckbox()
-    // }, [ramFilters])
-
-    // useEffect(() => {
-    //     handlePsFiltersCheckbox()
-    // }, [psFilters])
-
-    // useEffect(() => {
-    //     handleHeatsinkFiltersCheckbox()
-    // }, [heatsinkFilters])
-
-    // useEffect(() => {
-    //     handleHardDriveFiltersCheckbox()
-    // }, [hardDriveFilters])
 
     function sortByPrice(arr: any) {
         const newArr = [...arr];
@@ -1108,7 +1048,6 @@ export default function Parts(props: any) {
                 ...prev,
                 sizes: { All: true, 'Mini ITX Desktop': false, 'ATX Mid Tower': false, 'ATX Full Tower': false, 'ATX Tower': false, 'ATX Desktop': false }
             }))
-            //setTotalPages(Math.ceil(originalCaseData.length / 6));
         } else if (value !== 'All') {
             setCaseFilters((prev) => ({
                 ...prev,
@@ -1273,11 +1212,6 @@ export default function Parts(props: any) {
         }
     }
 
-    //manufacturers: { All: true, Crucial: false, Sabrent: false, Samsung: false, SanDisk: false, 'SK hynix': false, 'Western Digital': false },
-    //storages: { All: true, '250 GB': false, '256 GB': false, '480 GB': false, '500 GB': false, '512 GB': false, '1 TB': false, '2 TB': false },
-    //pcies: { All: true, 'SATA 6.0 Gb/s': false, 'M.2 SATA': false, 'M.2 PCIe 3.0 X4': false, 'M.2 PCIe 4.0 X4': false }
-
-
     const handleHardDriveStoragesCheckbox = (value: string, checked: boolean) => {
         if (value === 'All') {
             setHardDriveFilters((prev) => ({
@@ -1418,11 +1352,6 @@ export default function Parts(props: any) {
                                         valueLabelDisplay="auto"
                                         getAriaValueText={valuetext}
                                     />
-                                    {/* <hr />
-                                    <p>Budget</p>
-                                    <input className='w-75' type='number' placeholder='Min' value={minBudget} onChange={(e) => setMinBudget(parseInt(e.target.value))}></input>
-                                    <input className='w-75' type='number' placeholder='Max' value={maxBudget} onChange={(e) => setMaxBudget(parseInt(e.target.value))}></input> */}
-                                    {/* <button onClick={() => filterByPriceRange(minBudget, maxBudget)} className='clearFiltersBtn'>Results</button> */}
                                     <hr />
                                     <div className={props.componentType !== 'CPU' ? 'd-none' : ''}>
                                         <p>Manufacturer</p>
@@ -1645,11 +1574,6 @@ export default function Parts(props: any) {
                             disableSwap
                         />
                     </div>
-                    {/* <hr />
-                    <p>Budget</p>
-                    <input className='w-75' type='number' placeholder='Min' value={minBudget} onChange={(e) => setMinBudget(parseInt(e.target.value))}></input>
-                    <input className='w-75' type='number' placeholder='Max' value={maxBudget} onChange={(e) => setMaxBudget(parseInt(e.target.value))}></input> */}
-                    {/* <button onClick={() => filterByPriceRange(minBudget, maxBudget)} className='clearFiltersBtn'>Results</button> */}
                     <hr />
                     <div className={props.componentType !== 'CPU' ? 'd-none' : ''}>
                         <p>Manufacturer</p>
