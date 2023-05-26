@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom';
-import { Card } from 'react-bootstrap';
+import { Card, Toast } from 'react-bootstrap';
 import { WishlistData, CaseData } from '../../Interfaces/PartDataInterfaces';
 import ControlPointIcon from '@mui/icons-material/ControlPoint';
 import { AddWishlistItems } from '../../Services/DataService';
@@ -9,6 +9,7 @@ import { saveToSessionStorageByName } from '../../Services/LocalStorage';
 
 
 export default function CaseList(props: any) {
+    const [show, setShow] = useState<boolean>(false);
 
     const ITEMS_PER_PAGE = 6;
     const startIndex = props.currentPage * ITEMS_PER_PAGE;
@@ -21,29 +22,43 @@ export default function CaseList(props: any) {
 
     const handleSave = async (item: CaseData) => {
         const data: WishlistData = {
-          id: 0, // Set the desired value for the id property
-          username: usernameData || '',
-          title: item.title,
-          price: item.price,
-          image_url: item.image_url,
-          item_url: item.item_url,
-          type: item.type,
+            id: 0, // Set the desired value for the id property
+            username: usernameData || '',
+            title: item.title,
+            price: item.price,
+            image_url: item.image_url,
+            item_url: item.item_url,
+            type: item.type,
         };
         await AddWishlistItems(data);
-      };
+    };
 
-      const guestAdd = (item: CaseData) => {
-        if(data === 'guest'){
+    const guestAdd = (item: CaseData) => {
+        if (data === 'guest') {
             return null;
-        }else{
-            return <a className='WishlistBtn' onClick={async() => await handleSave(item)}><ControlPointIcon /></a>
+        } else {
+            return <a className='WishlistBtn' onClick={async () => { await handleSave(item); setShow(true) }}><ControlPointIcon /></a>
         }
 
-      }
+    }
 
     return (
         <div className='cards'>
+            <div className='toastPosition'>
+                <Toast onClose={() => setShow(false)} show={show} delay={3000} autohide>
+                    <Toast.Header>
+                        <img
+                            src="holder.js/20x20?text=%20"
+                            className="rounded me-2"
+                            alt=""
+                        />
+                        <small className='me-auto'>Just now</small>
+                    </Toast.Header>
+                    <Toast.Body>Added to Wishlist!</Toast.Body>
+                </Toast>
+            </div>
             {itemsToDisplay.map((item: CaseData) => (
+
                 <div key={item.id}>
                     <Card style={{ width: '16rem', height: '100%' }}>
                         <Link to={item.item_url} target='_blank'>

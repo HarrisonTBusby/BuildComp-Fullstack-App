@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 import Navbar from '../Navbar/Navbar';
 import Footer from '../Footer/Footer';
-import { Col, Card, Modal, Button, Row } from 'react-bootstrap';
+import { Col, Card, Modal, Button, Row, Toast } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { getSessionStorage, removeFromSessionStorage } from '../../Services/LocalStorage';
 import CpuList from '../Lists/CpuList';
@@ -15,6 +15,7 @@ import { GetAllWishlistItems, RemoveWishlistItems } from '../../Services/DataSer
 const Wishlist = () => {
   const navigate = useNavigate();
   const [show, setShow] = useState(true);
+  const [toastShow, setToastShow] = useState(false);
   const [wishlistItems, setWishlistItems] = useState([]);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -58,17 +59,13 @@ const Wishlist = () => {
     fetchData();
   }, []);
 
-  const handleDelete = async (title:string) => {
-    const username = sessionStorage.getItem("Username");
-    RemoveWishlistItems(username, title);
+  const handleDelete = async (title: string) => {
+  const username = sessionStorage.getItem("Username");
+  const newWishlist = wishlistItems.filter((item: WishlistData) => item.title !== title);
+  setWishlistItems(newWishlist);
+  RemoveWishlistItems(username, title);
+};
 
-    const data = getSessionStorage();
-    for(let i =0; i < data.length; i++){
-      if(data[i] === title){
-        removeFromSessionStorage(title);
-      }
-    }
-  }
 
   const SwitchSession = () => {
     if (wishlistItems.map((x: any) => x.type == "CPU")) {
@@ -76,6 +73,19 @@ const Wishlist = () => {
         return (
           <>
             <Col className='wishlistCards'>
+            <div className='toastPosition'>
+                    <Toast onClose={() => setToastShow(false)} show={toastShow} delay={3000} autohide>
+                        <Toast.Header>
+                            <img
+                                src="holder.js/20x20?text=%20"
+                                className="rounded me-2"
+                                alt=""
+                            />
+                            <small className='me-auto'>Just now</small>
+                        </Toast.Header>
+                        <Toast.Body>Removed from Wishlist!</Toast.Body>
+                    </Toast>
+                </div>
               <div className='d-grid justify-content-center 2fr'>
                 <div key={x.id}>
                   <Card style={{ width: '16rem', height: '100%', overflow: 'hidden' }}>
@@ -85,7 +95,7 @@ const Wishlist = () => {
                     <Card.Body>
                       <Link to={x.item_url} target='_blank'><u className='title'>{x.title}</u></Link>
                       <div>
-                        <div>${x.price}<a className='DeleteWishlistBtn' onClick={() => handleDelete(x.title)}><HighlightOffIcon /></a></div>
+                        <div>${x.price}<a className='DeleteWishlistBtn' onClick={() => {handleDelete(x.title); setToastShow(true)}}><HighlightOffIcon /></a></div>
                         <div>{x.type}</div>
                       </div>
                     </Card.Body>
