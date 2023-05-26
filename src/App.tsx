@@ -19,7 +19,7 @@ function App() {
     <WishlistContext.Provider value={data}>
       <BrowserRouter>
         <Routes>
-          <Route path='/' element={<Homepage setComponentType={setComponentType} />} />
+          <Route path='/' element={<Homepage setComponentType={setComponentType}/>} />
           <Route path='/Login' element={<Login />} />
           <Route path='/SignUp' element={<SignUp />} />
           <Route path='/Parts' element={<Parts componentType={componentType} setComponentType={setComponentType} />} />

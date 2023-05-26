@@ -24,7 +24,6 @@ export default function HardDriveList(props: any) {
           item_url: item.item_url,
           type: item.type,
         };
-        saveToSessionStorageByName(item.title);
         await AddWishlistItems(data);
       };
 

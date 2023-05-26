@@ -4,7 +4,7 @@ import Navbar from '../Navbar/Navbar';
 import Footer from '../Footer/Footer';
 import { Col, Card, Modal, Button, Row } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import { removeFromSessionStorage } from '../../Services/LocalStorage';
+import { getSessionStorage, removeFromSessionStorage } from '../../Services/LocalStorage';
 import CpuList from '../Lists/CpuList';
 import { CpuData, GpuData, CaseData, HardDriveData, MotherboardData, HeatsinkData, PowerSupplyData, RamData, WishlistData } from '../../Interfaces/PartDataInterfaces';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
@@ -51,21 +51,24 @@ const Wishlist = () => {
       const data = await GetAllWishlistItems();
       const username = sessionStorage.getItem("Username");
       const filteredData = data.filter((item: WishlistData) => item.username === username);
-      
+
       setWishlistItems(filteredData);
     };
 
     fetchData();
   }, []);
 
-  const handleDelete = async () => {
-    const data = GetAllWishlistItems();
+  const handleDelete = async (title:string) => {
     const username = sessionStorage.getItem("Username");
-   const title = sessionStorage.getItem('Favorites');
     RemoveWishlistItems(username, title);
-    //removeFromSessionStorage(title);
-  }
 
+    const data = getSessionStorage();
+    for(let i =0; i < data.length; i++){
+      if(data[i] === title){
+        removeFromSessionStorage(title);
+      }
+    }
+  }
 
   const SwitchSession = () => {
     if (wishlistItems.map((x: any) => x.type == "CPU")) {
@@ -82,7 +85,7 @@ const Wishlist = () => {
                     <Card.Body>
                       <Link to={x.item_url} target='_blank'><u className='title'>{x.title}</u></Link>
                       <div>
-                        <div>${x.price}<a className='DeleteWishlistBtn' onClick={handleDelete}><HighlightOffIcon /></a></div>
+                        <div>${x.price}<a className='DeleteWishlistBtn' onClick={() => handleDelete(x.title)}><HighlightOffIcon /></a></div>
                         <div>{x.type}</div>
                       </div>
                     </Card.Body>

@@ -37,7 +37,7 @@ export default function Homepage(props: any) {
                 <h3 style={{ backgroundColor: '#4463D5', fontWeight: 'bolder', color: 'white', padding: '20px', width: '50%', display: 'flex', justifyContent: 'center' }}>Lets Get Started!</h3>
                 <Row className="MainListCards">
                     <Col>
-                        <a onClick={() => handleCardClick('CPU')}><div className="MainPageCards 1">
+                        <a rel="prefetch" href="https://buildcompdatabase.azurewebsites.net/Webscraper/GetAllCpuData" onClick={() => handleCardClick('CPU')}><div className="MainPageCards 1">
                             <div className="card_image"></div>
                             <div className="card_title">
                                 <p>CPU</p>
